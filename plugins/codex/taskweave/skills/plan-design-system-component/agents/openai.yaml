@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Design System Component"
+  short_description: "공통 디자인 컴포넌트 조사 및 구현 승인 계획 작성"
+  default_prompt: "Use $taskweave:plan-design-system-component to investigate and prepare an approval plan for this shared design-system component."

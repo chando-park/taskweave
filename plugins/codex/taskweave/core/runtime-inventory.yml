@@ -1,0 +1,96 @@
+schema_version: 2
+
+# Client and platform adapters are deliberately declared here rather than
+# inferred from the executing machine.  `bootstrap.sh` only composes these
+# adapters; each client installer remains the sole owner of its own home.
+clients:
+  codex:
+    installer: scripts/install.sh
+    doctor: scripts/doctor.sh
+  claude:
+    installer: ../../Claude_Code/Runtime/scripts/install.sh
+    doctor: ../../Claude_Code/Runtime/scripts/doctor.sh
+
+platforms:
+  core:
+    mode: built-in
+  apple:
+    mode: optional-installer
+    installer: scripts/install-xcode-mcp.sh
+  android:
+    mode: check-only
+    required_commands: [java]
+    optional_commands: [adb, gradle]
+
+# 기존 bootstrap의 검사 모드는 보존한다. 실행은 프로젝트별 승인 검증 계획만 사용한다.
+plugin:
+  name: ai-workflow
+  bootstrap: ../../WorkflowPlugin/scripts/bootstrap.sh
+  runtime: ../../WorkflowPlugin/src/server.mjs
+  workflow:
+    common: references/task-workflow.md
+    writing: references/writing-work.md
+    swift: references/swift-code-conventions.md
+    modes: [immediate, plan-first]
+    project_registration_required_for_conversation: false
+  verification:
+    common: references/verification-planning.md
+    apple: references/verification-apple.md
+    android: references/verification-android.md
+    android_runner: repository-gradle-wrapper
+
+# This is the source of truth for portable client installation. Do not infer
+# installed skills by scanning a machine-specific CODEX_HOME or CLAUDE_HOME.
+personal:
+  skills:
+    - cpm
+    - code-change
+    - bugfix-plan
+    - bugfix-apply
+    - feature-plan
+    - feature-apply
+    - apply-workplan-feedback
+    - complete-work
+    - project-baseline
+    - promote-codex-rule
+    - plan-ui-with-design-system
+    - implement-ui-with-design-system
+    - plan-design-system-component
+    - author-design-system-component
+  bins:
+    runtime-evaluation: scripts/runtime-evaluation.rb
+    model-route: scripts/model-route.rb
+    verification-plan: scripts/verification-plan.rb
+    feature-plan-gate: scripts/feature-plan-gate.rb
+    ui-verification-gate: scripts/ui-verification-gate.rb
+    ui-image-compare: scripts/ui-image-compare.rb
+    artifact-placement-gate: scripts/artifact-placement-gate.rb
+    implementation-explanation-gate: scripts/implementation-explanation-gate.rb
+    micro-ui-feedback-gate: scripts/micro-ui-feedback-gate.rb
+    serena-preflight: scripts/serena-preflight.rb
+    serena-project: scripts/serena-project.rb
+    serena-mcp: scripts/serena-mcp.rb
+    install-serena-mcp: scripts/install-serena-mcp.rb
+    record-workplan-approval: scripts/record-workplan-approval.rb
+    workplan-memo: scripts/workplan-memo.rb
+    resolve-task-context: scripts/resolve-task-context.rb
+    resolve-workplan-policy: scripts/resolve-workplan-policy.rb
+    resolve-context-pack: scripts/resolve-context-pack.rb
+    workplan-approval-projection: scripts/workplan-approval-projection.rb
+    runtime-bin: scripts/runtime-bin.sh
+
+# These skills belong to a company workspace, never to this repository. They
+# are installed only when the configured workspace supplies the named skill.
+company:
+  skills:
+    - capture-product-source
+    - draft-serviceplan-release
+    - incident-investigate
+    - lint-product-memory
+    - promote-workplan-knowledge
+    - query-cart-sdk-facade
+    - query-product-memory
+    - refresh-company-dashboard
+    - refresh-product-memory
+    - triage-product-knowledge
+    - visualize-system-flow

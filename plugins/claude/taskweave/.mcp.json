@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "taskweave": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/src/server.mjs"
+      ]
+    }
+  }
+}

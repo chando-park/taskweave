@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+.env
+.env.*
+auth.json
+credentials.json
+settings.local.json

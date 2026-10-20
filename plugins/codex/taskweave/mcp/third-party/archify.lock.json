@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "name": "archify",
+  "version": "3.2.0",
+  "repository": "https://github.com/tt-a1i/archify",
+  "commit": "208acba8d412335185b2056fedf54b3405df43fb",
+  "archiveUrl": "https://codeload.github.com/tt-a1i/archify/tar.gz/208acba8d412335185b2056fedf54b3405df43fb",
+  "sha256": "7a6ee4f608c47d72c1f406be05fc30d015796f9f5006a7eda0daa79a8d695adc",
+  "archiveDirectory": "archify-208acba8d412335185b2056fedf54b3405df43fb/archify",
+  "entrypoint": "bin/archify.mjs",
+  "license": "MIT",
+  "updateCheckDisabled": true
+}

@@ -1,0 +1,13 @@
+{
+  "name": "taskweave-marketplace",
+  "owner": {
+    "name": "chando-park"
+  },
+  "plugins": [
+    {
+      "name": "taskweave",
+      "source": "./plugins/claude/taskweave",
+      "version": "0.3.0"
+    }
+  ]
+}

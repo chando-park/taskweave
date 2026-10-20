@@ -1,0 +1,115 @@
+# 공통 실행 절차
+
+작업 종류·진행 방식·기록 정책의 선택은 [공통 작업 흐름](task-workflow.md)이 소유한다. 이 문서의 resolver·Serena·Workplan·플랫폼 검증 명령은 해당 코드/기록 분기에서만 사용한다. 요약·대본 등 일반 비코드 작업에 Git 등록·코드 승인 hash·앱 테스트를 선행 조건으로 적용하지 않는다.
+
+## 필요한 문서만 읽기
+
+현재 요청의 Skill에서 작업 조건에 맞는 reference만 선택하고, 선택한 문서는 끝까지 읽는다. reference에 연결된 모든 문서를 재귀적으로 열지 않는다. 이미 읽은 같은 revision의 지침·원천은 재사용하되 코드 편집 직전의 Design System rule leaf·declaration처럼 시점이 지정된 확인은 생략하지 않는다. 새 사실·범위·입력이 바뀐 경우에만 영향받는 문서를 다시 확인한다.
+
+Taskweave 도구가 필요하면 [플러그인 실행 연결](plugin-runtime.md)을 읽는다. AI가 호스트 도구로 수정·직접 검증하며 MCP는 `context_read`·`task_current`·`record_save`만 맡는다. 기존 MCP 또는 CLI의 승인·시작·검증 orchestration과 문서 형식 검사를 새 작업의 선행 조건으로 만들지 않는다. 연결·저장 실패는 가능한 작업 전체를 막거나 재설치를 강제하는 이유가 아니다.
+
+코드 검증 계획·실행 때는 [공통 선택 원칙](verification-planning.md)과 해당 플랫폼 지침 하나([Apple](verification-apple.md), [Android](verification-android.md))만 읽는다. 공통 증거 판정은 [검증 근거](verification-evidence.md)를 사용한다. 플랫폼을 모르면 등록된 프로젝트 설정을 확인하고, 다른 플랫폼의 빌드·테스트를 추측해 실행하지 않는다. Swift 편집 직전에는 [Swift 코드 규칙](swift-code-conventions.md)을 읽고 간격·동시성·Preview를 적용한다. UI 편집 직전에는 [디자인 시스템 계약](design-system-implementation-contract.md)의 필수 rule leaf·component/token·external layout 선언을 읽는다. UI tier와 source/candidate 판정은 이 연결을 축약해도 생략하지 않는다.
+
+Workplan·승인안·Completion·사용자 설명은 한글을 기본으로 작성한다. 코드·명령·파일명·schema·인용 계약은 원문을 유지하고 저장소의 명시 언어 규칙을 우선한다.
+
+본문뿐 아니라 상세 코드와 사용자 보고의 설명도 [공통 설명 작성 원칙](implementation-handoff.md#공통-설명-작성-원칙)을 따른다. 작성자가 역할·실제 동작·변경 이유를 설명하며, 사용자가 어렵다고 지적한 뒤에만 풀어 쓰는 방식으로 미루지 않는다.
+
+## 승인 경로 선택
+
+코드 변경에서는 현재 경로·프로젝트 지침·알려진 회사 정책으로 대상을 확인한다. 정보가 부족하고 해당 유틸리티가 있으면 `resolve-task-context`와 `resolve-workplan-policy`로 보완한다. [Risk Routing](risk-routing.md)으로 짧은 작업 문서 후 바로 수정 또는 Workplan 계획 후 승인 경로를 고른다. 질문·읽기 전용 진단·현재 작업의 clarification은 파일과 Workplan을 바꾸지 않는다.
+
+간단하고 명확한 저위험 단일 저장소 수정은 `/taskweave:code-change`에서 짧은 작업 문서 하나를 쓰고 바로 구현한다. 복잡한 변경·중요한 선택·넓은 영향·고위험 조건은 [위험 분류](risk-routing.md)에 따라 계획 후 승인 경로를 사용한다. 회사·저장소가 정식 Workplan을 요구하면 그 기록 형식을 따르며, Jira 필수 여부는 별도로 확인한다. 기존 승인 Workplan을 진행하거나 그 피드백을 처리하는 중에는 경로를 바꾸지 않는다.
+
+## 간단한 수정: 짧은 작업 문서 하나
+
+[code-change](../skills/code-change/SKILL.md)는 실제 코드·원천·직접 검증으로 경계를 확정한다. 명확한 저위험 수정 요청은 수행 권한으로 사용하고, 편집 전에 짧은 작업 문서 하나에 요청·이유·변경 범위·대표 변경안·직접 검증을 적은 뒤 별도 승인 재질문 없이 구현한다. 결과·실제 변경 전후 설명·검증도 같은 문서에 갱신한다. 기록 위치·이름·최소 내용은 해당 Skill을 따른다. 정확한 symbol 경계가 필요한 작업은 Serena를 사용하고 UI·Swift·회사·Git 권한 규칙은 그대로 따른다.
+
+이 작업 문서는 정식 Workplan이 아니며 `workplan-memo create|prepare|approve|apply|result`, Completion·승인 hash 파일을 붙이지 않는다. 범위 안 피드백은 같은 문서와 수행 권한으로 수정하고 직접 영향만 재검증한다. 방향만 묻는 요청에는 읽기 전용으로 답하고 수정 권한을 추정하지 않는다. 중요한 선택·복잡한 변경·고위험 또는 의무 Workplan 조건이 새로 생기면 기존 구현을 보존하고 계획 후 승인 경로로 전환한다. Jira는 현재 작업에 적용되는 회사 정책상 필수인 경우에만 생성하며, commit·push·PR/MR·Jira 완료·지식 게시 권한은 구현 승인에 포함되지 않는다.
+
+## Workplan 실행
+
+Workplan 경로의 새 코드 변경은 [Workplan 양식](workplan-layout.md)의 `approval-memo-v1`을 사용한다. 과거 Workplan이나 다른 작업의 ID를 재사용하지 않는다. 다음은 코드 Workplan에서 연결하는 기준이며 공통 프로세스는 다시 만들지 않는다.
+
+1. 요청을 질문·진단·계획·구현·문서화로 분류한다.
+2. 확인한 현재 프로젝트·정책에서 target과 기록 위치를 확정한다. 이미 아는 경로를 resolver 성공 여부로 다시 허가받지 않는다.
+3. [Risk Routing](risk-routing.md)과 [Model Routing](model-routing.md)으로 조사·구현·리뷰 깊이를 정한다. direct는 조사량이 작은 실행 route이지 Workplan 생략 route가 아니다.
+4. Project Agent와 직접 관련 코드·테스트·원천에서 최소 변경 범위를 먼저 확인한다. 회사 정책이 티켓을 요구하면 [Ticket Lifecycle](ticket-lifecycle.md)에 따라 이번 요청의 번호를 확보한다. 과거 이력을 넓게 검색하지 않는다.
+5. 호스트 파일 도구 또는 `record_save`로 현재 요청 전용 메모를 만든다. 이유, 핵심 before/after, 파일·심볼, 제외 범위와 직접 검증을 기록하며 알려진 관련 원천을 재사용한다. 형식용 문서 세트를 추가하지 않는다.
+6. 회사 정책 또는 사용자가 정식 기록을 요구한 간단한 수정은 해당 승인 정책을 확인한다. 별도 계획 승인이 필요한 normal/high-risk는 현재 계획의 컨셉·코드·범위·검증·버전을 직접 보여 주고 응답을 끝낸다. 이후 실제 사용자가 그 계획을 명시 승인한 내용을 한 번 기록하고 수정한다. 승인 전 제품 코드·테스트를 편집하거나 Jira를 구현 상태로 전환하지 않는다. 기술적 승인 stamp·문서 검사의 성공은 시작 조건이 아니다.
+7. Swift edit 직전 [Swift 코드 규칙](swift-code-conventions.md), UI edit 직전 [디자인 시스템 계약](design-system-implementation-contract.md)의 필수 rule leaf·실제 declaration을 읽는다. 사용자 노출 문구는 [Localization Contract](localization-contract.md)를 따른다. UI `none | regression | conformance | full`은 영향 View·state만 검증하며 conformance/full은 정확한 대상 worktree candidate와 실제 원천을 대조한다. 원천 대조 전에 현재 render를 Golden으로 삼지 않고 원천 실패는 Snapshot·build 성공으로 덮지 않는다.
+8. 호스트 도구로 직접 검증하고 diff를 검토한 뒤 실제 변경·검증·미실행 범위를 기록한다. UI의 실제 source/candidate 대조와 실패 판정은 [UI Verification](ui-verification.md), 산출물 위치는 [Repository Artifact Boundary](repository-artifact-boundary.md)를 적용하되 문서 packet·영수증 검사의 성공을 편집·테스트 허가로 만들지 않는다.
+9. commit·push·PR/MR은 별도 [Git Operation Contract](git-operation-contract.md), 최종 지식·Jira·Workplan 종료는 `/taskweave:complete-work`에 맡긴다.
+
+새 계획과 적용 단계는 knowledge 문서, Product Memory 평가, 게시 후보를 요구하지 않는다. 이는 실제 diff·검증을 본 완료 단계의 책임이다.
+
+## 승인 후 구현 우선순위
+
+저위험 바로 수정의 수행 권한이 확인됐거나 일반 Workplan의 실제 계획 승인을 받으면 다음 행동은 실제 제품 diff 또는 직접 테스트 준비여야 한다. 기록은 한 번 남기되 제목·필드·설명 양식 보완을 이유로 이를 미루지 않는다. 이 사이에 계획 재검토, 결과 문서 선작성, 지식 평가, 과거 Jira·Workplan 검색을 넣지 않는다.
+
+- 원인·파일·심볼·수정 방향·직접 검증이 확정된 단일 저장소 작업은 **직접 구현 경로**다. 부모가 승인 범위를 즉시 구현하고 영향 테스트를 실행한다.
+- Public/외부 계약, 서버·BLE·펌웨어·저장 형식, 다중 저장소, 새 아키텍처 판단, 반복 실패나 해결되지 않은 원천 상충이 있는 작업은 **위임 구현 경로**다.
+- 연결된 회사 ticket의 시작 상태는 [Ticket Lifecycle](ticket-lifecycle.md)에 따라 한 번의 제한된 동기화 사이클만 수행한다. 같은 상태를 확인하기 위해 Workplan이나 Jira 이력을 반복 검색하지 않는다.
+- 위임 실패·지연·미완성 반환의 재시도와 승격은 [Model Routing의 실제 실행](model-routing.md#단계별-실제-실행)을 단일 원본으로 따른다. 같은 agent에 반복 위임하거나 실행하지 않은 모델을 사용했다고 보고하지 않는다.
+- 승인 뒤 120초 안에 제품 diff 또는 직접 테스트 실행이 시작되지 않았다면 `docs | jira | dispatch | environment` 중 실제 병목을 하나로 분류하고 행정 작업을 더 확장하지 않는다.
+
+## 승인 메모 내용
+
+승인 전에 다음을 짧게 보여 준다.
+
+- 왜 바꾸는지
+- 핵심 파일·심볼의 현재 코드와 제안 코드
+- 변경 파일과 제외 범위
+- 최소 직접 검증
+- 구현 승인 여부
+
+전체 조사 보고서나 모든 파일의 diff를 미리 작성하지 않는다. 긴 코드가 판단에 필요할 때만 선택적 Detail을 연결한다. 구현 후에는 실제 변경 전후 코드와 검증 결과를 사용자에게 보여 준다.
+
+최초 수정 요청을 수행 권한으로 쓸 수 있는 범위는 간단한 `/taskweave:code-change`와 조건을 충족한 `direct fix`뿐이다. 일반 Workplan(normal/high-risk)은 최초 요청·제품 기준 합의·스킬 호출을 승인 출처로 쓰지 않는다. 계획의 컨셉·현재/제안 코드·범위·검증·버전을 먼저 보여 주고, 사용자가 그 계획을 명시 승인한 뒤 구현한다. 에이전트가 스스로 승인으로 기록하거나 plan과 apply Skill을 함께 읽었다는 이유로 다음 단계에 진입하지 않는다. 승인과 범위 변경이 함께 오면 승인으로 기록하지 않고 메모를 수정해 새 revision을 제시한다.
+
+조사·계획·구현·리뷰의 담당을 부모가 직접 맡는다는 `직접 경로`는 승인 생략을 뜻하지 않는다. 일반 Workplan은 담당이 누구든 위 승인 대기 절차를 따른다.
+
+## 대상 변경과 dirty worktree
+
+사용자가 지정한 repository·remote·branch와 resolver가 다르거나 후보가 둘 이상이면 변경·Git 게시를 멈춘다. 회사 작업 문서·Workplan은 `WORKPLAN_ROOT` 또는 회사 workspace resolver의 `Workplans/<project-id>`에 두며 제품 저장소에 AI 문서를 만들지 않는다. 반환된 `project_agent`가 있으면 티켓·코드·Product Memory보다 먼저 읽고 없으면 프로젝트별 방향을 추정하지 않는다. 신규 회사 작업은 선택한 경로의 로컬 기록을 하나만 만든다. Jira 생성은 [티켓 절차](ticket-lifecycle.md)에 따라 현재 작업에 적용되는 회사 정책의 필수 여부를 확인한 경우에만 하며, 정확한 issue key의 제한된 재시도·멱등 확인만 허용한다. Jira는 승인된 구현 시작 때 정책상 시작 상태까지만 동기화하고 구현·검증만으로 자동 완료하지 않는다. 개인 위키와 회사 Product Memory는 섞지 않는다.
+
+현재 프로젝트 identity와 합의한 범위·실제 사용자 승인을 확인한다. 지문은 기록 동시 저장 충돌을 감지하는 데 사용하며 구현 허가를 위한 과거 기준선 일치를 요구하지 않는다. 범위 밖 tracked·untracked 변경을 보존하고 dirty라는 이유만으로 중단하지 않는다.
+
+현재 요청, 승인 메모, 코드 주석·테스트·Preview와 현재 diff를 대조한다. 관련 파일이 조사 뒤 달라졌거나 승인 코드와 충돌할 때만 해당 편집을 멈춘다. 의도가 확인되지 않은 범위 밖 변경은 건드리지 않는다.
+
+## 피드백
+
+Workplan 없는 코드 작업은 `/taskweave:code-change`에서 현재 작업 문서·대화의 수행 권한·diff를 이어간다. 세부 피드백 분류는 [공통 피드백 절차](acceptance-feedback-loop.md)가 소유한다. 다음 범위 구분은 코드 Workplan이 연결된 작업에만 적용한다.
+
+피드백 경로는 현재 대화가 구현 중이거나 완료 대기 중인 Workplan을 명확히 가지고 있을 때만 사용한다. 전역 Workplan 검색이나 오래된 동일 키워드 매칭으로 대상을 고르지 않는다. 현재 메모가 연결한 관련 URL은 선택적으로 확인할 수 있다.
+
+- 승인 범위 안 correction: 같은 Workplan, 같은 승인으로 수정하고 직접 영향 증거만 무효화·재실행한다.
+- 의미 범위 변경: 같은 Workplan을 재승인 대상으로 만든다.
+- 독립 이슈: 새 Workplan을 생성한다.
+
+## 사용자 상태 보고
+
+내부 상태명보다 실제 결과를 먼저 말한다. 보고 순서는 `끝난 것 → 아직 안 한 것 → 멈춘 이유 → 다음 행동`이다. `prepared baseline`, `approval revision`, `apply`, `gate`, `implementing`, `delegation` 같은 내부 표현은 각각 `계획을 확인했을 때의 파일 상태`, `확인한 계획 버전`, `코드 수정 시작`, `필수 확인`, `수정 중`, `구현 담당에게 작업 전달`처럼 풀어 쓴다.
+
+코드를 변경한 작업의 구현 완료·완료 대기·검증 차단 및 최종 종료 응답에는 실제 diff를 근거로 코드 설명을 포함한다.
+
+- 변경 전후의 핵심 코드 조각과 실제 파일·심볼 링크를 보여 주고, 무엇을 왜 바꿨는지 설명한다. 신규 기능은 기존 삽입 지점과 핵심 추가 코드를 보여 준다.
+- 변경된 caller·State·Action·Effect·Delegate·비동기 수명처럼 이해에 필요한 호출 흐름을 코드에 연결해 설명한다. 작은 수정은 짧은 코드 조각과 한 문단이면 충분하다.
+- 계획과 실제 구현이 다른 부분, 유지한 동작, 실행한 검증과 미실행 범위를 설명한다. 설정·문서 작업은 실제 변경 문구와 적용 범위를 설명한다.
+- 모든 작업은 [공통 검토와 보고](verification-evidence.md#공통-검토와-보고)에 따라 실제 확인·미확인 범위를 설명한다. 코드 테스트가 해당하는 작업은 [테스트·커버리지 기록](verification-evidence.md#테스트커버리지-기록)에 따라 테스트 파일·케이스별 확인 동작과 결과, 실행 집계, 커버리지 실측값 또는 `미측정 — 이유`를 보여 준다. Workplan이 있으면 기존 검증 영역의 같은 테스트·대상·설정을 최신 결과로 갱신한다. Workplan이 없으면 대화에 기록하고 보고 때문에 새 기록을 만들지 않는다. 요약·대본에는 실제 원문·의미·분량 검토를 보고하며 앱 테스트·커버리지 행을 강제하지 않는다.
+- 테스트·커버리지 보고는 가능한 사실을 기록하는 방식으로 처리한다. 보고 형식·항목 누락·커버리지 수집 실패만으로 오류·엄격한 문서 검사·완료 차단 조건을 추가하지 않는다. 이 보고를 위해 테스트를 반복 실행하거나 별도 결과 문서를 강제하지 않으며, 실제 테스트 실패·미실행은 통과로 바꾸지 않는다.
+- 승인 전 계획 코드, 변경 파일 목록, Workplan·Completion 링크만으로 실제 코드 설명을 대신하지 않는다. 전체 파일이나 무관한 diff를 복제하지 않는다.
+
+
+새로운 제품 결정이나 권한이 필요하지 않다면 내부 실행 방식 때문에 사용자에게 예외 승인을 요구하지 않는다.
+
+## 대화 결과 수용과 선택적 지식
+
+Workplan 없는 일반 작업은 결과 전달·사용자 수용으로 끝낼 수 있다. 명시적인 추가 완료 요청·회사 adapter·자동 지식 평가를 기본 조건으로 만들지 않는다. `/taskweave:complete-work`가 호출되면 현재 결과·수행한 검토만 확인하고 Workplan을 사후 생성하지 않는다. 반복 규칙의 영구 반영은 별도 사용자 동의로 처리하며 회사 Workplan은 기존 명시 완료 권한·지식/티켓 절차를 유지한다.
+
+## 레거시 호환
+
+기존 Workplan의 schema·approval revision·Details·gate 실행 이력과 회사 기록을 보존한다. 새 메모로 migration하거나 같은 승인을 다시 요구하지 않는다. 과거 문서 gate는 새 Taskweave 진행의 필수 조건으로 승계하지 않는다. 사용자가 명시적으로 요청한 기존 호환 실행은 해당 기록에만 한정하고, 필요한 회사 권한·실제 제품 검증은 그대로 유지한다. 레거시 resolver를 새 작업의 전역 검색에 사용하지 않는다.
+
+## 운영 실험
+
+`runtime-evaluation active`가 성공할 때만 익명 case와 실제 사용 rule을 기록한다. 계측 실패는 본 작업을 막지 않으며 회사·제품 식별 정보나 실제 Workplan 내용은 기록하지 않는다.

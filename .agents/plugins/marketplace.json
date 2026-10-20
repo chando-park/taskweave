@@ -1,0 +1,20 @@
+{
+  "name": "taskweave-marketplace",
+  "interface": {
+    "displayName": "Taskweave"
+  },
+  "plugins": [
+    {
+      "name": "taskweave",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex/taskweave"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

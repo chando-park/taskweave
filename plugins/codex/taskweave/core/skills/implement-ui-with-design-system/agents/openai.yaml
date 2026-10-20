@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement UI With Design System"
+  short_description: "승인된 기능 Workplan에 UI 검증을 추가해 구현"
+  default_prompt: "Use $taskweave:implement-ui-with-design-system as the UI-context entry point to apply the approved shared feature Workplan."

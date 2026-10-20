@@ -1,0 +1,67 @@
+schema_version: 1
+base:
+  include:
+    - request_or_ticket
+    - repository_rules
+    - change_boundary
+profiles:
+  logic:
+    include:
+      - feature_entrypoint
+      - direct_call_flow
+      - state_and_error_paths
+      - direct_tests
+    exclude:
+      - figma_node_and_state
+      - design_system_contract
+      - preview_and_render
+      - unrelated_project_areas
+      - external_contract_sources
+  ui:
+    include:
+      - figma_node_and_state
+      - target_view
+      - design_system_contract
+      - direct_ui_state_and_events
+      - preview_and_render
+    exclude:
+      - unrelated_domain_flows
+      - unrelated_project_areas
+      - external_contract_sources
+  mixed:
+    extends:
+      - logic
+      - ui
+    exclude:
+      - unrelated_project_areas
+facets:
+  external-contract:
+    include:
+      - external_contract_sources
+      - boundary_compatibility_consumers
+      - contract_tests
+    note: Workplan에 API, BLE/FW, 저장 또는 Public API 중 실제 계약 종류와 범위를 명시한다.
+  state-management:
+    include: [project_state_management_contract, reference_feature_and_reducer, direct_state_transition_tests]
+    note: 프로젝트의 조건부 State·Action 전이를 변경할 때 선택한다. 특정 아키텍처 타입명은 전제하지 않는다.
+  flow-navigation:
+    include: [project_flow_navigation_contract, reference_flow, delegate_and_destination_tests]
+    note: destination·navigation·delegate 경계를 변경할 때 선택하며 destination이 있으면 mixed profile과 함께 사용한다.
+  async-lifecycle:
+    include: [long_living_effect_ownership, cancellation_and_resubscription_contract, lifecycle_tests]
+    note: AsyncStream·BLE 구독·장기 Effect·취소 경계를 변경할 때 선택한다.
+  presentation:
+    include: [project_presentation_decisions, reference_presenters_and_consumers, presentation_tests]
+    note: Alert·sheet·overlay처럼 앱 표시 경계를 변경할 때 선택한다.
+  ui-system:
+    include: [design_system_contract, source_to_render_mapping, preview_and_render]
+    note: 시각 UI나 프로젝트 UI system 소비 방식을 변경할 때 선택한다.
+  testing:
+    include: [project_test_runbook, direct_test_harness, independent_expected_value]
+    note: logic·unit·integration 직접 테스트 계약을 확인할 때 선택한다.
+  visual-testing:
+    include: [preview_snapshot_golden_contract, viewport_locale_contract, source_to_render_evidence]
+    note: Preview·Snapshot·Golden·viewport·locale와 원천 대조가 실제 변경 경계일 때 선택한다.
+  ui-automation:
+    include: [interaction_and_app_lifecycle_scope, xctest_ui_automation_contract, snapshot_non_replacement_decision]
+    note: 실제 앱 interaction·권한·lifecycle 검증이 필요할 때 선택한다.

@@ -1,0 +1,37 @@
+# 현재 결과의 피드백과 수용
+
+진행 순서와 권한은 [공통 작업 흐름](task-workflow.md)을 따른다. 먼저 현재 대화가 가리키는 결과물·기준·Workplan 유무를 확인한다. Workplan 없는 글쓰기에 코드 diff나 승인 hash를 요구하지 않고, 과거 Workplan·Jira 검색으로 현재 작업을 추정하지 않는다.
+
+## 공통 분류
+
+- 같은 기준 안의 수정: 합의한 결과를 맞추는 표현·구현·누락 수정이다. 현재 수정본과 여전히 유효한 기준을 보존하고 영향받는 부분만 수정·검토한다.
+- 기준 변경: 목적·독자·근거·중요한 제약을 바꾸는 요청이다. 바뀌는 기준과 영향만 설명한다. 명확한 저위험 수정은 바로 이어가며 중요한 미정 선택·권한·필수 승인 정책이 있을 때만 확인한다.
+- 별도 요청: 현재 목적과 독립된 결과물이다. [공통 작업 흐름](task-workflow.md)에서 새로 선택하며 무조건 코드 Workplan을 만들지 않는다.
+
+보육일지를 줄일 때는 관찰 사실을 유지하고 누락·분량을 대조한다. 학부모 안내문으로 바꿀 때는 독자·목적·표현이 달라진 부분을 검토하며 실제 발송 권한은 추정하지 않는다. 메모에 없는 사실은 확인 없이 추가하지 않는다. 자료·작성 규칙은 [글쓰기 작업](writing-work.md)에 둔다.
+
+Workplan 없는 코드는 `/taskweave:code-change`의 기존 짧은 작업 문서 하나에서 변경·검증을 갱신한다. 피드백 때문에 정식 Workplan·Completion·승인 hash를 사후 생성하지 않는다. 고위험·복잡한 변경 조건이 새로 생기면 현재 구현을 보존하고 필요한 계획·승인만 추가한다.
+
+## 코드 Workplan에서 이어가기
+
+현재 승인 Workplan의 구현 중·검증 중·완료 대기 피드백은 현재 코드·관련 diff·합의한 범위만 읽는다. Jira·전체 원천·과거 이력 조사를 다시 시작하지 않는다.
+
+- `in_scope_correction`: 승인된 기대 동작을 충족하는 수정은 같은 Workplan·승인으로 진행한다. 최초 준비·승인·시작 처리를 반복하지 않는다.
+- `scope_change`: Public/외부 API·저장 계약·대상 저장소·주요 동작·승인 UI source를 바꾸거나 넓히면 추가 변경은 멈춘다. 현재 구현을 보존하고 같은 Workplan에 추가 현재/제안 코드·검증을 설명해 해당 계획의 재승인을 받는다. 최초 코드 상태로 되돌리지 않는다.
+- `independent_issue`: 무관한 결함·기능은 새 코드 계획 경로로 분리한다.
+
+실제 대화에서 받은 승인과 추가 승인 범위를 한 번 기록한다. 기록·문서 형식의 기술적 성공을 수정 허가로 만들지 않으며 [실행 계약](execution-contract.md)과 [플러그인 실행 연결](plugin-runtime.md)을 따른다.
+
+## 수정과 직접 검토
+
+Swift 편집 직전 [Swift 코드 규칙](swift-code-conventions.md), UI 편집 직전 [디자인 시스템 계약](design-system-implementation-contract.md)의 필수 leaf·실제 component/token·외부 layout 선언을 읽는다. 관련 코드의 symbol 경계는 Serena로 확인하고 정확한 문구·리소스·단일 literal만 textual 예외로 처리한다.
+
+UI 피드백은 실제 영향 View·state·source·render root·visible region으로 검토 범위를 정한다. 같은 source·state의 spacing·color 등 좁은 변경은 영향 snapshot만 확인할 수 있다. 새 source·overlay/background·Safe Area·여러 region 관계가 걸리면 가장 가까운 공통 render root까지 원천 대조를 넓힌다. 같은 동작의 누락된 부모 source 보충은 근거 보완이고 다른 디자인·state·revision·제품 동작은 재승인 대상이다. 이 판단을 위한 문서 manifest·gate 영수증의 성공을 새 Taskweave 편집 선행 조건으로 만들지 않는다. 실제 원천·대상 worktree candidate 대조와 제품 검증은 유지한다.
+
+연속된 같은 범위 피드백은 묶고 마지막 관련 편집 뒤 무효가 된 직접 test·build·render만 다시 실행한다. 변하지 않은 입력의 유효한 증거는 재사용한다. 원천 불일치를 snapshot·build 성공으로 덮지 않는다. 실제 변경·검증·미실행 범위를 현재 결과 기록에 갱신하며 새 graph·Detail·knowledge 문서는 만들지 않는다.
+
+## 기존 기록과 종료
+
+기존 schema·approval revision·Details·회사 이력은 보존하고 자동 migration·최초 승인 반복을 하지 않는다. 과거 gate·영수증은 그 이력의 근거이지 새 Taskweave 진행 허가가 아니다. 명시적으로 요청된 기존 호환 절차만 해당 기록에 한정하며 새 작업으로 강제하지 않는다.
+
+일반 결과는 전달·수용으로 끝낼 수 있다. 피드백 처리는 Workplan/Jira 완료·지식 게시·Git 게시를 수행하지 않는다. Workplan의 피드백과 완료 표현이 함께 오면 수정·검토를 먼저 마치고 새 명시 완료 요청을 기다린다. 회사 종료는 `/taskweave:complete-work`만 소유한다.

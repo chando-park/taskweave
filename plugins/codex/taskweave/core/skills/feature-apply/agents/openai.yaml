@@ -1,0 +1,4 @@
+interface:
+  display_name: "승인된 기능 구현"
+  short_description: "승인된 기능 구현 계획의 범위만 수정하고 테스트 결과를 기록합니다"
+  default_prompt: "Use $taskweave:feature-apply to implement the approved feature plan and verify the result."
