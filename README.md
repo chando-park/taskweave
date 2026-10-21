@@ -1,62 +1,244 @@
 # Taskweave
 
-Codex와 Claude Code에서 사용하는 개인 작업 플러그인입니다. 코드·설정은 작은 수정도 변경 전후 코드·검증 방법을 먼저 보여 주고 사용자 승인 후 편집합니다. 문서는 사용자 요청·회사/저장소 의무·인계 필요가 있을 때만 사용하며 같은 승인안의 실행·재시도에는 승인을 반복하지 않습니다. 코드뿐 아니라 요약·대본 등에도 작업 종류에 맞는 규칙을 연결하고, 모든 작업에 Workplan이나 앱 테스트를 강제하지 않습니다.
+**English** | [한국어](README.ko.md)
 
-이 저장소는 **직접 운영하는 GitHub 플러그인 장터**입니다. OpenAI·Anthropic 공식 기본 장터에 입점했다는 뜻이 아닙니다. 주소를 한 번 등록한 후 `taskweave`를 설치합니다. 별도 서버나 ZIP 다운로드는 필요하지 않습니다.
+Taskweave is a workflow plugin for Codex and Claude Code. It helps you review what the AI intends to change before it edits your files, then follow the work through implementation, verification, and feedback.
 
-## 준비
+For code and configuration changes—even small ones—the AI is instructed to show the current and proposed code and explain the verification method, then wait for your approval. Small tasks normally stay in the conversation. A Workplan is used when the change is complex, your project requires a record, or you ask for one.
 
-Node.js 22 이상, Ruby, Git, 사용할 호스트의 CLI가 필요합니다. 로그인은 각 호스트에서 완료합니다. 기본 패키지의 MCP 의존성은 포함되어 있으므로 별도 `npm install`은 필요하지 않습니다. 현재 배포·설치 확인 환경은 macOS입니다. Windows·Linux에서의 실제 호스트 설치는 아직 검증하지 않았습니다.
+This repository is a **GitHub-hosted plugin marketplace**. Add its address once, then install Taskweave through your host. It is not an entry in the default OpenAI or Anthropic directory. No separate Taskweave server or ZIP download is needed; its MCP process runs locally.
 
-## Codex 설치
+## What Taskweave helps you do
 
-터미널에서 실행합니다.
+- Review a concrete change instead of approving a vague implementation summary.
+- Connect a task to the relevant project rules and sources without reading every document for every request.
+- Continue feedback from the current implementation and record, rather than restarting the investigation.
+- Separate compilation, behavior tests, visual checks, and unverified work in the result.
+
+Code work, research, summaries, and scripts share a common process, but not the same evidence. A text summary is checked against its source; an app change needs the relevant code or UI checks. Taskweave does not turn every writing request into a software project.
+
+These are instructions for the AI, not a guarantee that a model will always follow them. Taskweave does not replace human review or the host's permissions.
+
+## Try it: requests and expected responses
+
+The following are illustrative examples, not results from a real project. Select a Taskweave skill explicitly if you want to make sure that workflow is used. In Codex, use `$taskweave:<skill>`; in Claude Code, use `/taskweave:<skill>`.
+
+### A small code fix
+
+Request with `code-change`:
+
+> This label formatter crashes when the value is missing. Show me the code change and the checks before editing.
+
+The AI should inspect the relevant file and propose something concrete, for example:
+
+```javascript
+// Before
+return value.trim();
+
+// Proposed
+return value?.trim() ?? "";
+```
+
+It should explain why the change fits your actual code and propose checks for a normal value, an empty string, and a missing value. It must then wait. After you approve, it edits the agreed scope and reports what it actually checked. A new Markdown document is not required by default.
+
+### A feature that affects several parts of an app
+
+Request with `feature-plan`:
+
+> Plan how to connect the home date picker to the existing date-selection flow. Show the affected files, representative code, and the tests. Do not implement it yet.
+
+The AI should read the relevant project guidance, current implementation, and source material. It writes a Workplan explaining the current behavior, proposed behavior, important code changes, exclusions, and verification plan. If a product decision or source is missing, it asks a specific question instead of guessing.
+
+After you approve that plan, `feature-apply` implements it. For UI work, the design-system planning and implementation skills add the relevant component, token, and visual checks to the same task; they do not create an unrelated second project.
+
+### A bug investigation and follow-up
+
+Request with `bugfix-plan`:
+
+> Investigate why submitting this form sends two requests. Explain the cause, the proposed code, and a regression check. Do not edit yet.
+
+The AI should distinguish observed facts from hypotheses, identify the affected code, and propose a fix and a check that would detect the bug. It waits for approval before `bugfix-apply` edits the code.
+
+If you later say, “The error path still sends twice,” `apply-workplan-feedback` continues from the current implementation. Work already covered by the approved proposal can continue without repeating the first approval. If the feedback introduces additional code or verification outside that proposal, the AI shows that addition and asks for approval.
+
+### A writing task
+
+> Summarize these meeting notes. Preserve decisions, action owners, and unresolved questions. Do not create a file.
+
+The AI uses the supplied notes and the writing guidance, then returns a summary in the conversation. It does not require Git registration, app tests, code coverage, or a Workplan. It should not invent missing facts. There is no separate childcare-log or script-writing skill in the current bundle; unfamiliar writing tasks use the common guidance and the material you provide.
+
+## Install and set up
+
+### Requirements
+
+Have Node.js 22 or newer, Ruby, Git, and the CLI for the host you intend to use. Sign in to that host normally. The plugin includes its MCP dependencies, so a separate `npm install` is not needed.
+
+Actual remote installation and MCP startup have been checked on macOS. Windows and Linux host installation have not been verified.
+
+### Codex
 
 ```sh
 codex plugin marketplace add https://github.com/chando-park/taskweave.git
 codex plugin add taskweave@taskweave-marketplace
 ```
 
-새 대화에서 `$taskweave:setup`을 요청합니다. 일부 클라이언트 버전은 스킬 선택기에서 `taskweave`로 검색해 선택해야 할 수 있습니다.
+Open a new conversation and request `$taskweave:setup`. If typing the name does not select a skill in your client, search for Taskweave in its skill selector.
 
-## Claude Code 설치
-
-터미널에서 실행합니다.
+### Claude Code
 
 ```sh
 claude plugin marketplace add https://github.com/chando-park/taskweave.git --scope user
 claude plugin install taskweave@taskweave-marketplace --scope user
 ```
 
-새 대화에서 `/taskweave:setup`을 요청합니다.
+Open a new conversation and request `/taskweave:setup`.
 
-## 처음 사용할 때
+### What setup needs to know
 
-- 일반 요약·대본 수정은 프로젝트 등록 없이 사용할 수 있습니다.
-- 프로젝트·작업 기록을 관리하려면 setup에서 코드가 담긴 폴더와 기록 보관 위치를 지정합니다. 기존 Workplans·Product Memory는 원래 위치를 연결하고 자동 이동·변환하지 않습니다.
-- Serena·Figma·Jira는 호스트에 이미 연결된 도구를 재사용합니다. 필요한 연결·로그인은 해당 호스트의 공식 기능으로 진행합니다. Taskweave MCP가 다른 MCP를 자동 호출하거나 토큰을 대신 발급하지 않습니다.
-- 기존 AGENTS.md·CLAUDE.md·직접 설치한 스킬을 자동 삭제·교체하지 않습니다. 스킬은 `taskweave:` 이름으로 선택합니다. 모든 대화의 전역 지침까지 전환하려면 기존 지침을 보존하는 별도 연결 작업이 필요합니다.
-- 기존 `taskweave@my-ai-toolbox` 로컬 설치와 이번 `taskweave@taskweave-marketplace` 원격 설치를 동시에 켜면 중복 노출될 수 있습니다. 새 설치를 확인한 뒤 이전 Taskweave만 선택적으로 비활성화하고 다른 플러그인·스킬·설정은 유지합니다.
+Setup is optional for a plain conversation task. If you want project and record management, be ready to provide:
 
-## 포함된 기능
+1. The folder containing your projects. Do not assume everyone uses the same folder layout.
+2. The specific project you intend to work on. Discovery results need confirmation; a Git remote alone is not the task.
+3. Where to keep work records, or the location of records you already have.
+4. Which existing integrations to reuse and which missing ones you want to connect.
 
-개인 스킬 14개와 setup 1개, 연결된 공통 규칙, 로컬 stdio MCP를 제공합니다. MCP의 기본 도구는 다음 세 가지입니다.
+For example:
 
-| 도구 | 하는 일 |
+> My projects are in `/example/projects`. Use `example-app` for this task. My existing work records are in `/example/work-records/example-app`; keep them there. Reuse the Figma connection and do not create Jira tickets unless the project policy requires them.
+
+Those paths are examples. The setup skill can guide you through the management CLI when available; otherwise it asks for the needed choices and reports what has not been saved. It must not claim that registration, authentication, or a read operation succeeded without confirmation.
+
+Installing a plugin does **not** automatically replace your global `AGENTS.md` or `CLAUDE.md`. Use its named skills first. Making Taskweave the default for all conversations is a separate instruction-linking step that must preserve your existing guidance.
+
+## How a task moves through the system
+
+```text
+Your request + current project
+          |
+          v
+AI selects a Taskweave skill
+          |
+          v
+Skill -> relevant shared rules -> project guidance and task sources
+          |
+          v
+AI presents code changes and verification -> you approve
+          |
+          v
+Host tools edit files and run the relevant checks
+          |
+          v
+AI explains the actual changes, results, and remaining gaps
+          |
+          +-> feedback: continue the current work
+          `-> acceptance: close a Workplan only when you request it
+```
+
+A skill is the procedure the AI reads. References contain the more detailed rules it needs for a particular task. The host supplies the actual editor, terminal, and service tools. MCP provides access to scoped material and records; it does not implement the feature itself.
+
+A build passing does not prove that a UI matches Figma. When visual conformance is required, the AI must compare the actual render with an independent design source at a matching state and boundary. Recording the current render as its own answer is not conformance verification.
+
+Approval to implement does not also authorize commit, push, MR/PR creation, external publication, Jira closure, or knowledge publication. Those actions need their own applicable permission. Ordinary conversation results do not require a formal closing ceremony.
+
+## Skills: choose by the work you need
+
+The bundle contains 14 personal workflow skills plus `setup`. The names below work with the Codex `$taskweave:` or Claude `/taskweave:` prefix.
+
+| Skill | When to use it | What it does |
+| --- | --- | --- |
+| `setup` | Configure projects, records, or integrations | Guides the necessary setup; reuses existing connections |
+| `code-change` | A small, well-understood code or configuration fix | Shows before/after and checks, waits for approval, then implements |
+| `project-baseline` | Understand a new project or trace a feature | Investigates structure and sources; a persistent baseline is recorded only when requested |
+| `feature-plan` | Plan a feature with a wider impact | Produces a concrete Workplan proposal; does not implement |
+| `feature-apply` | Implement an approved feature plan | Makes the agreed changes and reports direct checks |
+| `bugfix-plan` | Investigate and plan a complex bug fix | Connects symptoms, cause, code changes, and regression checks |
+| `bugfix-apply` | Implement an approved bug fix | Fixes the cause and checks the affected behavior |
+| `plan-ui-with-design-system` | Add UI details to feature planning | Maps design states to existing components, tokens, and needed UI checks |
+| `implement-ui-with-design-system` | Implement approved product UI | Uses the actual design-system declarations and checks affected states |
+| `plan-design-system-component` | Plan a shared design-system component | Compares the official design source with the existing library and proposes its API and variants |
+| `author-design-system-component` | Build an approved shared component | Implements the approved API, tokens, and variants without automatically changing consumer apps |
+| `apply-workplan-feedback` | Give feedback on current work | Reuses the current work and separates corrections, extra scope, and independent tasks |
+| `complete-work` | Explicitly close the current Workplan | Checks the actual result and applies only configured completion adapters |
+| `cpm` | Commit or publish Git changes | A bare invocation commits; push and MR/PR creation require an explicit request; never auto-merges |
+| `promote-codex-rule` | Make a repeated lesson a reusable rule | Reviews the appropriate rule or skill change before applying an approved update |
+
+The [packaged skill files](plugins/codex/taskweave/skills/) and [shared references](plugins/codex/taskweave/references/) show the actual instructions. This public bundle does not include company-specific Jira, knowledge-publication, or dashboard skills. A company workflow needs its own trusted policies and adapters.
+
+## Where files live and how they connect
+
+Keep three things separate: the installed plugin, the material being worked on, and long-lived work records.
+
+```text
+GitHub: chando-park/taskweave
+|-- .agents/plugins/marketplace.json       Codex catalog
+|-- .claude-plugin/marketplace.json        Claude catalog
+`-- plugins/
+    |-- codex/taskweave/                   Codex package
+    `-- claude/taskweave/                  Claude package
+        |-- skills/                       Task procedures
+        |-- references/                   Shared and task-specific rules
+        |-- core/                         Supporting runtime files
+        `-- mcp/                          Local MCP program and dependencies
+
+Your computer
+|-- host plugin cache                     Installed copy; do not edit by hand
+|-- /example/projects/example-app/         Your code or source material
+|-- /example/work-records/example-app/     Existing records, if you connect them
+|   |-- Workplans/                        Plans and work results
+|   |-- ProductMemory/                    Reusable knowledge, if configured
+|   `-- Instructions/                     Project guidance, if configured
+|-- ~/.config/ai-workflow/settings.json    Configuration and location index
+`-- ~/.local/share/ai-workflow/            Managed state, backups, and optional records
+```
+
+This is a logical example, not a promise that installation creates every folder. You choose the project and record locations. New managed records can use the data root's `workspaces/<workspace>/projects/<project>/` structure; existing external records stay at their original location. Compatibility paths retain the `ai-workflow` name.
+
+For a complex task that needs a Workplan, a record can look like this:
+
+```text
+<workplan_root>/
+`-- YYYYMMDD-short-task-name/
+    |-- YYYYMMDD-short-task-name.md        Reason, proposed code, checks, approval
+    |-- Completion.md                     Actual implementation/result record
+    `-- Details/plan-code.md               Only when longer code detail is useful
+```
+
+A Workplan records this particular job. Instructions explain how this project should be worked on. Product Memory holds reviewed, reusable knowledge when that system is configured. They are not three copies of the same document, and completing a task does not silently publish knowledge. Simple fixes can remain entirely in the conversation.
+
+For example, an AI planning an app change reads the selected skill, follows its links to the relevant shared rules, then reads the project's guidance and directly relevant code/design sources. It uses the chosen record location only if a record is needed. It should not search unrelated old tickets to invent a current task.
+
+## MCP and external integrations
+
+MCP is the protocol through which the host calls a tool. Taskweave bundles a local MCP process with three default tools:
+
+| Tool | Purpose |
 | --- | --- |
-| `context_read` | 등록한 작업공간의 필요한 자료 읽기 |
-| `task_current` | 현재 작업을 제한된 단서로 찾기 |
-| `record_save` | 중복 요청·동시 저장 충돌을 확인하며 기록 저장 |
+| `context_read` | Read relevant material from a registered workspace or allowed reference |
+| `task_current` | Find the current task from explicit identifiers and limited context |
+| `record_save` | Save a record with duplicate-request and concurrent-write checks |
 
-실제 코드 편집·테스트·외부 서비스 호출은 AI가 호스트의 도구로 수행합니다. MCP는 문서 형식이나 승인 기록을 심사해 작업 시작을 허가하는 프로그램이 아닙니다. 실제 테스트 실패·자료 부족·사용자 권한은 별도로 존중합니다.
+These tools do not approve plans, run app tests, or call other MCP servers on their own. File-safety checks do not enforce every action the AI can take through other host tools.
 
-## 업데이트
+| Integration | Used for | What you must supply |
+| --- | --- | --- |
+| Serena | Code symbols, callers, and implementations | A working host connection and suitable project/language setup |
+| Figma | Design sources and component information | A host connection, access to the file, and the relevant frame/component |
+| Jira | Issue lookup and policy-required lifecycle updates | A host connection, issue/project context, and applicable permission |
+| Xcode or Android tools | Platform-specific compilation and tests | The project's real toolchain, targets, schemes or Gradle configuration |
 
-Codex에서는 다음 명령으로 장터 목록을 갱신한 뒤 호스트의 플러그인 관리에서 설치 버전을 확인합니다. 목록 갱신만으로 실행 중 세션의 버전이 바뀌었다고 판단하지 않습니다.
+Existing connections should be reused. Authentication happens in the host or provider's official flow, not by pasting tokens into Taskweave. Tool visibility, successful authentication, and a successful read are different checks. Platform guidance is included, but a working SDK, simulator, device, or project build is not installed or guaranteed by the plugin.
+
+## Update, remove, and troubleshoot
+
+### Update
+
+Codex:
 
 ```sh
 codex plugin marketplace upgrade taskweave-marketplace
 ```
+
+This refreshes the catalog. Check the installed version in the host's plugin manager and apply the available version there; do not assume an already running conversation has changed.
 
 Claude Code:
 
@@ -65,18 +247,37 @@ claude plugin marketplace update taskweave-marketplace
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-업데이트 뒤에는 새 대화에서 확인합니다. 작업 기록과 기존 연결은 업데이트 대상이 아닙니다.
+Start a new conversation after an update. Updating Taskweave does not mean moving or rewriting your existing records.
 
-## 데이터와 보안
+### Remove
 
-MCP는 사용자 컴퓨터에서 실행합니다. 기록은 설정한 로컬·외부 작업공간 위치에 저장합니다. 조회한 내용은 AI에게 도구 결과로 전달되므로, 사용하는 Codex·Claude와 연결 서비스의 데이터 처리 정책도 적용됩니다. 로컬 실행이라는 이유로 자료가 컴퓨터 밖으로 절대 전달되지 않는다고 보장하지 않습니다.
+To remove the plugin, use your host's plugin manager or the commands below. Keep work records outside the plugin cache.
 
-인증값을 채팅·Workplan·Product Memory에 넣지 않습니다. 공개 패키지에는 개인 작업 기록·회사 전용 스킬·제품 코드·인증 파일을 포함하지 않습니다. 기본 설정 경로는 호환을 위해 `~/.config/ai-workflow/settings.json`, 관리 데이터는 `~/.local/share/ai-workflow/`를 사용합니다. 플러그인 캐시와 장기 기록은 별도입니다.
+```sh
+codex plugin remove taskweave@taskweave-marketplace
+claude plugin uninstall taskweave@taskweave-marketplace --scope user --keep-data
+```
 
-문제는 [GitHub Issues](https://github.com/chando-park/taskweave/issues)에 남겨 주세요. 공개 이슈에 회사 자료·개인정보·토큰·비밀 로그를 붙이지 않습니다.
+Only run the command for the host you intend to change. These commands are not instructions to delete your projects, external records, or entire `.codex`/`.claude` folders. If a global instruction still links to an installed file, review that link before removing its target. Back up important records before any separate data cleanup.
 
-## 배포 정보와 사용 허락
+### Common questions
 
-현재 버전은 0.3.1입니다. 기초 커밋 `93a1f50aac3a7c40155df8976380cbc5768d8b88`에 승인 후 간단 수정·선택적 문서 규칙을 반영한 배포 패키지입니다. 다른 작업의 미커밋 변경과 원본 저장소의 전체 이력은 포함하지 않습니다. `plugins/codex/taskweave`와 `plugins/claude/taskweave`가 각 호스트의 실제 패키지입니다.
+- **I do not see the skills.** Open a new conversation, check that the plugin is enabled, and select its named skill explicitly.
+- **I see two copies.** A previous `taskweave@my-ai-toolbox` installation or direct home skill may coexist with the new marketplace package. Verify the new one before selectively disabling the old Taskweave entry; do not delete all skills.
+- **The AI asks where to save records.** Confirm a location only if this task needs records. A plain summary or small fix should not require project-wide setup just to proceed.
+- **A service is not connected.** Connect it in the host, or continue only the work that does not require it. Taskweave must report missing evidence rather than invent a successful check.
+- **Will this reduce time or tokens?** The design aims to avoid irrelevant reading and repeated work. There is no guaranteed saving; tool latency, model behavior, and the task still matter.
 
-별도의 오픈소스 라이선스는 아직 지정하지 않았습니다. 저장소 공개가 코드의 자유로운 재배포·수정 권한을 부여한다는 뜻은 아닙니다. 외부 의존성의 고지와 라이선스는 각 패키지의 `THIRD_PARTY_NOTICES.md` 및 포함된 원본 LICENSE를 따릅니다.
+## Data, limitations, and release information
+
+The MCP process runs on your computer, but material returned to the AI is also subject to your Codex/Claude and connected providers' data policies. “Local MCP” does not mean that data can never leave the computer.
+
+Do not put credentials in chats, Workplans, or Product Memory. This package excludes personal work records, company-only skills, product repositories, and authentication files. Documented safeguards and package checks are not a complete security audit.
+
+Current package version: **0.3.1**. Package/MCP tests and macOS CLI installation have been checked. The wording of the rules and a successful installation do not prove end-to-end model behavior in every new task or environment.
+
+Report problems through [GitHub Issues](https://github.com/chando-park/taskweave/issues), without private logs, personal information, or credentials.
+
+No open-source license has been selected for Taskweave itself. Public visibility does not grant an additional project license. Bundled dependencies retain their own licenses and notices: [Codex notices](plugins/codex/taskweave/THIRD_PARTY_NOTICES.md) and [Claude notices](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
+
+Maintainers generate this distribution from a separate development source. Users do not need that source checkout to install it. The 0.3.1 bundle is based on source commit `93a1f50aac3a7c40155df8976380cbc5768d8b88` plus the approved small-change approval rules; unrelated uncommitted development changes and the source repository's history are not shipped.
