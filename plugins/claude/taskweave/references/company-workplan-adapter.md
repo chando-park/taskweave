@@ -7,7 +7,7 @@
   <repository> --kind bug|feature|investigation
 ```
 
-저장소 식별을 건너뛰거나 허용 workspace 밖 경로를 사용하지 않는다. 새 변경 작업은 환경과 관계없이 반환된 `workplan_directory`에 `approval-memo-v1`을 새로 만든다.
+저장소 식별·허용 workspace 경계는 유지한다. resolver는 대상·기록 위치·정책을 알려 줄 뿐 Workplan/Jira 생성 지시가 아니다. 간단한 수정은 `/taskweave:code-change`에서 대화로 코드·검증을 제시하고 승인받으며 문서는 실제 기록 의무·사용자 요청·인계 필요가 있을 때만 반환된 관리 위치에 작성한다. 복잡한 변경은 승인용 `approval-memo-v1`, 정식 기록이 필수인 간단한 수정은 direct fix를 사용한다. 질문·읽기 전용 조사는 기록을 만들지 않는다.
 
 ## Personal System
 

@@ -7,6 +7,8 @@ description: 복잡한 코드 기능 변경의 원천·현재/제안 코드·직
 
 경로·권한은 [실행 계약](../../references/execution-contract.md)과 [위험 분류](../../references/risk-routing.md)를 따른다. 보육일지·요약·대본 등 글쓰기는 [글쓰기 작업](../../references/writing-work.md)으로 연결하며 코드 기능 계획으로 만들지 않는다. 간단하고 명확한 저위험 코드 수정은 $taskweave:code-change, 현재 Workplan 구현 피드백은 $taskweave:apply-workplan-feedback으로 이어간다. 복잡한 변경·중요한 선택·넓은 영향·고위험 또는 회사/저장소 의무 조건이면 [Workplan 양식](../../references/workplan-layout.md)을 사용한다. 단순한 방향 질문은 읽기 전용으로 답하며 구현하지 않는다.
 
+code-change로 연결해도 승인을 생략하지 않는다. 작은 수정은 대화에 변경 전후 코드·검증 방법을 먼저 보여 주고 승인받으며, 문서는 필요할 때만 사용한다.
+
 ## 시작과 조사
 
 1. 현재 프로젝트·지침·알려진 정책에서 repository·기록 위치를 확인한다. 부족할 때만 사용 가능한 resolver로 보완하며 회사 Project Agent가 있으면 코드·티켓보다 먼저 읽는다.

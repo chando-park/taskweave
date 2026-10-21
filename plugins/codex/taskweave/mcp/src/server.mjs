@@ -103,7 +103,7 @@ function definitions({ store, bridge, verification, diagram, integrations, recor
 
 export function createServer({ store = new SettingsStore(), bridge = new RuntimeBridge({ store }), verification, diagram, integrations = new IntegrationService({ store }), records = new RecordService({ store }), legacyTools = false } = {}) {
   if (bridge instanceof RuntimeBridge && verification) bridge.verification = verification;
-  const server = new Server({ name: 'taskweave', version: '0.3.0' }, { capabilities: { tools: {} } });
+  const server = new Server({ name: 'taskweave', version: '0.3.1' }, { capabilities: { tools: {} } });
   const tools = definitions({ store, bridge, verification, diagram, integrations, records, legacyTools });
   server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: tools.map(({ name, description, schema }) => ({ name, description, inputSchema: z.toJSONSchema(schema) })) }));
   server.setRequestHandler(CallToolRequestSchema, async ({ params }) => {

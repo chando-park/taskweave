@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "host": "codex",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "personalSkills": [
     "cpm",
     "code-change",
@@ -24,7 +24,7 @@
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
-      "sha256": "2ee22d6e9b63d1c1bdad7197085eccbb16a4aea2cc5b2c6aa5edd5b7b7988858"
+      "sha256": "713e89227463a55ae0f5fac85281e137ed0384c34bb877288806d5f408170b1c"
     },
     {
       "path": ".mcp.json",
@@ -32,7 +32,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "d3692d479b693a0c636fce55e96dd2b4051f47f151f7567e4eb95fb55ea3deb5"
+      "sha256": "98699d301ac7425b9b950843baa979f4eac21c0f477bb3894f6682ce631579e4"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -40,7 +40,7 @@
     },
     {
       "path": "core/AGENTS.md",
-      "sha256": "d3692d479b693a0c636fce55e96dd2b4051f47f151f7567e4eb95fb55ea3deb5"
+      "sha256": "98699d301ac7425b9b950843baa979f4eac21c0f477bb3894f6682ce631579e4"
     },
     {
       "path": "core/agents/general-terra.toml",
@@ -60,7 +60,7 @@
     },
     {
       "path": "core/references/acceptance-feedback-loop.md",
-      "sha256": "4d6c8411204463d8f92e9d692ee8908265e0bf4f8f4c40988032b238a0fbbaa1"
+      "sha256": "586af22a0eb0e5d09f379793019ea37a8be4552efc52be8a45704330e24ba9f1"
     },
     {
       "path": "core/references/code-comment-contract.md",
@@ -68,7 +68,7 @@
     },
     {
       "path": "core/references/company-workplan-adapter.md",
-      "sha256": "6b81dc1cea44a501253abb08a4e22235e7d6c55d7ab39eef0639244076333594"
+      "sha256": "5657d421c42d5f83cea6ca15f57c82ad5adac044f34c9df0b4cb3629301ea0cf"
     },
     {
       "path": "core/references/context-pack.md",
@@ -84,7 +84,7 @@
     },
     {
       "path": "core/references/execution-contract.md",
-      "sha256": "8aa6ecbdde4434cb22382c8df84c6948ca9e9bd4dcddebf14028153962908ec9"
+      "sha256": "cd86c3e01a579fc76e467f1efdaf80878dd1ec517e1b43108df9b17a2cc48950"
     },
     {
       "path": "core/references/git-operation-contract.md",
@@ -124,7 +124,7 @@
     },
     {
       "path": "core/references/risk-routing.md",
-      "sha256": "ec357a8e0e26ae098e85d8c3c488feaffc491136fc7a70b7fa2d1b68d359f3be"
+      "sha256": "2f8d02631b433bbaa624bd14269c72aa5c6d3e25eb857b00aa3ebaeed2d94f4b"
     },
     {
       "path": "core/references/rule-enforcement.md",
@@ -148,11 +148,11 @@
     },
     {
       "path": "core/references/task-workflow.md",
-      "sha256": "29bd255addb2cbd537d7c07cf9b76d102119dd775de3d379c21b46d7ce252b52"
+      "sha256": "883f1cb979873b0e5cdf8ee868469a20ff621c3d3f7f9e1698de94af147211ce"
     },
     {
       "path": "core/references/ticket-lifecycle.md",
-      "sha256": "eefcfa9a9665e84843c8d9c71bc1cb659b8c38356b6b4f1e6dc5ec3a1519626c"
+      "sha256": "0bd08f361581c2fb5ea110a41284f71de8f7668f059b0f70fe94f02439bc4d62"
     },
     {
       "path": "core/references/ui-source-coverage.md",
@@ -172,7 +172,7 @@
     },
     {
       "path": "core/references/verification-evidence.md",
-      "sha256": "bfb4661f64023d612370d626871f6af6f6ff538d4c6dddad62de5f9af7983dfb"
+      "sha256": "9da1bc1d45e7dc9c028d2f204cc165591ed3f8cacf0f8b7e9b96cf95f8aa5ec0"
     },
     {
       "path": "core/references/verification-planning.md",
@@ -180,7 +180,7 @@
     },
     {
       "path": "core/references/workplan-layout.md",
-      "sha256": "0739ea38f84e0a467049f5577c44d5a258072e1a6ed9cffb14a01679b25817a2"
+      "sha256": "8a6cf15ca2fa94c259a6739e2032a04f75868f0abaebf738e55eaf1508d0d937"
     },
     {
       "path": "core/references/workplan-metadata.md",
@@ -344,7 +344,7 @@
     },
     {
       "path": "core/skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "d0f9cc0e43165558ce1f108c26db9ee7823205eef5e41975a32ce95bae4d4745"
+      "sha256": "53b8f1fd82cc1d17cc56a63e63a93cf7a7198110bb3366f4ac6a0513bfa66399"
     },
     {
       "path": "core/skills/apply-workplan-feedback/agents/openai.yaml",
@@ -376,7 +376,7 @@
     },
     {
       "path": "core/skills/bugfix-plan/SKILL.md",
-      "sha256": "fd48f4c48500007cbd2571d728f647ad7d38a6d188955af2b3339ec50d8fd61e"
+      "sha256": "7e4dc1d74379aab730c118da15bd67c5169bc6360802d7c3dd7e3d5680ca6478"
     },
     {
       "path": "core/skills/bugfix-plan/agents/openai.yaml",
@@ -388,7 +388,7 @@
     },
     {
       "path": "core/skills/code-change/SKILL.md",
-      "sha256": "1fa6f16983565e7f5b00ec5e28beb92ce60231b4c040a3ed4f5181b21996495a"
+      "sha256": "e12c8a31d00e47a8dbf51bb60a67496d2487ee1c6676f9fbda99fce4cb248aa1"
     },
     {
       "path": "core/skills/code-change/agents/openai.yaml",
@@ -396,7 +396,7 @@
     },
     {
       "path": "core/skills/complete-work/SKILL.md",
-      "sha256": "9b7c4320c77a092f0d3851ce155c9d18325ddc68e1cc6089e93c49b112f06591"
+      "sha256": "43d2305cf921dcccc4415517a6078be748692049153fd75fcf2ca0cc5e1c6a5e"
     },
     {
       "path": "core/skills/complete-work/agents/openai.yaml",
@@ -460,7 +460,7 @@
     },
     {
       "path": "core/skills/feature-plan/SKILL.md",
-      "sha256": "a2bfd5d9084e6f1977126c7c73f9fd968f8609f75c8163328d3668df934642f4"
+      "sha256": "3a849057afda7daaea232de18ada7ae03fb9e1a15298d4e44b4dc28de79d802a"
     },
     {
       "path": "core/skills/feature-plan/agents/openai.yaml",
@@ -15148,11 +15148,11 @@
     },
     {
       "path": "mcp/package-lock.json",
-      "sha256": "1e8d054972d00f056fac3a27575124275bb0be828f1abe0bc149a5f3dd9af23b"
+      "sha256": "3250b6653037a404211cf4ab04eb0cc03fee2b1f50c8d16753c6daedbee16912"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "ab1d1a23842c366910dec747696b70424ab4d956a79363eb46b60448e1ad4ca3"
+      "sha256": "29134b80c371aa614fca78442f7fdf555c9da7d7113d38212de7aba627b7bbb7"
     },
     {
       "path": "mcp/src/adapters/android.mjs",
@@ -15184,7 +15184,7 @@
     },
     {
       "path": "mcp/src/server.mjs",
-      "sha256": "752a4a3a7f9d748555edbb6175d2d6dc8a186c6ec5bac7baf4b715308c5a04a8"
+      "sha256": "3f14f9c9d0a85085fe7b0afb211a9632e643f809fa2388f5bcfe27e4eb2a034b"
     },
     {
       "path": "mcp/src/settings.mjs",
@@ -15204,11 +15204,11 @@
     },
     {
       "path": "plugin.json",
-      "sha256": "afc081a3699a4981cf51a620a2de453d45dd096343b8650bbeec78db6fdb5255"
+      "sha256": "f32701d28af7fdf338692b4e4aa2497f450223f3629fccca479963722a2090ea"
     },
     {
       "path": "references/acceptance-feedback-loop.md",
-      "sha256": "4d6c8411204463d8f92e9d692ee8908265e0bf4f8f4c40988032b238a0fbbaa1"
+      "sha256": "586af22a0eb0e5d09f379793019ea37a8be4552efc52be8a45704330e24ba9f1"
     },
     {
       "path": "references/code-comment-contract.md",
@@ -15216,7 +15216,7 @@
     },
     {
       "path": "references/company-workplan-adapter.md",
-      "sha256": "6b81dc1cea44a501253abb08a4e22235e7d6c55d7ab39eef0639244076333594"
+      "sha256": "5657d421c42d5f83cea6ca15f57c82ad5adac044f34c9df0b4cb3629301ea0cf"
     },
     {
       "path": "references/context-pack.md",
@@ -15232,7 +15232,7 @@
     },
     {
       "path": "references/execution-contract.md",
-      "sha256": "8aa6ecbdde4434cb22382c8df84c6948ca9e9bd4dcddebf14028153962908ec9"
+      "sha256": "cd86c3e01a579fc76e467f1efdaf80878dd1ec517e1b43108df9b17a2cc48950"
     },
     {
       "path": "references/git-operation-contract.md",
@@ -15272,7 +15272,7 @@
     },
     {
       "path": "references/risk-routing.md",
-      "sha256": "ec357a8e0e26ae098e85d8c3c488feaffc491136fc7a70b7fa2d1b68d359f3be"
+      "sha256": "2f8d02631b433bbaa624bd14269c72aa5c6d3e25eb857b00aa3ebaeed2d94f4b"
     },
     {
       "path": "references/rule-enforcement.md",
@@ -15296,11 +15296,11 @@
     },
     {
       "path": "references/task-workflow.md",
-      "sha256": "29bd255addb2cbd537d7c07cf9b76d102119dd775de3d379c21b46d7ce252b52"
+      "sha256": "883f1cb979873b0e5cdf8ee868469a20ff621c3d3f7f9e1698de94af147211ce"
     },
     {
       "path": "references/ticket-lifecycle.md",
-      "sha256": "eefcfa9a9665e84843c8d9c71bc1cb659b8c38356b6b4f1e6dc5ec3a1519626c"
+      "sha256": "0bd08f361581c2fb5ea110a41284f71de8f7668f059b0f70fe94f02439bc4d62"
     },
     {
       "path": "references/ui-source-coverage.md",
@@ -15320,7 +15320,7 @@
     },
     {
       "path": "references/verification-evidence.md",
-      "sha256": "bfb4661f64023d612370d626871f6af6f6ff538d4c6dddad62de5f9af7983dfb"
+      "sha256": "9da1bc1d45e7dc9c028d2f204cc165591ed3f8cacf0f8b7e9b96cf95f8aa5ec0"
     },
     {
       "path": "references/verification-planning.md",
@@ -15328,7 +15328,7 @@
     },
     {
       "path": "references/workplan-layout.md",
-      "sha256": "0739ea38f84e0a467049f5577c44d5a258072e1a6ed9cffb14a01679b25817a2"
+      "sha256": "8a6cf15ca2fa94c259a6739e2032a04f75868f0abaebf738e55eaf1508d0d937"
     },
     {
       "path": "references/workplan-metadata.md",
@@ -15340,7 +15340,7 @@
     },
     {
       "path": "skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "d0f9cc0e43165558ce1f108c26db9ee7823205eef5e41975a32ce95bae4d4745"
+      "sha256": "53b8f1fd82cc1d17cc56a63e63a93cf7a7198110bb3366f4ac6a0513bfa66399"
     },
     {
       "path": "skills/apply-workplan-feedback/agents/openai.yaml",
@@ -15372,7 +15372,7 @@
     },
     {
       "path": "skills/bugfix-plan/SKILL.md",
-      "sha256": "fd48f4c48500007cbd2571d728f647ad7d38a6d188955af2b3339ec50d8fd61e"
+      "sha256": "7e4dc1d74379aab730c118da15bd67c5169bc6360802d7c3dd7e3d5680ca6478"
     },
     {
       "path": "skills/bugfix-plan/agents/openai.yaml",
@@ -15384,7 +15384,7 @@
     },
     {
       "path": "skills/code-change/SKILL.md",
-      "sha256": "1fa6f16983565e7f5b00ec5e28beb92ce60231b4c040a3ed4f5181b21996495a"
+      "sha256": "e12c8a31d00e47a8dbf51bb60a67496d2487ee1c6676f9fbda99fce4cb248aa1"
     },
     {
       "path": "skills/code-change/agents/openai.yaml",
@@ -15392,7 +15392,7 @@
     },
     {
       "path": "skills/complete-work/SKILL.md",
-      "sha256": "9b7c4320c77a092f0d3851ce155c9d18325ddc68e1cc6089e93c49b112f06591"
+      "sha256": "43d2305cf921dcccc4415517a6078be748692049153fd75fcf2ca0cc5e1c6a5e"
     },
     {
       "path": "skills/complete-work/agents/openai.yaml",
@@ -15456,7 +15456,7 @@
     },
     {
       "path": "skills/feature-plan/SKILL.md",
-      "sha256": "a2bfd5d9084e6f1977126c7c73f9fd968f8609f75c8163328d3668df934642f4"
+      "sha256": "3a849057afda7daaea232de18ada7ae03fb9e1a15298d4e44b4dc28de79d802a"
     },
     {
       "path": "skills/feature-plan/agents/openai.yaml",

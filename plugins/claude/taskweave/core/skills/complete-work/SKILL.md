@@ -10,7 +10,7 @@ description: 사용자가 완료를 요청한 현재 코드·문서 작업의 �
 ## 경로별 문서 선택
 
 - Workplan 없는 요약·대본/일반 문서: [공통 검토와 보고](../../references/verification-evidence.md#공통-검토와-보고)와 필요한 [글쓰기 작업](../../references/writing-work.md)만 읽는다. 원문·의도·분량 등 실제 기준과 수정본을 확인하고 대화로 결과·한계를 설명한다. Git/resolver·Serena·앱 테스트·커버리지·회사 adapter·자동 지식 평가를 요구하지 않는다.
-- Workplan 없는 코드: [실행 계약](../../references/execution-contract.md)의 대화 종료 기준만 적용한다. 실제 수행 권한·범위·diff·마지막 편집 이후 직접 검증을 대조하고 기존 짧은 작업 문서 하나의 결과를 확인해 설명한다. 회사 adapter·사후 Workplan·Completion·hash 파일을 만들지 않는다.
+- Workplan 없는 코드: [실행 계약](../../references/execution-contract.md)의 대화 종료 기준을 적용한다. 대화의 승인안·실제 diff·마지막 편집 이후 직접 검증을 대조하고 필요한 기존 문서가 있을 때만 결과를 확인한다. 문서가 없는 작업에 회사 adapter·사후 Workplan·Completion·hash 파일을 만들지 않는다.
 - 개인 Workplan: [Workplan 양식](../../references/workplan-layout.md)과 [검증 근거](../../references/verification-evidence.md)로 현재 결과·승인·검증을 확인한다.
 - 회사 Workplan: 위 확인 뒤 [지식 수명주기](../../references/knowledge-lifecycle.md), [회사 adapter](../../references/company-workplan-adapter.md), [티켓 절차](../../references/ticket-lifecycle.md)를 읽고 resolver가 반환한 정확한 현재 작업의 정책·adapter만 실행한다.
 - 누락된 코드 설명·자료 또는 인계 문제가 있을 때: [구현 인계](../../references/implementation-handoff.md).
@@ -21,7 +21,7 @@ description: 사용자가 완료를 요청한 현재 코드·문서 작업의 �
 
 approval-memo-v1은 기존 Completion.md의 실제 diff·검증 identity가 같으면 보존하고 변경된 사실만 호스트 파일 도구 또는 `record_save`로 기록한다. 사용자 완료 요청 내용·시각을 한 번 남긴다. 결과 확인과 사용자 최종 완료는 다른 단계다. 기록 제목·필드·설명 부족은 경고하고 마지막에 보완하며 이전 MCP/CLI의 result·completion validate 성공을 새 종료 허가로 만들지 않는다. 실제 검증 실패·필수 원문 부족·무권한·저장 충돌은 형식 문제와 구분한다.
 
-코드 테스트가 해당하는 완료 보고 전에는 [테스트·커버리지 기록](../../references/verification-evidence.md#테스트커버리지-기록)을 읽고 현재 결과를 사용한다. Workplan 검증 영역의 테스트별 결과·집계·커버리지를 확인하고 실제 새 실행 결과만 같은 테스트·대상·설정의 행에 갱신한다. code-change는 기존 짧은 작업 문서에 갱신하며 그 밖의 Workplan 없는 일반 대화 작업은 대화에 기록한다. 응답에는 요약과 기존 기록 위치, 미측정 이유를 설명한다. 별도 테스트 보고서·중복 상세 표·보고 목적의 재실행을 추가하지 않으며 기록 형식·항목 누락·미측정만으로 엄격한 문서 검사나 새 차단 조건을 만들지 않는다. 비코드에는 실제 수행한 원문/표현/형식 검토와 한계를 보고하고 테스트·커버리지 행을 강제하지 않는다.
+코드 테스트가 해당하는 완료 보고 전에는 [테스트·커버리지 기록](../../references/verification-evidence.md#테스트커버리지-기록)으로 현재 결과를 확인한다. 실제 테스트별 결과·집계·커버리지 또는 미측정 이유를 응답에 설명하고 기존 작업 문서가 있을 때만 해당 검증 영역을 갱신한다. 별도 보고서·중복 표·보고용 재실행·형식 검사를 추가하지 않는다. 비코드에는 실제 원문/표현/형식 검토와 한계를 보고하고 테스트·커버리지 행을 강제하지 않는다.
 
 ## 회사 지식·티켓 종료
 

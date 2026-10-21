@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "host": "claude",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "personalSkills": [
     "cpm",
     "code-change",
@@ -24,7 +24,7 @@
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
-      "sha256": "f572eec8cb5c302d4a91ade12313c004bba9b1947d42b0caabd0a01069ade7b3"
+      "sha256": "fd16f4600e424d0e34be79dd363336f2f66689ad647ee1f6254501df2deb19ca"
     },
     {
       "path": ".mcp.json",
@@ -32,7 +32,7 @@
     },
     {
       "path": "CLAUDE.md",
-      "sha256": "dd9cacb922d566e1fbdd704102f2e809d3e6e228081ea007403c2caa60a60273"
+      "sha256": "0dfcf7bac49bb9305dbb6bea1f724b815de15914281541c85645a6f19830f342"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -40,11 +40,11 @@
     },
     {
       "path": "core/AGENTS.md",
-      "sha256": "e25a74802638c84f4b98c62c37fbd4cbec5fe135037dd30ca5bc6857d32d790d"
+      "sha256": "c78386fda07313f28f0a84f38c9ea320f95210426bae286223d7fdbb0c41f9bb"
     },
     {
       "path": "core/CLAUDE.md",
-      "sha256": "dd9cacb922d566e1fbdd704102f2e809d3e6e228081ea007403c2caa60a60273"
+      "sha256": "0dfcf7bac49bb9305dbb6bea1f724b815de15914281541c85645a6f19830f342"
     },
     {
       "path": "core/agents/general-terra.toml",
@@ -64,7 +64,7 @@
     },
     {
       "path": "core/references/acceptance-feedback-loop.md",
-      "sha256": "1fe7f6af6f60eb2c95b84a0df645e9b35929004ef197cd1b6a307f8540d2f690"
+      "sha256": "73bfc314895e2b2ec1eb6b3f04e01d29e7c62204c2b5e37feeec23d94aa25cce"
     },
     {
       "path": "core/references/code-comment-contract.md",
@@ -72,7 +72,7 @@
     },
     {
       "path": "core/references/company-workplan-adapter.md",
-      "sha256": "753e5508e78205a5ea25ac704d6234a2291fc378f5d478485fdc3cb37167b9fd"
+      "sha256": "a7133c32f36b31ee7c8ca4e4349d5a51800036ca61dfe92edc525727cc13e91f"
     },
     {
       "path": "core/references/context-pack.md",
@@ -88,7 +88,7 @@
     },
     {
       "path": "core/references/execution-contract.md",
-      "sha256": "c3716b1fbdf20c20ad73f18432010f5c0168394f058df12b9cdf56b632cae2e0"
+      "sha256": "d89f0033c8540136d52bac7844079cb4e2b6b28f0ca9af79cecbbf125b321e82"
     },
     {
       "path": "core/references/git-operation-contract.md",
@@ -128,7 +128,7 @@
     },
     {
       "path": "core/references/risk-routing.md",
-      "sha256": "dde4d99415bffb1140c3e24e0e47ac19eed10f945bbb606bc81be744d76540d3"
+      "sha256": "2c24dd8ff9f9b5c4ada9ed5f63b81e1f024ed2815a27173c92419707ac34bd8b"
     },
     {
       "path": "core/references/rule-enforcement.md",
@@ -152,11 +152,11 @@
     },
     {
       "path": "core/references/task-workflow.md",
-      "sha256": "b1ce79bcefb3fab55d5acfe08c40a7b16575332ca0e1cd386312378ba644575b"
+      "sha256": "c4e1e481c4d10e43719968b01a8c63f357dba8fb85b9d2fba7c67f054e75881d"
     },
     {
       "path": "core/references/ticket-lifecycle.md",
-      "sha256": "c70200c494e1083bdd7959590b7809b3614ab93fad7c48e0333915af20b65def"
+      "sha256": "bc6eb202eaff22f16583632c56cc36d213872e8287e548009a7f507df3591d91"
     },
     {
       "path": "core/references/ui-source-coverage.md",
@@ -176,7 +176,7 @@
     },
     {
       "path": "core/references/verification-evidence.md",
-      "sha256": "bfb4661f64023d612370d626871f6af6f6ff538d4c6dddad62de5f9af7983dfb"
+      "sha256": "9da1bc1d45e7dc9c028d2f204cc165591ed3f8cacf0f8b7e9b96cf95f8aa5ec0"
     },
     {
       "path": "core/references/verification-planning.md",
@@ -184,7 +184,7 @@
     },
     {
       "path": "core/references/workplan-layout.md",
-      "sha256": "8407f4047e5f20ddb83cd9b9e9cbf766e9c86a8acec35153b48303800bd80ab6"
+      "sha256": "bb724834ccc4c3974d1080d43a60e6b03bbde1f31a029b453c81cc70bd6c0fb2"
     },
     {
       "path": "core/references/workplan-metadata.md",
@@ -348,7 +348,7 @@
     },
     {
       "path": "core/skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "81fb383409737d6ab97e8b3f160947dffe8b787f0c7a160b4ce15e920c72accb"
+      "sha256": "8a7d4810fd7bbccfc91fe345c36dc2310744e7b060b53718529e620780f88cc1"
     },
     {
       "path": "core/skills/apply-workplan-feedback/agents/openai.yaml",
@@ -380,7 +380,7 @@
     },
     {
       "path": "core/skills/bugfix-plan/SKILL.md",
-      "sha256": "6a1e32ce1fcc08b6e0311e27d0beac9b4220d8518efd63bded3b40beec1a6a56"
+      "sha256": "b2b280b023de3c5a733e72da9f93cc701a37f3aecdbac65e0cee65d8a78faef6"
     },
     {
       "path": "core/skills/bugfix-plan/agents/openai.yaml",
@@ -392,7 +392,7 @@
     },
     {
       "path": "core/skills/code-change/SKILL.md",
-      "sha256": "51ddf760eb97cebbebf3563b9498edd16d9dae36b0e2808cd4bbc267a4acdb0d"
+      "sha256": "cfdf4dfe0560c10d5245562628d9809be37a5bf1da931bdf7d9f9f02d73ac7ef"
     },
     {
       "path": "core/skills/code-change/agents/openai.yaml",
@@ -400,7 +400,7 @@
     },
     {
       "path": "core/skills/complete-work/SKILL.md",
-      "sha256": "9b7c4320c77a092f0d3851ce155c9d18325ddc68e1cc6089e93c49b112f06591"
+      "sha256": "43d2305cf921dcccc4415517a6078be748692049153fd75fcf2ca0cc5e1c6a5e"
     },
     {
       "path": "core/skills/complete-work/agents/openai.yaml",
@@ -464,7 +464,7 @@
     },
     {
       "path": "core/skills/feature-plan/SKILL.md",
-      "sha256": "7369b01001939411b842b768248e2745bb7b1bcd5c0c14220b6b5c108a4eaab4"
+      "sha256": "0d39002c9e9ab06acf1cefdce8b78002c3ae285b1d0888785cd08e0400ac08f1"
     },
     {
       "path": "core/skills/feature-plan/agents/openai.yaml",
@@ -15152,11 +15152,11 @@
     },
     {
       "path": "mcp/package-lock.json",
-      "sha256": "1e8d054972d00f056fac3a27575124275bb0be828f1abe0bc149a5f3dd9af23b"
+      "sha256": "3250b6653037a404211cf4ab04eb0cc03fee2b1f50c8d16753c6daedbee16912"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "ab1d1a23842c366910dec747696b70424ab4d956a79363eb46b60448e1ad4ca3"
+      "sha256": "29134b80c371aa614fca78442f7fdf555c9da7d7113d38212de7aba627b7bbb7"
     },
     {
       "path": "mcp/src/adapters/android.mjs",
@@ -15188,7 +15188,7 @@
     },
     {
       "path": "mcp/src/server.mjs",
-      "sha256": "752a4a3a7f9d748555edbb6175d2d6dc8a186c6ec5bac7baf4b715308c5a04a8"
+      "sha256": "3f14f9c9d0a85085fe7b0afb211a9632e643f809fa2388f5bcfe27e4eb2a034b"
     },
     {
       "path": "mcp/src/settings.mjs",
@@ -15204,7 +15204,7 @@
     },
     {
       "path": "references/acceptance-feedback-loop.md",
-      "sha256": "1fe7f6af6f60eb2c95b84a0df645e9b35929004ef197cd1b6a307f8540d2f690"
+      "sha256": "73bfc314895e2b2ec1eb6b3f04e01d29e7c62204c2b5e37feeec23d94aa25cce"
     },
     {
       "path": "references/code-comment-contract.md",
@@ -15212,7 +15212,7 @@
     },
     {
       "path": "references/company-workplan-adapter.md",
-      "sha256": "753e5508e78205a5ea25ac704d6234a2291fc378f5d478485fdc3cb37167b9fd"
+      "sha256": "a7133c32f36b31ee7c8ca4e4349d5a51800036ca61dfe92edc525727cc13e91f"
     },
     {
       "path": "references/context-pack.md",
@@ -15228,7 +15228,7 @@
     },
     {
       "path": "references/execution-contract.md",
-      "sha256": "c3716b1fbdf20c20ad73f18432010f5c0168394f058df12b9cdf56b632cae2e0"
+      "sha256": "d89f0033c8540136d52bac7844079cb4e2b6b28f0ca9af79cecbbf125b321e82"
     },
     {
       "path": "references/git-operation-contract.md",
@@ -15268,7 +15268,7 @@
     },
     {
       "path": "references/risk-routing.md",
-      "sha256": "dde4d99415bffb1140c3e24e0e47ac19eed10f945bbb606bc81be744d76540d3"
+      "sha256": "2c24dd8ff9f9b5c4ada9ed5f63b81e1f024ed2815a27173c92419707ac34bd8b"
     },
     {
       "path": "references/rule-enforcement.md",
@@ -15292,11 +15292,11 @@
     },
     {
       "path": "references/task-workflow.md",
-      "sha256": "b1ce79bcefb3fab55d5acfe08c40a7b16575332ca0e1cd386312378ba644575b"
+      "sha256": "c4e1e481c4d10e43719968b01a8c63f357dba8fb85b9d2fba7c67f054e75881d"
     },
     {
       "path": "references/ticket-lifecycle.md",
-      "sha256": "c70200c494e1083bdd7959590b7809b3614ab93fad7c48e0333915af20b65def"
+      "sha256": "bc6eb202eaff22f16583632c56cc36d213872e8287e548009a7f507df3591d91"
     },
     {
       "path": "references/ui-source-coverage.md",
@@ -15316,7 +15316,7 @@
     },
     {
       "path": "references/verification-evidence.md",
-      "sha256": "bfb4661f64023d612370d626871f6af6f6ff538d4c6dddad62de5f9af7983dfb"
+      "sha256": "9da1bc1d45e7dc9c028d2f204cc165591ed3f8cacf0f8b7e9b96cf95f8aa5ec0"
     },
     {
       "path": "references/verification-planning.md",
@@ -15324,7 +15324,7 @@
     },
     {
       "path": "references/workplan-layout.md",
-      "sha256": "8407f4047e5f20ddb83cd9b9e9cbf766e9c86a8acec35153b48303800bd80ab6"
+      "sha256": "bb724834ccc4c3974d1080d43a60e6b03bbde1f31a029b453c81cc70bd6c0fb2"
     },
     {
       "path": "references/workplan-metadata.md",
@@ -15336,7 +15336,7 @@
     },
     {
       "path": "skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "81fb383409737d6ab97e8b3f160947dffe8b787f0c7a160b4ce15e920c72accb"
+      "sha256": "8a7d4810fd7bbccfc91fe345c36dc2310744e7b060b53718529e620780f88cc1"
     },
     {
       "path": "skills/apply-workplan-feedback/agents/openai.yaml",
@@ -15368,7 +15368,7 @@
     },
     {
       "path": "skills/bugfix-plan/SKILL.md",
-      "sha256": "6a1e32ce1fcc08b6e0311e27d0beac9b4220d8518efd63bded3b40beec1a6a56"
+      "sha256": "b2b280b023de3c5a733e72da9f93cc701a37f3aecdbac65e0cee65d8a78faef6"
     },
     {
       "path": "skills/bugfix-plan/agents/openai.yaml",
@@ -15380,7 +15380,7 @@
     },
     {
       "path": "skills/code-change/SKILL.md",
-      "sha256": "51ddf760eb97cebbebf3563b9498edd16d9dae36b0e2808cd4bbc267a4acdb0d"
+      "sha256": "cfdf4dfe0560c10d5245562628d9809be37a5bf1da931bdf7d9f9f02d73ac7ef"
     },
     {
       "path": "skills/code-change/agents/openai.yaml",
@@ -15388,7 +15388,7 @@
     },
     {
       "path": "skills/complete-work/SKILL.md",
-      "sha256": "9b7c4320c77a092f0d3851ce155c9d18325ddc68e1cc6089e93c49b112f06591"
+      "sha256": "43d2305cf921dcccc4415517a6078be748692049153fd75fcf2ca0cc5e1c6a5e"
     },
     {
       "path": "skills/complete-work/agents/openai.yaml",
@@ -15452,7 +15452,7 @@
     },
     {
       "path": "skills/feature-plan/SKILL.md",
-      "sha256": "7369b01001939411b842b768248e2745bb7b1bcd5c0c14220b6b5c108a4eaab4"
+      "sha256": "0d39002c9e9ab06acf1cefdce8b78002c3ae285b1d0888785cd08e0400ac08f1"
     },
     {
       "path": "skills/feature-plan/agents/openai.yaml",
