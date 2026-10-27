@@ -1,39 +1,114 @@
-# Taskweave
+# CDPower
 
 **English** | [한국어](README.ko.md)
 
-Taskweave is a workflow plugin for Codex and Claude Code. It helps you review what the AI intends to change before it edits your files, then follow the work through implementation, verification, and feedback.
+**A Codex and Claude Code plugin for reviewing changes before the AI edits files, then following the work through checks, feedback, and acceptance.**
 
-For code and configuration changes—even small ones—the AI is instructed to show the current and proposed code and explain the verification method, then wait for your approval. Small tasks normally stay in the conversation. A Workplan is used when the change is complex, your project requires a record, or you ask for one.
+The same workflow supports code changes, research, summaries, and scripts, with sources and checks chosen for the task. Small code changes stay in the conversation: review the proposal, approve it, and inspect the result. Complex changes use a Workplan, a document describing the proposed work.
 
-This repository is a **GitHub-hosted plugin marketplace**. Add its address once, then install Taskweave through your host. It is not an entry in the default OpenAI or Anthropic directory. No separate Taskweave server or ZIP download is needed; its MCP process runs locally.
+This README describes the **CDPower 0.3.8** package, the new display name for Taskweave. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
 
-## What changed in 0.3.6
+[Install and set up](#install-and-set-up) · [Task flow](#how-a-task-moves-through-the-system) · [Examples](#try-it-requests-and-expected-responses) · [Viewer](#read-workplans-in-the-local-viewer) · [Record locations](#where-files-live-and-how-they-connect) · [Update](#update-remove-and-troubleshoot)
 
-Codex and Claude receive packages built from the same shared rules. This release includes:
+The install ID `taskweave`, skill prefixes `$taskweave:` and `/taskweave:`, marketplace names, and GitHub URL stay unchanged so existing installations can update. You do not need to move your code or records. The UI and installation descriptions use **CDPower**.
 
-- Concrete code and responsibility decisions before approval. If implementation requires a new design outside that agreement, the AI must explain it and ask before proceeding.
-- Explanations of all added or changed types, functions, branches, and call flows, with test lists, actual results, and measured coverage—or an explicit “not measured.” Complex changes can link a code-flow visualization to the real code and tests.
-- Plain-language progress updates: what was checked, what went wrong, what happens next, and how that affects the code or records.
-- Reuse of the existing ticket key you designate, including keys outside an implementation project's usual prefix. Existing tickets and document names are not automatically renamed.
-- Shared project records for both hosts and a read-only local Workplan viewer that starts when the Taskweave MCP starts.
+## What changed in 0.3.8
 
-These are instructions and supporting tools, not a guarantee that every model response follows every rule. Company-specific adapters and credentials remain separate.
+- The home page, brand page, favicon, and downloadable logo use the CDPower battery-and-lightning symbol. It is branding, not a battery reading or completion percentage.
+- A dedicated uninstall skill removes the selected plugin and its owned instruction links together. The shared viewer stays running while another installation needs it; only the last removal stops the verified owned viewer.
+- Code, records, settings, and Serena/Figma/Jira connections are preserved. Modified instructions and processes that cannot be identified are left alone.
 
-## What Taskweave helps you do
+## What CDPower helps you do
 
 - Review a concrete change instead of approving a vague implementation summary.
 - Connect a task to the relevant project rules and sources without reading every document for every request.
 - Continue feedback from the current implementation and record, rather than restarting the investigation.
 - Separate compilation, behavior tests, visual checks, and unverified work in the result.
 
-Code work, research, summaries, and scripts share a common process, but not the same evidence. A text summary is checked against its source; an app change needs the relevant code or UI checks. Taskweave does not turn every writing request into a software project.
+Code work, research, summaries, and scripts share a common process, but not the same evidence. A text summary is checked against its source; an app change needs the relevant code or UI checks. CDPower does not turn every writing request into a software project.
 
-These are instructions for the AI, not a guarantee that a model will always follow them. Taskweave does not replace human review or the host's permissions.
+The common sequence is: request → relevant sources → proposed changes → approval → work and checks → explanation → feedback and acceptance. It does not require a document, Jira ticket, or app test for every task.
+
+## Install and set up
+
+### Requirements
+
+Have Node.js 22 or newer, Ruby, Git, and the CLI for the host you intend to use. Sign in to that host normally. The plugin includes its MCP dependencies, so a separate `npm install` is not needed.
+
+Packages, MCP connections, and viewer behavior have been checked in isolated macOS tests. Installation on another computer and Windows/Linux operation have not been verified.
+
+### Codex
+
+```sh
+codex plugin marketplace add https://github.com/chando-park/taskweave.git
+codex plugin add taskweave@taskweave-marketplace
+```
+
+Open a new conversation and request `$taskweave:setup`. If typing the name does not select a skill in your client, search for CDPower in its skill selector.
+
+### Claude Code
+
+```sh
+claude plugin marketplace add https://github.com/chando-park/taskweave.git --scope user
+claude plugin install taskweave@taskweave-marketplace --scope user
+```
+
+Open a new conversation and request `/taskweave:setup`.
+
+### What setup needs to know
+
+Setup is optional for a plain conversation task. If you want project and record management, be ready to provide:
+
+1. Provide the parent folder containing your projects. Setup does not assume that everyone uses the same layout.
+2. Review the discovered projects and confirm which ones to register. Project IDs are derived from folder names.
+3. Setup creates records in the managed location below; you do not need to choose another record folder.
+4. Check Serena, Figma, or Jira only if needed. Reuse existing connections and keep external record folders where they are.
+
+For example:
+
+> My projects are in `/example/projects`. Register `example-app` and use CDPower's default record folder. Preserve existing settings and records, reuse the Figma connection, and do not create Jira tickets unless the project policy requires them.
+
+Run `$taskweave:setup` in Codex or `/taskweave:setup` in Claude. Setup registers the confirmed project and creates `Workplans`, `ProductMemory`, and `Instructions` under `~/.local/share/ai-workflow/workspaces/personal/projects/<project>/`. Both hosts use the same settings and records. Previously configured external record folders stay connected; setup does not move or delete them.
+
+Replace the example project path with your own. New records use the default location above; an existing configured location is preserved. On another computer, the same structure is created under that computer's user home. Codex and Claude share records on one computer; CDPower does not synchronize records between computers.
+
+Installing a plugin does **not** automatically replace your global `AGENTS.md` or `CLAUDE.md`. Use its named skills first. Making CDPower the default for all conversations is a separate instruction-linking step that must preserve your existing guidance.
+
+## How a task moves through the system
+
+```text
+Your request + current project
+          |
+          v
+AI reads the CDPower skill for this task
+          |
+          v
+AI follows links to relevant rules, project guidance, and sources
+          |
+          v
+AI presents code changes and verification -> you approve
+          |
+          v
+Host tools edit files and run the relevant checks
+          |
+          v
+AI explains the actual changes, results, and remaining gaps
+          |
+          +-> feedback: continue the current work
+          `-> acceptance: close a Workplan only when you request it
+```
+
+For example, a feature request leads the AI to `skills/feature-plan/SKILL.md`, the linked explanation and verification rules, and the project's actual code. Once you approve the proposed code and test plan, it uses `feature-apply` to edit and check the implementation. The result must explain every added or changed type, function, branch, and call flow.
+
+The documents do not perform the work themselves. The AI reads the skill and relevant rules, then uses Codex's or Claude's editor, terminal, and connected tools. CDPower's MCP helps it access material and records.
+
+A build passing does not prove that a UI matches Figma. When visual conformance is required, the AI must compare the actual render with an independent design source at a matching state and boundary. Recording the current render as its own answer is not conformance verification.
+
+Approval to implement does not also authorize commit, push, MR/PR creation, external publication, Jira closure, or knowledge publication. Those actions need their own applicable permission. Ordinary conversation results do not require a formal closing ceremony.
 
 ## Try it: requests and expected responses
 
-The following are illustrative examples, not results from a real project. Select a Taskweave skill explicitly if you want to make sure that workflow is used. In Codex, use `$taskweave:<skill>`; in Claude Code, use `/taskweave:<skill>`.
+The following are illustrative examples, not results from a real project. Select a CDPower skill explicitly if you want to make sure that workflow is used. In Codex, use `$taskweave:<skill>`; in Claude Code, use `/taskweave:<skill>`.
 
 ### A small code fix
 
@@ -79,105 +154,28 @@ If you later say, “The error path still sends twice,” `apply-workplan-feedba
 
 The AI uses the supplied notes and the writing guidance, then returns a summary in the conversation. It does not require Git registration, app tests, code coverage, or a Workplan. It should not invent missing facts. There is no separate childcare-log or script-writing skill in the current bundle; unfamiliar writing tasks use the common guidance and the material you provide.
 
-## Install and set up
+## Read Workplans in the local viewer
 
-### Requirements
+When the host starts CDPower's MCP, it starts the local viewer and opens the browser once. A running viewer is reused across Codex and Claude without opening a duplicate tab. This happens on MCP startup, not merely when you install the plugin or open any conversation.
 
-Have Node.js 22 or newer, Ruby, Git, and the CLI for the host you intend to use. Sign in to that host normally. The plugin includes its MCP dependencies, so a separate `npm install` is not needed.
+The viewer shows recent work, search, status, rendered Markdown details, code-flow pages, and recorded test results. It is read-only: it does not edit plans, approve work, or change tickets. The original Markdown is not replaced with HTML; the viewer renders it for reading inside the browser. It listens only on the local computer; if a port belongs to another application, that application is left alone. A viewer startup error does not block the MCP's record tools. Set `TASKWEAVE_VIEWER_AUTO_OPEN=0` in the MCP environment to disable automatic startup and browser opening.
 
-Actual remote installation and MCP startup have been checked on macOS. Windows and Linux host installation have not been verified.
+### Open the viewer again
 
-### Codex
+Ask Codex or Claude:
 
-```sh
-codex plugin marketplace add https://github.com/chando-park/taskweave.git
-codex plugin add taskweave@taskweave-marketplace
-```
+> Find the running CDPower viewer's address and open it in the browser. Do not change records or settings.
 
-Open a new conversation and request `$taskweave:setup`. If typing the name does not select a skill in your client, search for Taskweave in its skill selector.
+The default runtime file `~/.local/share/ai-workflow/viewer/service.json` contains the address in `url`. If you configured a different data location, use its `viewer/service.json` instead. Do not assume port `4317`; another port may have been selected. Closing the browser does not necessarily stop the viewer.
 
-### Claude Code
+If automatic startup fails, check the CDPower MCP connection and the default log at `~/.local/share/ai-workflow/viewer/service.log`. To run a separate viewer manually, replace both paths below with your installed plugin and record directory:
 
 ```sh
-claude plugin marketplace add https://github.com/chando-park/taskweave.git --scope user
-claude plugin install taskweave@taskweave-marketplace --scope user
+node "/installed/plugin/folder/mcp/src/viewer/main.mjs" \
+  --root "/records/Workplans"
 ```
 
-Open a new conversation and request `/taskweave:setup`.
-
-### What setup needs to know
-
-Setup is optional for a plain conversation task. If you want project and record management, be ready to provide:
-
-1. The folder containing your projects. Do not assume everyone uses the same folder layout.
-2. The specific project you intend to work on. Discovery results need confirmation; a Git remote alone is not the task.
-3. Any existing record locations that should remain connected. New records use the managed location below; you do not need to choose another record folder.
-4. Which existing integrations to reuse and which missing ones you want to connect.
-
-For example:
-
-> My projects are in `/example/projects`. Register `example-app` and use Taskweave's default record folder. Preserve existing settings and records, reuse the Figma connection, and do not create Jira tickets unless the project policy requires them.
-
-Run `$taskweave:setup` in Codex or `/taskweave:setup` in Claude. Setup registers the confirmed project and creates `Workplans`, `ProductMemory`, and `Instructions` under `~/.local/share/ai-workflow/workspaces/personal/projects/<project>/`. Both hosts use the same settings and records. Previously configured external record folders stay connected; setup does not move or delete them.
-
-Those paths are examples. The setup skill can guide you through the management CLI when available; otherwise it asks for the needed choices and reports what has not been saved. It must not claim that registration, authentication, or a read operation succeeded without confirmation.
-
-Installing a plugin does **not** automatically replace your global `AGENTS.md` or `CLAUDE.md`. Use its named skills first. Making Taskweave the default for all conversations is a separate instruction-linking step that must preserve your existing guidance.
-
-## How a task moves through the system
-
-```text
-Your request + current project
-          |
-          v
-AI selects a Taskweave skill
-          |
-          v
-Skill -> relevant shared rules -> project guidance and task sources
-          |
-          v
-AI presents code changes and verification -> you approve
-          |
-          v
-Host tools edit files and run the relevant checks
-          |
-          v
-AI explains the actual changes, results, and remaining gaps
-          |
-          +-> feedback: continue the current work
-          `-> acceptance: close a Workplan only when you request it
-```
-
-A skill is the procedure the AI reads. References contain the more detailed rules it needs for a particular task. The host supplies the actual editor, terminal, and service tools. MCP provides access to scoped material and records; it does not implement the feature itself.
-
-A build passing does not prove that a UI matches Figma. When visual conformance is required, the AI must compare the actual render with an independent design source at a matching state and boundary. Recording the current render as its own answer is not conformance verification.
-
-Approval to implement does not also authorize commit, push, MR/PR creation, external publication, Jira closure, or knowledge publication. Those actions need their own applicable permission. Ordinary conversation results do not require a formal closing ceremony.
-
-## Skills: choose by the work you need
-
-The bundle contains 15 personal workflow skills plus `setup`. The names below work with the Codex `$taskweave:` or Claude `/taskweave:` prefix.
-
-| Skill | When to use it | What it does |
-| --- | --- | --- |
-| `setup` | Configure projects, records, or integrations | Guides the necessary setup; reuses existing connections |
-| `code-change` | A small, well-understood code or configuration fix | Shows before/after and checks, waits for approval, then implements |
-| `explain-code` | Understand code, a Workplan proposal, or implementation results | Shows the execution/data/branch flow first and connects each step to code, rationale, and tests; HTML is only the display medium |
-| `project-baseline` | Understand a new project or trace a feature | Investigates structure and sources; a persistent baseline is recorded only when requested |
-| `feature-plan` | Plan a feature with a wider impact | Produces a concrete Workplan proposal; does not implement |
-| `feature-apply` | Implement an approved feature plan | Makes the agreed changes and reports direct checks |
-| `bugfix-plan` | Investigate and plan a complex bug fix | Connects symptoms, cause, code changes, and regression checks |
-| `bugfix-apply` | Implement an approved bug fix | Fixes the cause and checks the affected behavior |
-| `plan-ui-with-design-system` | Add UI details to feature planning | Maps design states to existing components, tokens, and needed UI checks |
-| `implement-ui-with-design-system` | Implement approved product UI | Uses the actual design-system declarations and checks affected states |
-| `plan-design-system-component` | Plan a shared design-system component | Compares the official design source with the existing library and proposes its API and variants |
-| `author-design-system-component` | Build an approved shared component | Implements the approved API, tokens, and variants without automatically changing consumer apps |
-| `apply-workplan-feedback` | Give feedback on current work | Reuses the current work and separates corrections, extra scope, and independent tasks |
-| `complete-work` | Explicitly close the current Workplan | Checks the actual result and applies only configured completion adapters |
-| `cpm` | Commit or publish Git changes | A bare invocation commits; push and MR/PR creation require an explicit request; never auto-merges |
-| `promote-codex-rule` | Make a repeated lesson a reusable rule | Reviews the appropriate rule or skill change before applying an approved update |
-
-The [packaged skill files](plugins/codex/taskweave/skills/) and [shared references](plugins/codex/taskweave/references/) show the actual instructions. This public bundle does not include company-specific Jira, knowledge-publication, or dashboard skills. A company workflow needs its own trusted policies and adapters.
+Open the address printed in the terminal. This manual process is separate from the managed viewer; stop it with Ctrl+C in that terminal. Records are not deleted.
 
 ## Where files live and how they connect
 
@@ -218,13 +216,41 @@ For a complex task that needs a Workplan, a record can look like this:
     `-- Details/plan-code.md               Only when longer code detail is useful
 ```
 
+For a new task linked to a ticket, use `YYYYMMDD-<ticket-key>-short-task-name` for the folder and main file. If you designate `QA-123` as the task's ticket, that key stays unchanged. Existing document names are not renamed in bulk.
+
 A Workplan records this particular job. Instructions explain how this project should be worked on. Product Memory holds reviewed, reusable knowledge when that system is configured. They are not three copies of the same document, and completing a task does not silently publish knowledge. Simple fixes can remain entirely in the conversation.
 
 For example, an AI planning an app change reads the selected skill, follows its links to the relevant shared rules, then reads the project's guidance and directly relevant code/design sources. It uses the chosen record location only if a record is needed. It should not search unrelated old tickets to invent a current task.
 
+## Skills: choose by the work you need
+
+The bundle contains 16 personal workflow skills plus `setup`. The names below work with the Codex `$taskweave:` or Claude `/taskweave:` prefix.
+
+| Skill | When to use it | What it does |
+| --- | --- | --- |
+| `setup` | Configure projects, records, or integrations | Guides the necessary setup; reuses existing connections |
+| `code-change` | A small, well-understood code or configuration fix | Shows before/after and checks, waits for approval, then implements |
+| `explain-code` | Understand code, a Workplan proposal, or implementation results | Shows the execution/data/branch flow first and connects each step to code, rationale, and tests; HTML is only the display medium |
+| `project-baseline` | Understand a new project or trace a feature | Investigates structure and sources; a persistent baseline is recorded only when requested |
+| `feature-plan` | Plan a feature with a wider impact | Produces a concrete Workplan proposal; does not implement |
+| `feature-apply` | Implement an approved feature plan | Makes the agreed changes and reports direct checks |
+| `bugfix-plan` | Investigate and plan a complex bug fix | Connects symptoms, cause, code changes, and regression checks |
+| `bugfix-apply` | Implement an approved bug fix | Fixes the cause and checks the affected behavior |
+| `plan-ui-with-design-system` | Add UI details to feature planning | Maps design states to existing components, tokens, and needed UI checks |
+| `implement-ui-with-design-system` | Implement approved product UI | Uses the actual design-system declarations and checks affected states |
+| `plan-design-system-component` | Plan a shared design-system component | Compares the official design source with the existing library and proposes its API and variants |
+| `author-design-system-component` | Build an approved shared component | Implements the approved API, tokens, and variants without automatically changing consumer apps |
+| `apply-workplan-feedback` | Give feedback on current work | Reuses the current work and separates corrections, extra scope, and independent tasks |
+| `complete-work` | Explicitly close the current Workplan | Checks the actual result and applies only configured completion adapters |
+| `uninstall` | Stop using CDPower or the former Taskweave | Removes the selected host installation and owned links while preserving shared use and records |
+| `cpm` | Commit or publish Git changes | A bare invocation commits; push and MR/PR creation require an explicit request; never auto-merges |
+| `promote-codex-rule` | Make a repeated lesson a reusable rule | Reviews the appropriate rule or skill change before applying an approved update |
+
+The [packaged skill files](plugins/codex/taskweave/skills/) and [shared references](plugins/codex/taskweave/references/) show the actual instructions. This public bundle does not include company-specific Jira, knowledge-publication, or dashboard skills. A company workflow needs its own trusted policies and adapters.
+
 ## MCP and external integrations
 
-MCP is the protocol through which the host calls a tool. Taskweave bundles a local MCP process with three default tools:
+MCP is the protocol through which the host calls a tool. CDPower bundles a local MCP process with three default tools:
 
 | Tool | Purpose |
 | --- | --- |
@@ -241,13 +267,7 @@ These tools do not approve plans, run app tests, or call other MCP servers on th
 | Jira | Issue lookup and policy-required lifecycle updates | A host connection, issue/project context, and applicable permission |
 | Xcode or Android tools | Platform-specific compilation and tests | The project's real toolchain, targets, schemes or Gradle configuration |
 
-Existing connections should be reused. Authentication happens in the host or provider's official flow, not by pasting tokens into Taskweave. Tool visibility, successful authentication, and a successful read are different checks. Platform guidance is included, but a working SDK, simulator, device, or project build is not installed or guaranteed by the plugin.
-
-## Read Workplans in the local viewer
-
-When the host starts Taskweave's MCP, it starts the local viewer and opens the browser once. A running viewer is reused across Codex and Claude without opening a duplicate tab. This happens on MCP startup, not merely when you install the plugin or open any conversation.
-
-The viewer shows recent work, search, status, rendered Markdown details, code-flow pages, and recorded test results. It is read-only: it does not edit plans, approve work, or change tickets. It listens only on the local computer; if a port belongs to another application, that application is left alone. A viewer startup error does not block the MCP's record tools. Set `TASKWEAVE_VIEWER_AUTO_OPEN=0` in the MCP environment to disable automatic startup and browser opening.
+Existing connections should be reused. Authentication happens in the host or provider's official flow, not by pasting tokens into CDPower. Tool visibility, successful authentication, and a successful read are different checks. Platform guidance is included, but a working SDK, simulator, device, or project build is not installed or guaranteed by the plugin.
 
 ## Update, remove, and troubleshoot
 
@@ -259,7 +279,7 @@ Codex:
 codex plugin marketplace upgrade taskweave-marketplace
 ```
 
-This refreshes the catalog. In Codex's plugin manager, apply the Taskweave update and confirm version **0.3.6**; do not assume an already running conversation has changed.
+This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.3.8**; do not assume an already running conversation has changed.
 
 Claude Code:
 
@@ -268,26 +288,51 @@ claude plugin marketplace update taskweave-marketplace
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-Confirm version **0.3.6**, then start a new conversation and select the Taskweave skill you need. Updating Taskweave does not mean moving or rewriting your existing records. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link.
+Confirm version **0.3.8**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
 
-### Remove
+### Remove the plugin, owned links, and viewer
 
-To remove the plugin, use your host's plugin manager or the commands below. Keep work records outside the plugin cache.
+**Recommended: run the uninstall skill before removing the plugin.**
+
+- Codex: select `$taskweave:uninstall` and ask, “Remove CDPower from this Codex installation. Keep my records.”
+- Claude Code: run `/taskweave:uninstall` with the same request.
+- To remove both, explicitly ask, “Remove CDPower from both Codex and Claude. Keep my records.”
+
+The AI identifies the exact plugin and marketplace before running the host's official removal command. After a removal is confirmed, it cleans up only owned instruction blocks and legacy links for that installation. It preserves other instructions, modified links, and anything whose ownership cannot be established, then reports what remains. If another host or duplicate installation still uses the shared viewer, it keeps it running. Only the last removal can stop a viewer whose service, instance, and actual process identity match. A PID or port alone is not enough.
+
+Your code, Workplans, Product Memory, user-authored project guidance, settings, credentials, and Serena/Figma/Jira connections stay in place. Browser tabs are not closed. Start a new conversation afterward: removing files does not erase instructions already read into the current conversation.
+
+For terminal use, supply the actual installed plugin directory. The first command previews the operation without cleanup.
 
 ```sh
-codex plugin remove taskweave@taskweave-marketplace
-claude plugin uninstall taskweave@taskweave-marketplace --scope user --keep-data
+node "/installed/plugin/folder/mcp/src/installation.mjs" --client codex --uninstall
+# Apply to that same target
+node "/installed/plugin/folder/mcp/src/installation.mjs" --client codex --uninstall --apply
 ```
 
-Only run the command for the host you intend to change. These commands are not instructions to delete your projects, external records, or entire `.codex`/`.claude` folders. If a global instruction still links to an installed file, review that link before removing its target. Back up important records before any separate data cleanup.
+Use `--client claude` for Claude only or `--client both` for both. If one host has multiple marketplace installations, select an exact choice from the preview and pass it with a single host, for example `--plugin-selector taskweave@taskweave-marketplace`. Do not guess which marketplace to remove.
+
+**Using only the marketplace's uninstall button, `codex plugin remove`, or `claude plugin uninstall`:** this removes the plugin but does not establish that external instruction links and the detached viewer were cleaned up. The documented hooks do not specify a plugin-uninstall event, so use the dedicated removal path. If you already removed it, inspect remaining links with a surviving installed removal tool, or identify the exact owned links before manual cleanup. Do not delete entire instruction files or the `.codex` and `.claude` directories.
 
 ### Common questions
 
 - **I do not see the skills.** Open a new conversation, check that the plugin is enabled, and select its named skill explicitly.
-- **I see two copies.** A previous `taskweave@my-ai-toolbox` installation or direct home skill may coexist with the new marketplace package. Verify the new one before selectively disabling the old Taskweave entry; do not delete all skills.
+- **I see two copies.** A previous `taskweave@my-ai-toolbox` installation or direct home skill may coexist with the new marketplace package. Verify the new one before selectively disabling the old CDPower entry; do not delete all skills.
 - **The AI asks where to save records.** Confirm a location only if this task needs records. A plain summary or small fix should not require project-wide setup just to proceed.
-- **A service is not connected.** Connect it in the host, or continue only the work that does not require it. Taskweave must report missing evidence rather than invent a successful check.
+- **A service is not connected.** Connect it in the host, or continue only the work that does not require it. CDPower must report missing evidence rather than invent a successful check.
 - **Will this reduce time or tokens?** The design aims to avoid irrelevant reading and repeated work. There is no guaranteed saving; tool latency, model behavior, and the task still matter.
+
+## What changed in 0.3.6
+
+Codex and Claude receive packages built from the same shared rules. This release includes:
+
+- Concrete code and responsibility decisions before approval. If implementation requires a new design outside that agreement, the AI must explain it and ask before proceeding.
+- Explanations of all added or changed types, functions, branches, and call flows, with test lists, actual results, and measured coverage—or an explicit “not measured.” Complex changes can link a code-flow visualization to the real code and tests.
+- Plain-language progress updates: what was checked, what went wrong, what happens next, and how that affects the code or records.
+- Reuse of the existing ticket key you designate, including keys outside an implementation project's usual prefix. Existing tickets and document names are not automatically renamed.
+- Shared project records for both hosts and a read-only local Workplan viewer that starts when the CDPower MCP starts.
+
+These rules are included in the public package. Company-specific adapters and credentials remain separate.
 
 ## Data, limitations, and release information
 
@@ -295,10 +340,14 @@ The MCP process runs on your computer, but material returned to the AI is also s
 
 Do not put credentials in chats, Workplans, or Product Memory. This package excludes personal work records, company-only skills, product repositories, and authentication files. Documented safeguards and package checks are not a complete security audit.
 
-Current package version: **0.3.6**. Release checks cover generated Codex/Claude packages, MCP connections, shared setup, and viewer behavior in isolated local tests. Installation on another computer and Windows/Linux operation are not verified by those tests. The wording of the rules and a successful installation do not prove end-to-end model behavior in every new task or environment.
+**0.3.8 checks:** 32 installation tests, 13 legacy-link tests, 12 viewer-lifecycle tests, 14 MCP tests, 2 packaging tests, and 5 viewer-server tests passed: 78 distinct tests, with no failures or skips in the final runs. Removal tests used isolated temporary homes and child processes; they did not uninstall the maintainer's live setup. Latest installation-module coverage was 92.42% line and 78.22% branch coverage, not whole-project coverage. The homepage, battery logo, search, and work details were also checked in a browser. Installation and behavior on another computer or Windows/Linux have not been independently verified.
+
+**Historical 0.3.6 checks:** 2 packaging tests, 14 MCP tests, 9 viewer-lifecycle tests, and 4 viewer-server tests passed: 29 in total. These are tests of the plugin, not results for your app. They do not guarantee that every AI response follows the instructions. You retain final judgment, and the host's permissions still apply.
 
 Report problems through [GitHub Issues](https://github.com/chando-park/taskweave/issues), without private logs, personal information, or credentials.
 
-No open-source license has been selected for Taskweave itself. Public visibility does not grant an additional project license. Bundled dependencies retain their own licenses and notices: [Codex notices](plugins/codex/taskweave/THIRD_PARTY_NOTICES.md) and [Claude notices](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
+No open-source license has been selected for CDPower itself. Public visibility does not grant an additional project license. Bundled dependencies retain their own licenses and notices: [Codex notices](plugins/codex/taskweave/THIRD_PARTY_NOTICES.md) and [Claude notices](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
 
-Maintainers generate this distribution from a separate development source. Users do not need that source checkout to install it. Version 0.3.6 includes the approved shared rules, MCP, and viewer changes from source baseline `e6f3514`, plus release-version metadata. Personal records, credentials, and the source repository's Git history are not shipped.
+Maintainers generate this distribution from a separate development source. Users do not need that source checkout to install it. Version **0.3.8** corresponds to source commit `4871d7a`: the updated local homepage, CDPower branding, and safe removal flow for both hosts. The repository address and installation IDs remain unchanged so existing marketplace subscriptions can update in place. Personal records, credentials, and the source repository's Git history are not shipped. Historical version 0.3.6 used source baseline `e6f3514`, plus release-version metadata.
+
+Official installation and update guidance: [OpenAI plugin packaging](https://developers.openai.com/plugins/build/plugins), [Claude Code plugin management](https://code.claude.com/docs/en/discover-plugins).

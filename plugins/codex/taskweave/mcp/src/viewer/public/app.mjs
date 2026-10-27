@@ -1,16 +1,73 @@
+import { statusGroup, statusLabel } from './status.mjs';
+
 const $ = selector => document.querySelector(selector);
 const form=$('#filters');
-let listVersion=0, detailVersion=0, page=1, currentWorkplan=null, currentTab='계획', selectedId=null;
+let listVersion=0, detailVersion=0, overviewVersion=0, page=1, currentWorkplan=null, currentTab='계획', selectedId=null;
+let currentView='home', returnView='home', listData=null, searchTimer;
 const tabs=['계획','구현','코드 흐름','테스트','변경 이력','추가 문서'];
 const escape = text => String(text ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const date = value => new Intl.DateTimeFormat('ko-KR',{dateStyle:'medium',timeStyle:'short',timeZone:'UTC'}).format(new Date(value));
+const date = value => new Intl.DateTimeFormat('ko-KR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
 async function getJson(url) { const response=await fetch(url,{cache:'no-store'}); const data=await response.json(); if (!response.ok) throw new Error(data.error || '자료를 읽지 못했습니다.'); return data; }
 function message(element,text) { element.textContent=text; element.hidden=!text; }
 function failure(element,error,retry) { message(element,error.message); const button=document.createElement('button'); button.textContent='다시 시도'; button.addEventListener('click',retry,{once:true}); element.append(' ',button); }
+function readingWarnings(warnings) {
+  const element=$('#overview-notice'); element.replaceChildren(); element.hidden=!warnings.length;
+  if (!warnings.length) return;
+  const details=document.createElement('details'), summary=document.createElement('summary'), list=document.createElement('ul');
+  summary.textContent=`일부 자료를 제외했습니다 · 읽기 안내 ${warnings.length}건`;
+  for(const warning of warnings){const item=document.createElement('li');item.textContent=warning;list.append(item);}
+  details.append(summary,list);element.append(details);
+}
 function updateOptions(select,values,all,missing=false) {
   const chosen=select.value;
   select.innerHTML=`<option value="">${all}</option>${missing?'<option value="__missing__">기록 없음</option>':''}${values.map(v=>`<option value="${escape(v)}">${escape(v)}</option>`).join('')}`;
   select.value=chosen;
+}
+function statusBadge(status) {
+  return `<span class="tw-status status" data-status="${statusGroup(status)}" title="${escape(status || '기록 없음')}"><span class="tw-check-dot" aria-hidden="true"></span>${escape(statusLabel(status))}</span>`;
+}
+function updateFilters() {
+  document.querySelectorAll('.tw-filter[data-group]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.group===form.elements.group.value)));
+  $('#filter-summary').textContent=[form.elements.project.value,form.elements.status.value,form.elements.from.value,form.elements.to.value].filter(Boolean).join(' · ');
+  document.querySelectorAll('[data-project]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.project===form.elements.project.value)));
+}
+function renderList() {
+  if (!listData) return;
+  const items=currentView==='home' ? listData.items.slice(0,5) : listData.items;
+  $('#count').textContent=currentView==='home' ? `${items.length} / ${listData.total}건` : `${listData.total}건`;
+  $('#more').hidden=currentView==='home' || !listData.hasMore;
+  $('#list').innerHTML=items.map(item=>`<button type="button" class="workplan-card tw-row${selectedId===item.id?' selected':''}" data-workplan="${item.id}" aria-pressed="${selectedId===item.id}"><span class="tw-row-top"><span class="tw-row-id">${escape(item.project)}</span>${statusBadge(item.status)}</span><strong class="tw-row-title">${escape(item.title)}</strong><span class="tw-row-bottom">${item.jira?`<span>${escape(item.jira)}</span> · `:''}<time datetime="${item.updatedAt}">${date(item.updatedAt)}</time><span>· ${item.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</span></span></button>`).join('') || '<p class="empty">조건에 맞는 작업이 없습니다.<br>키워드나 필터를 바꿔 보세요.</p>';
+}
+function showPage(view) {
+  ++detailVersion;
+  currentView=view;
+  $('#work-page').hidden=view==='brand'; $('#brand-page').hidden=view!=='brand';
+  $('.workspace').classList.toggle('is-detail',view==='detail');
+  $('.workspace').classList.toggle('is-library',view==='library');
+  $('.detail').hidden=view!=='detail';
+  $('#current-page').textContent={home:'홈',library:'워크플랜',brand:'브랜드',detail:'작업 상세'}[view];
+  $('#list-heading').textContent=view==='home'?'최근 작업':'워크플랜';
+  $('#page-title').innerHTML=view==='library'?'워크플랜 라이브러리':'필요한 맥락을 모으고,<br><span>다음 일을 가볍게.</span>';
+  $('#page-subtitle').innerHTML=view==='library'?'계획부터 코드와 검증까지, 필요한 맥락을 찾아보세요.':'계획과 코드, 그 사이의 결정까지.<br>쌓아 둔 맥락이 다음 작업의 힘이 됩니다.';
+  document.querySelectorAll('[data-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.view===(view==='detail'?'library':view))));
+  $('#flow').hidden=true; $('#flow').removeAttribute('src');
+  renderList();
+}
+export async function loadOverview() {
+  const version=++overviewVersion;
+  try {
+    const data=await getJson('/api/overview'); if (version!==overviewVersion) return;
+    for (const group of ['active','review','done']) $(`#${group}-count`).textContent=String(data.counts[group]).padStart(2,'0');
+    $('#nav-count').textContent=data.total;
+    $('#catalog-summary').textContent=`전체 ${data.total}건 · 그 외 상태 ${data.counts.other}건 · 원문 기준`;
+    $('#project-links').innerHTML=data.projects.map(project=>`<button type="button" class="tw-project" data-project="${escape(project.name)}" aria-pressed="${form.elements.project.value===project.name}"><span class="tw-project-dot" aria-hidden="true"></span><span class="project-name">${escape(project.name)}</span><span class="project-count">${project.count}</span></button>`).join('') || '<p class="empty">등록된 작업 없음</p>';
+    const latest=data.recent[0];
+    $('#recent-title').textContent=latest?.title || '아직 읽은 작업이 없습니다.';
+    $('#resume').disabled=!latest;
+    if (latest) $('#resume').dataset.workplan=latest.id; else delete $('#resume').dataset.workplan;
+    $('#recent-updates').innerHTML=data.recent.map(item=>`<div class="tw-event"><button type="button" data-workplan="${item.id}">${escape(item.title)}</button><small>${date(item.updatedAt)}<br>${item.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'} · ${escape(statusLabel(item.status))}</small></div>`).join('') || '<p class="empty">갱신 기록 없음</p>';
+    readingWarnings(data.warnings);
+  } catch(error) { if(version===overviewVersion) failure($('#overview-notice'),error,loadOverview); }
 }
 export async function loadList(append=false) {
   const version=++listVersion; if (!append) page=1;
@@ -19,11 +76,11 @@ export async function loadList(append=false) {
   try {
     const data=await getJson(`/api/workplans?${params}`); if (version !== listVersion) return;
     updateOptions(form.elements.project,data.projects,'모든 프로젝트'); updateOptions(form.elements.status,data.statuses,'모든 상태',true);
-    $('#count').textContent=`${data.total}건`; $('#more').hidden=!data.hasMore; $('#more').disabled=false;
-    message($('#notice'), data.warnings.length ? `일부 자료를 읽지 못했습니다 · ${data.warnings.join(' / ')}` : `${data.indexed}개 작업을 읽었습니다. 날짜 기준: UTC · 원문 날짜 또는 문서 수정 시각`);
-    const html=data.items.map(item=>`<button class="workplan-card${selectedId===item.id?' selected':''}" data-workplan="${item.id}" aria-pressed="${selectedId===item.id}"><span class="card-project">${escape(item.project)}</span><strong>${escape(item.title)}</strong><span class="card-meta"><span class="status">${escape(item.status || '기록 없음')}</span>${item.jira?`<span>${escape(item.jira)}</span>`:''}</span><time datetime="${item.updatedAt}">${date(item.updatedAt)} UTC · ${item.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</time></button>`).join('');
-    if (append) $('#list').insertAdjacentHTML('beforeend',html); else $('#list').innerHTML=html || '<p class="empty">조건에 맞는 작업이 없습니다.<br>키워드나 필터를 바꿔 보세요.</p>';
+    listData={...data,items:append&&listData?[...listData.items,...data.items]:data.items};
+    renderList(); updateFilters();
+    readingWarnings(data.warnings); message($('#notice'),'');
   } catch (error) { if (version===listVersion) failure($('#notice'),error,()=>loadList(append)); }
+  finally { if(version===listVersion) $('#more').disabled=false; }
 }
 function setDetailState(text) { $('#detail-state').hidden=false; message($('#detail-state'),text); $('#detail-content').hidden=true; }
 function kindFor(doc) {
@@ -75,15 +132,16 @@ async function selectTab(tab) {
   else { $('#article').innerHTML='<p class="empty">기록 없음 · 이 영역으로 분류할 수 있는 연결 문서가 없습니다.</p>'; message($('#document-notice'),''); }
 }
 export async function selectWorkplan(id) {
-  selectedId=id; const version=++detailVersion; setDetailState('작업을 읽고 있습니다…');
+  if(currentView!=='detail') returnView=currentView==='home'?'home':'library';
+  selectedId=id; showPage('detail'); const version=++detailVersion; setDetailState('작업을 읽고 있습니다…');
   document.querySelectorAll('[data-workplan]').forEach(button=>{ const selected=button.dataset.workplan===id; button.classList.toggle('selected',selected); button.setAttribute('aria-pressed',String(selected)); });
   try {
     const entry=await getJson(`/api/workplans/${id}`); if (version!==detailVersion) return;
     currentWorkplan=entry; $('#detail-state').hidden=true; $('#detail-content').hidden=false;
-    $('#workplan-heading').innerHTML=`<button class="back-to-list" type="button">← 목록으로</button><p class="eyebrow">${escape(entry.project)}</p><h2>${escape(entry.title)}</h2><p class="detail-meta"><span class="status">${escape(entry.status || '기록 없음')}</span> ${escape(entry.jira || '')} · ${date(entry.updatedAt)} UTC · ${entry.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</p>`;
-    $('#workplan-heading .back-to-list').addEventListener('click',()=>$('.library').scrollIntoView({block:'start'}));
+    $('#workplan-heading').innerHTML=`<button class="back-to-list" type="button">← 목록으로</button><p class="eyebrow">${escape(entry.project)}</p><h2>${escape(entry.title)}</h2><p class="detail-meta">${statusBadge(entry.status)} ${escape(entry.jira || '')} · ${date(entry.updatedAt)} · ${entry.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</p>`;
+    $('#workplan-heading .back-to-list').addEventListener('click',()=>{showPage(returnView);$('.library').scrollIntoView({block:'start'});});
     await selectTab('계획');
-    if (matchMedia('(max-width:760px)').matches) $('.detail').scrollIntoView({block:'start'});
+    $('.detail').scrollIntoView({block:'start'});
   } catch (error) { if (version===detailVersion) { setDetailState(''); failure($('#detail-state'),error,()=>selectWorkplan(id)); } }
 }
 export async function selectDocument(id) {
@@ -97,18 +155,26 @@ export function showFlow(id) {
 }
 export async function refreshCatalog() {
   $('#refresh').disabled=true; message($('#notice'),'원본에서 다시 읽고 있습니다…');
-  ++listVersion; ++detailVersion;
-  try { await getJson('/api/refresh'); await loadList(); if (selectedId) await selectWorkplan(selectedId); }
+  ++listVersion; ++detailVersion; ++overviewVersion;
+  try { await getJson('/api/refresh'); await Promise.all([loadList(),loadOverview()]); if (selectedId && currentView==='detail') await selectWorkplan(selectedId); }
   catch (error) { failure($('#notice'),error,refreshCatalog); }
   finally { $('#refresh').disabled=false; }
 }
-form.addEventListener('submit',event=>{event.preventDefault();loadList();});
+function searchList() { clearTimeout(searchTimer); if(currentView!=='detail') showPage('library'); loadList(); }
+form.addEventListener('submit',event=>{event.preventDefault();searchList();});
+form.elements.q.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(searchList,220);});
+form.addEventListener('change',event=>{if(event.target!==form.elements.q)searchList();});
+$('#reset-filters').addEventListener('click',()=>{form.reset();form.elements.group.value='';searchList();});
+$('#open-library').addEventListener('click',()=>{showPage('library');loadList();});
 $('#refresh').addEventListener('click',refreshCatalog);
 $('#more').addEventListener('click',()=>{page++;loadList(true);});
 document.addEventListener('click',event=>{
-  const target=event.target.closest('[data-workplan],[data-tab],[data-document],[data-asset]'); if (!target) return;
+  const target=event.target.closest('[data-view],[data-group],[data-project],[data-workplan],[data-tab],[data-document],[data-asset]'); if (!target) return;
   event.preventDefault();
-  if (target.dataset.workplan) selectWorkplan(target.dataset.workplan);
+  if (target.dataset.view) { clearTimeout(searchTimer);if(target.dataset.view==='home'){form.reset();form.elements.group.value='';}showPage(target.dataset.view);if(target.dataset.view!=='brand')loadList(); }
+  else if ('group' in target.dataset) {form.elements.group.value=target.dataset.group;form.elements.status.value='';searchList();}
+  else if (target.dataset.project) {form.elements.project.value=target.dataset.project;searchList();}
+  else if (target.dataset.workplan) selectWorkplan(target.dataset.workplan);
   else if (target.dataset.tab) selectTab(target.dataset.tab);
   else if (target.dataset.document) selectDocument(target.dataset.document);
   else showFlow(target.dataset.asset);
@@ -119,4 +185,5 @@ window.addEventListener('message',event=>{
   if ($('#flow').hidden || event.source!==$('#flow').contentWindow || data?.type!=='taskweave-link' || !/^[a-f0-9]{24}$/.test(data.id) || !currentWorkplan?.documents.some(doc=>doc.id===data.id)) return;
   if (data.kind==='document') selectDocument(data.id); else if (data.kind==='assets') showFlow(data.id);
 });
+loadOverview();
 loadList();

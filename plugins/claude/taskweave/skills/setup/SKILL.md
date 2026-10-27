@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Taskweave 공통 기록 위치를 준비하고 사용자가 지정한 프로젝트 폴더를 등록한다. Codex·Claude가 같은 기록을 사용하며 기존 설정·기록을 보존한다.
+description: CDPower 공통 기록 위치를 준비하고 사용자가 지정한 프로젝트 폴더를 등록한다. Codex·Claude가 같은 기록을 사용하며 기존 설정·기록을 보존한다.
 ---
 
 # 프로젝트 폴더만 지정하는 초기 설정
@@ -19,3 +19,5 @@ description: Taskweave 공통 기록 위치를 준비하고 사용자가 지정�
 기본 MCP 업무 도구는 context_read, task_current, record_save 세 가지다. 설치·등록·로그인을 MCP가 대신한다고 가정하지 않는다. 일반 문서 작업은 MCP 없이 계속할 수 있다.
 
 기존 기록은 원래 위치에 연결하고 이동·변환하지 않는다. 미완료 항목만 재개한다. 회사 정책·관리자 제한을 우회하거나 Jira 시험 티켓·Figma 시험 파일을 만들지 않는다. 우리 MCP가 다른 서버를 대신 호출한다고 가정하지 않는다. 설정·플러그인 파일 저장은 새 세션의 도구 노출·인증 성공과 별개다.
+
+사용자가 CDPower 또는 이전 Taskweave 제거를 요청하면 /taskweave:uninstall을 사용한다. 설치 ID와 스킬 접두어 taskweave는 기존 업데이트 호환을 위해 유지한다.

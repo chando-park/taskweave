@@ -1,6 +1,7 @@
 import { pathToFileURL } from 'node:url';
 import { createCatalog } from './reader.mjs';
 import { createViewerServer } from './server.mjs';
+import { PRODUCT_NAME } from '../product.mjs';
 
 export function parseArguments(args) {
   const options={roots:[],port:0};
@@ -22,7 +23,7 @@ export async function startViewer({roots,port=0,instance,...limits}) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
     const options=parseArguments(process.argv.slice(2));
-    if (options.help) console.log('Taskweave 조회 전용 뷰어\nnode src/viewer/main.mjs --root /절대경로/Workplans [--root /다른/Workplans] [--port 0]');
-    else { const {url}=await startViewer(options); console.log(`Taskweave · ${url}\n조회 전용입니다. 종료: Ctrl+C`); }
+    if (options.help) console.log(`${PRODUCT_NAME} 조회 전용 뷰어\nnode src/viewer/main.mjs --root /절대경로/Workplans [--root /다른/Workplans] [--port 0]`);
+    else { const {url}=await startViewer(options); console.log(`${PRODUCT_NAME} · ${url}\n조회 전용입니다. 종료: Ctrl+C`); }
   } catch (error) { console.error(`뷰어를 시작하지 못했습니다: ${error.message}`); process.exitCode=1; }
 }

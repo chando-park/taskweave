@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "host": "codex",
-  "version": "0.3.6",
+  "version": "0.3.8",
   "personalSkills": [
     "cpm",
     "code-change",
@@ -12,6 +12,7 @@
     "feature-apply",
     "apply-workplan-feedback",
     "complete-work",
+    "uninstall",
     "project-baseline",
     "promote-codex-rule",
     "plan-ui-with-design-system",
@@ -25,7 +26,7 @@
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
-      "sha256": "d46293d8f78385cb357241be2f35c8de883adb256a79b3dfba2d58b5d397f165"
+      "sha256": "c01c62f5d93f06755e5c7b3f2fdfe7b6463160c075dd987ead20581a343ff9ba"
     },
     {
       "path": ".mcp.json",
@@ -197,7 +198,7 @@
     },
     {
       "path": "core/runtime-inventory.yml",
-      "sha256": "13dc18fe886bb9a5ff02470566b6b30288b6e17c74ed02fc42470e9e9ef72841"
+      "sha256": "f65cae056c8331ededafbec0b68cf45d028913dbf43898a0cc1b1ecfe38488bc"
     },
     {
       "path": "core/runtime-rules.yml",
@@ -546,6 +547,10 @@
     {
       "path": "core/skills/promote-codex-rule/references/promotion-targets.md",
       "sha256": "0b1a878a53b823984e3fa2f7c52bf064793abe42420fc1d9a5f97e0d66380a6c"
+    },
+    {
+      "path": "core/skills/uninstall/SKILL.md",
+      "sha256": "263c40887efda341056066b187c57360b8f225cda32f9e1db14a756192a0d02d"
     },
     {
       "path": "mcp/THIRD_PARTY_NOTICES.md",
@@ -19113,11 +19118,11 @@
     },
     {
       "path": "mcp/package-lock.json",
-      "sha256": "8c0bd86f8e07de51dbf3a40f2767c1568f44cde57772777a4f817c1d4087f623"
+      "sha256": "e69a0772ca97dfca394f3f1246e38ebf6e46b84743638939915168c983ba4dfe"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "65ced8f85a505013e4ac2200991a645d9003f8337df6ffa7ebbaa6508a3735f4"
+      "sha256": "dbd39fd04f22c2aa001e3888d0f7102a5418a1cf21aa41ff97b57dacb1bd727a"
     },
     {
       "path": "mcp/src/adapters/android.mjs",
@@ -19133,7 +19138,7 @@
     },
     {
       "path": "mcp/src/installation.mjs",
-      "sha256": "465a79951c18ac347c987c6337d4074058d32b4ec107e769773117a07ff67919"
+      "sha256": "19755e8b9f98ff502bcb81f1fa072a20278e7a5799358941520bb0f84bc949f1"
     },
     {
       "path": "mcp/src/integrations.mjs",
@@ -19141,7 +19146,11 @@
     },
     {
       "path": "mcp/src/legacy-migration.mjs",
-      "sha256": "8b7de992a28cbebd3be03f532ab8ed79a1923467ea0c855a3af85855d43e4782"
+      "sha256": "cd12fe0cdefd7c17246105ecb450a044e4ca3f7d6f0e10ca1dba0688c34de734"
+    },
+    {
+      "path": "mcp/src/product.mjs",
+      "sha256": "f182c91ef7063d7382f8e91eeb62a9ac1ebc7f949d140e6ae80aae115faaf5f8"
     },
     {
       "path": "mcp/src/records.mjs",
@@ -19153,7 +19162,7 @@
     },
     {
       "path": "mcp/src/server.mjs",
-      "sha256": "752021809cb85f10fd138f6f44e9707388695a3e46b7f731c5e8cb9c5839bc4f"
+      "sha256": "78e3b6306790b72c1214346ce825a7730ca5cc9075c3edb0812ca3f7666ecfe5"
     },
     {
       "path": "mcp/src/settings.mjs",
@@ -19165,35 +19174,51 @@
     },
     {
       "path": "mcp/src/viewer/lifecycle.mjs",
-      "sha256": "d50f8d53ba9eefdfe2a39a4f61160e1e9c560dbbee4b16309426baf3e7a6fec3"
+      "sha256": "0dff27c83e4ba25109a8165eca8788241288f2f64408981faf8c5c11f8faec8b"
     },
     {
       "path": "mcp/src/viewer/main.mjs",
-      "sha256": "1e443369f5ebc1f364d08c811aedc3a7033ca3253a083d35a98a00b84ef1e4c0"
+      "sha256": "96d899d8af79cc6f50988c54373efb0abce736848515394f4f85bc80277363fe"
     },
     {
       "path": "mcp/src/viewer/public/app.mjs",
-      "sha256": "bbfbb267655348e1cd4fd9c85b40c423a6687cc1e47f6875f97c0e3414eef6e9"
+      "sha256": "9a83f30aa12f5b2349715fc9521dd86a4c2c0573d5f10c3b39630e07b982ad91"
+    },
+    {
+      "path": "mcp/src/viewer/public/icons.svg",
+      "sha256": "55060912aa2b5de71cc68e7118305d7e4614d4c4f2f3ae9a608e0b6ef1b3408d"
     },
     {
       "path": "mcp/src/viewer/public/index.html",
-      "sha256": "34f1ff9232bf4c5a8a642d5d8b1373700079ec85d97cac1f3332a6367cf6ff72"
+      "sha256": "7bb7ddfd3a24b02a99e5031f2d577a7e335662efb1a12a6ae5e92b17ee0896ca"
+    },
+    {
+      "path": "mcp/src/viewer/public/logo.svg",
+      "sha256": "be859b2991f91e7f3dfef4fbdc3ca70f1c034a79a6d4aa859d8db017aeea2499"
+    },
+    {
+      "path": "mcp/src/viewer/public/status.mjs",
+      "sha256": "aefc52b55fd2b967fccb579cde540dd9ecdac7443aeab84ec17cd6e79282444f"
     },
     {
       "path": "mcp/src/viewer/public/styles.css",
-      "sha256": "19b6cb118fa11f6e278496911d8c13ba2402a258a68ba663bc7381bde87395cd"
+      "sha256": "dc6dc3568b0a7d59f67e7edd830e61aed3fe2aa20d2bce3fa1309cc085b158a0"
+    },
+    {
+      "path": "mcp/src/viewer/public/wordmark.svg",
+      "sha256": "89c06ca66758b5e86d7de351b0b120a805025388dbeb8de2ce585d8b42fee668"
     },
     {
       "path": "mcp/src/viewer/reader.mjs",
-      "sha256": "9411075417ee5fb01d6832cae6052fcf94c21e0165f9662f5e9e28cbab85425e"
+      "sha256": "2aba4a014bc54fdfbb5ac5923ef9029ef6f3133e1017549881a43dd0ba7e9c55"
     },
     {
       "path": "mcp/src/viewer/render.mjs",
-      "sha256": "bc32b06ce6e086119d0927115d1861c314d0274250aac2b605f0c38e4c1f782a"
+      "sha256": "9a6ff7b055068a2b2ecbd977ff947c0f9425285cb02ce9d70856665e3b38c5c3"
     },
     {
       "path": "mcp/src/viewer/server.mjs",
-      "sha256": "67f1b021b9c8f3a09324cf176c7d1f26ce0a0c3d57bd69f57e4b39583bb74866"
+      "sha256": "4c68202e74f84d3377f614c8f2f3070d04a81c3370ebfcfe94c0edacf6f2feb9"
     },
     {
       "path": "mcp/third-party/archify.lock.json",
@@ -19205,7 +19230,7 @@
     },
     {
       "path": "plugin.json",
-      "sha256": "440e841814de9868ae8d9a9ffffc8459fe9aec0d403c606b646444d732addf9d"
+      "sha256": "8d463cbe9128f75d44f24fca00372aa37910ab2874f989a32feba2caf6b843f4"
     },
     {
       "path": "references/acceptance-feedback-loop.md",
@@ -19545,7 +19570,11 @@
     },
     {
       "path": "skills/setup/SKILL.md",
-      "sha256": "d2563a65ebd14834793ffba629c76e5f356c70dc307929c9f3aa22f13f46df30"
+      "sha256": "a134ff5830dd8f7259ad7b5a4ab0ab3fcc5877c4a869e778b811d9ca054832ba"
+    },
+    {
+      "path": "skills/uninstall/SKILL.md",
+      "sha256": "263c40887efda341056066b187c57360b8f225cda32f9e1db14a756192a0d02d"
     }
   ]
 }

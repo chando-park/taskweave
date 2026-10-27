@@ -2,6 +2,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { promises as fs, constants } from 'node:fs';
 import { parseDocument } from 'yaml';
+import { statusGroup } from './public/status.mjs';
 
 const SUPPORTED = new Set(['.md', '.html', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg']);
 const AUXILIARY = /^(completion|detail|details|readme|changelog|verification|test-results?)\.md$/i;
@@ -139,11 +140,26 @@ export async function createCatalog({ roots, maxFiles = 5000, maxBytes = 2 * 102
     const page = Math.max(1, Math.min(100000, Number.parseInt(query.page,10) || 1));
     for (const key of ['from','to']) if (query[key] && !/^\d{4}-\d{2}-\d{2}$/.test(query[key])) throw viewerError(400, '기간은 YYYY-MM-DD 형식이어야 합니다.');
     const words = normalize(query.q || '').split(/\s+/).filter(Boolean);
-    const result = entries.filter(e => words.every(w => e.searchText.includes(w)) && (!query.project || e.project === query.project) && (!query.status || (query.status === '__missing__' ? e.status === null : e.status === query.status)) && (!query.from || e.updatedAt.slice(0,10) >= query.from) && (!query.to || e.updatedAt.slice(0,10) <= query.to));
+    const result = entries.filter(e => words.every(w => e.searchText.includes(w)) && (!query.group || statusGroup(e.status) === query.group) && (!query.project || e.project === query.project) && (!query.status || (query.status === '__missing__' ? e.status === null : e.status === query.status)) && (!query.from || e.updatedAt.slice(0,10) >= query.from) && (!query.to || e.updatedAt.slice(0,10) <= query.to));
     return { items: result.slice((page-1)*20,page*20).map(({ searchText, documents, ...e }) => e), total: result.length, page, hasMore: page*20 < result.length, projects: [...new Set(entries.map(e => e.project))].sort(), statuses: [...new Set(entries.map(e => e.status).filter(Boolean))].sort(), warnings: [...warnings], indexed: entries.length };
+  }
+  function overview() {
+    const counts = { active: 0, review: 0, done: 0, other: 0 };
+    const projects = new Map();
+    for (const entry of entries) {
+      counts[statusGroup(entry.status)]++;
+      projects.set(entry.project, (projects.get(entry.project) || 0) + 1);
+    }
+    return {
+      total: entries.length,
+      counts,
+      projects: [...projects].sort(([a], [b]) => a.localeCompare(b)).map(([name, count]) => ({ name, count })),
+      recent: entries.slice(0, 3).map(({ searchText, documents, ...entry }) => entry),
+      warnings: [...warnings],
+    };
   }
   async function readDocument(id) { const ref = refs.get(id); if (!ref || ref.ext !== '.md') throw viewerError(404, '등록된 문서가 아닙니다.'); const { bytes } = await readReference(ref); const sourceText = bytes.toString('utf8'); return { id, name: ref.name, sourceText, ...parseMetadata(sourceText) }; }
   async function readAsset(id) { const ref = refs.get(id); if (!ref || ref.ext === '.md') throw viewerError(404, '등록된 첨부가 아닙니다.'); return { ...ref, ...(await readReference(ref)) }; }
   async function readWorkplan(id) { const entry = entries.find(e => e.id === id); if (!entry) throw viewerError(404, '작업을 찾지 못했습니다.'); const { searchText, ...safe } = entry; return { ...safe, document: await readDocument(id) }; }
-  return { refresh, list, readDocument, readWorkplan, readAsset, resolveLink };
+  return { refresh, list, overview, readDocument, readWorkplan, readAsset, resolveLink };
 }

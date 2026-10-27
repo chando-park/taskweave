@@ -12,6 +12,7 @@ import { RuntimeBridge } from './runtime-bridge.mjs';
 import { IntegrationService, CONNECTION_STATES } from './integrations.mjs';
 import { RecordService } from './records.mjs';
 import { ensureViewer } from './viewer/lifecycle.mjs';
+import { PRODUCT_NAME, PLUGIN_ID } from './product.mjs';
 
 const text = z.string().min(1).max(512_000);
 const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,99}$/);
@@ -104,7 +105,7 @@ function definitions({ store, bridge, verification, diagram, integrations, recor
 
 export function createServer({ store = new SettingsStore(), bridge = new RuntimeBridge({ store }), verification, diagram, integrations = new IntegrationService({ store }), records = new RecordService({ store }), legacyTools = false } = {}) {
   if (bridge instanceof RuntimeBridge && verification) bridge.verification = verification;
-  const server = new Server({ name: 'taskweave', version: '0.3.6' }, { capabilities: { tools: {} } });
+  const server = new Server({ name: PLUGIN_ID, version: '0.3.8' }, { capabilities: { tools: {} } });
   const tools = definitions({ store, bridge, verification, diagram, integrations, records, legacyTools });
   server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: tools.map(({ name, description, schema }) => ({ name, description, inputSchema: z.toJSONSchema(schema) })) }));
   server.setRequestHandler(CallToolRequestSchema, async ({ params }) => {
@@ -130,12 +131,12 @@ export async function startServer(options = {}) {
   // 뷰어는 부가 기능이다. 자동 실행 실패가 MCP 연결·자료 조회를 막아서는 안 된다.
   if (options.autoViewer !== false && process.env.TASKWEAVE_VIEWER_AUTO_OPEN !== '0') {
     Promise.resolve().then(() => (options.launchViewer ?? ensureViewer)({ store }))
-      .catch(error => (options.onViewerWarning ?? (message => process.stderr.write(`${message}\n`)))(`Taskweave 뷰어 안내: ${error.message}`));
+      .catch(error => (options.onViewerWarning ?? (message => process.stderr.write(`${message}\n`)))(`${PRODUCT_NAME} 뷰어 안내: ${error.message}`));
   }
   return server;
 }
 
 const entrypoint = process.argv[1] ? await realpath(process.argv[1]).catch(() => null) : null;
 if (entrypoint && import.meta.url === pathToFileURL(entrypoint).href) {
-  startServer().catch((error) => { process.stderr.write(`Taskweave 시작 실패: ${error.message}\n`); process.exitCode = 1; });
+  startServer().catch((error) => { process.stderr.write(`${PRODUCT_NAME} 시작 실패: ${error.message}\n`); process.exitCode = 1; });
 }

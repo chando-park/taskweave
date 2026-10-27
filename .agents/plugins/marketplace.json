@@ -1,7 +1,7 @@
 {
   "name": "taskweave-marketplace",
   "interface": {
-    "displayName": "Taskweave"
+    "displayName": "CDPower"
   },
   "plugins": [
     {

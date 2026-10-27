@@ -3,7 +3,15 @@ import { readFile } from 'node:fs/promises';
 import { renderSafeMarkdown, renderFlowHtml, renderDocumentPage } from './render.mjs';
 
 const PUBLIC = new URL('./public/', import.meta.url);
-const STATIC = new Map([['/',['index.html','text/html; charset=utf-8']],['/app.mjs',['app.mjs','text/javascript; charset=utf-8']],['/styles.css',['styles.css','text/css; charset=utf-8']]]);
+const STATIC = new Map([
+  ['/', ['index.html', 'text/html; charset=utf-8']],
+  ['/app.mjs', ['app.mjs', 'text/javascript; charset=utf-8']],
+  ['/status.mjs', ['status.mjs', 'text/javascript; charset=utf-8']],
+  ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
+  ['/logo.svg', ['logo.svg', 'image/svg+xml']],
+  ['/wordmark.svg', ['wordmark.svg', 'image/svg+xml']],
+  ['/icons.svg', ['icons.svg', 'image/svg+xml']],
+]);
 const MIME = { '.html':'text/html; charset=utf-8', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.gif':'image/gif', '.webp':'image/webp', '.svg':'image/svg+xml' };
 const PAGE_CSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; frame-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'";
 export function isLocalBrowserRequest(request) {
@@ -29,6 +37,7 @@ export function createViewerServer({ catalog, instance }) {
         return send(200, { service: 'taskweave-viewer-v1', instance });
       }
       if (STATIC.has(url.pathname)) { const [file,type] = STATIC.get(url.pathname); return send(200,await readFile(new URL(file,PUBLIC)),type); }
+      if (url.pathname === '/api/overview') return send(200,catalog.overview());
       if (url.pathname === '/api/workplans') return send(200,catalog.list(Object.fromEntries(url.searchParams)));
       if (url.pathname === '/api/refresh') return send(200,await catalog.refresh());
       const match = url.pathname.match(/^\/(api\/workplans|api\/documents|document|assets)\/([a-f0-9]{24})$/);

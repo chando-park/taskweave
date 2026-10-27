@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="352" height="88" viewBox="0 0 352 88" fill="none" role="img" aria-label="CDPower 배터리 로고">
+  <g transform="translate(0 8)"><rect x="7" y="13" width="77" height="46" rx="12" fill="#E7F2EB" stroke="#293D39" stroke-width="5"/><path d="M89 28v16" stroke="#293D39" stroke-width="6" stroke-linecap="round"/><rect x="14" y="20" width="63" height="32" rx="7" fill="#158774"/><path d="M49 18 32 39h15l-5 16 22-25H49z" fill="#FFFFFC"/></g>
+  <text x="110" y="57" fill="#293D39" font-family="Avenir Next,Inter,Arial,sans-serif" font-size="42" font-weight="650" letter-spacing="-1.5">CDPower</text>
+</svg>

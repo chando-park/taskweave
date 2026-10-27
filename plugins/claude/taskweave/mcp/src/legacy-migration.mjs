@@ -19,6 +19,8 @@ async function state(file) {
 
 async function safeParents(root, file) {
   if (!inside(root, file) || file === root) throw new Error(`경계 밖 경로: ${file}`);
+  const rootState = await state(root);
+  if (rootState.type === 'symlink' || rootState.type === 'file') throw new Error(`상위 symlink/파일 보존: ${root}`);
   let current = root;
   for (const name of path.relative(root, path.dirname(file)).split(path.sep).filter(Boolean)) {
     current = path.join(current, name);
@@ -201,4 +203,92 @@ export async function restoreMigration(manifestPath, { confirmed = false } = {})
     restored += 1;
   }
   return { restored, manifestPath };
+}
+
+export async function inspectOwnedLegacyCleanup({ home, dataDir, clients, projects = [], pluginRoots = {} }) {
+  home = path.resolve(home);
+  dataDir = path.resolve(dataDir);
+  const operations = new Map();
+  const preserved = [];
+  const candidates = new Map();
+  const add = (host, file, root, expected) => candidates.set(file, { host, path: file, root, expected });
+  for (const host of clients) {
+    add(host, path.join(home, `.${host}`, entryName(host)), home, managedEntry(home, host));
+    const pointer = pointerPath(home, host);
+    try {
+      await safeParents(home, pointer);
+      const current = await state(pointer);
+      if (current.type === 'symlink' && pluginRoots[host]?.includes(path.resolve(path.dirname(pointer), current.target))) {
+        add(host, pointer, home, null);
+        candidates.get(pointer).expectedTarget = current.target;
+      } else if (current.type !== 'missing') preserved.push({ path: pointer, reason: 'active-pointer-ownership-unknown' });
+    } catch { preserved.push({ path: pointer, reason: 'active-pointer-unverifiable' }); }
+    for (const project of projects) {
+      const root = path.resolve(project);
+      add(host, path.join(root, entryName(host)), root, managedEntry(home, host));
+    }
+  }
+  const backups = path.join(dataDir, 'backups');
+  try {
+    await safeParents(home, path.join(backups, '_probe'));
+    for (const name of (await children(backups)).filter(name => name.startsWith('migration-'))) {
+      const manifestPath = path.join(backups, name, 'manifest.json');
+      try {
+        await safeParents(home, manifestPath);
+        if ((await state(manifestPath)).type !== 'file') continue;
+        const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+        if (manifest.schema !== 'taskweave-migration-backup-v1' || path.resolve(manifest.home) !== home || !Array.isArray(manifest.entries)) continue;
+        for (const entry of manifest.entries) {
+          const host = clients.find(host => entry.path === pointerPath(home, host) || inside(path.join(home, `.${host}`), entry.path));
+          if (!host || entry.status !== 'applied') continue;
+          const base = path.join(home, `.${host}`);
+          const relative = path.relative(base, entry.path).split(path.sep);
+          const allowed = entry.path === pointerPath(home, host) || relative.length === 1 && ['references', entryName(host)].includes(relative[0]) || relative.length === 2 && ['bin', 'agents', 'skills'].includes(relative[0]);
+          if (!allowed) continue;
+          const replacement = entry.replacement;
+          const ownedLink = replacement?.type === 'symlink' && (entry.path === pointerPath(home, host)
+            ? ['active-pointer', 'active-pointer-update'].includes(entry.reason) && entry.after?.target === replacement.target
+            : inside(pointerPath(home, host), path.resolve(path.dirname(entry.path), replacement.target)));
+          const ownedEntry = replacement?.type === 'file' && replacement.content === managedEntry(home, host) && entry.path === path.join(base, entryName(host));
+          if (ownedLink || ownedEntry) {
+            add(host, entry.path, home, replacement.type === 'file' ? replacement.content : null);
+            candidates.get(entry.path).manifestState = entry.after;
+          }
+          if (ownedLink) candidates.get(entry.path).expectedTarget = replacement.target;
+        }
+      } catch { preserved.push({ path: manifestPath, reason: 'migration-manifest-unverifiable' }); }
+    }
+  } catch { preserved.push({ path: backups, reason: 'migration-backups-unverifiable' }); }
+  for (const candidate of candidates.values()) {
+    try {
+      await safeParents(candidate.root, candidate.path);
+      const before = await state(candidate.path);
+      if (before.type === 'missing') continue;
+      const owned = candidate.expectedTarget !== undefined
+        ? before.type === 'symlink' && before.target === candidate.expectedTarget
+        : before.type === 'file' && before.hash === digest(candidate.expected);
+      if (owned && (!candidate.manifestState || equal(before, candidate.manifestState))) operations.set(candidate.path, { ...candidate, before });
+      else preserved.push({ path: candidate.path, reason: 'unowned-or-user-modified' });
+    } catch { preserved.push({ path: candidate.path, reason: 'unsafe-parent-or-unreadable' }); }
+  }
+  return { operations: [...operations.values()], preserved: preserved.filter(item => !operations.has(item.path)) };
+}
+
+export async function cleanupOwnedLegacyLinks({ inspection, clients, dataDir }) {
+  const cleaned = [];
+  const preserved = [...inspection.preserved];
+  for (const operation of inspection.operations.filter(operation => clients.includes(operation.host))) {
+    try {
+      await safeParents(operation.root, operation.path);
+      if (!equal(await state(operation.path), operation.before)) throw new Error('changed-after-inspection');
+      const backup = path.join(dataDir, 'backups', `uninstall-${randomUUID()}`);
+      if (inside(operation.root, dataDir)) await safeParents(operation.root, backup);
+      await safeParents(path.resolve(dataDir), backup);
+      await mkdir(path.dirname(backup), { recursive: true, mode: 0o700 });
+      // 옛 링크를 복구하면 제거한 지침이 다시 활성화되므로 원본은 백업만 남긴다.
+      await rename(operation.path, backup);
+      cleaned.push({ path: operation.path, backup });
+    } catch { preserved.push({ path: operation.path, reason: 'changed-or-cleanup-failed' }); }
+  }
+  return { cleaned, preserved };
 }

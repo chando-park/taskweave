@@ -1,3 +1,4 @@
+import { PRODUCT_NAME } from '../product.mjs';
 import { Marked } from 'marked';
 import sanitizeHtml from 'sanitize-html';
 
@@ -49,5 +50,5 @@ export function renderFlowHtml(text, resolveLink) {
 }
 
 export function renderDocumentPage(document, html) {
-  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(document.name)} · Taskweave</title><link rel="stylesheet" href="/styles.css"></head><body class="document-page"><header class="document-heading"><a href="/">Taskweave</a><span>${escapeHtml(document.name)}</span></header><main class="markdown">${html}<details class="source"><summary>원문 텍스트 보기</summary><pre>${escapeHtml(document.sourceText)}</pre></details></main></body></html>`;
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(document.name)} · ${PRODUCT_NAME}</title><link rel="stylesheet" href="/styles.css"></head><body class="document-page"><header class="document-heading"><a href="/">${PRODUCT_NAME}</a><span>${escapeHtml(document.name)}</span></header><main class="markdown">${html}<details class="source"><summary>원문 텍스트 보기</summary><pre>${escapeHtml(document.sourceText)}</pre></details></main></body></html>`;
 }

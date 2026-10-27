@@ -1,5 +1,6 @@
 {
   "name": "taskweave",
-  "version": "0.3.6",
-  "description": "Taskweave — 스킬 중심 공통 작업 흐름과 자료 조회·현재 작업·안전한 기록 저장"
+  "version": "0.3.8",
+  "description": "CDPower — 승인한 작업 흐름, 코드 설명과 안전한 기록 관리 (설치 ID: taskweave)",
+  "displayName": "CDPower"
 }

@@ -1,4 +1,4 @@
-import { mkdir, readFile, stat, unlink, open, realpath } from 'node:fs/promises';
+import { mkdir, readFile, stat, unlink, open, realpath, lstat } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { randomUUID } from 'node:crypto';
@@ -7,6 +7,7 @@ import { promisify } from 'node:util';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { SettingsStore, atomicJSON, requireWithin, withLock } from '../settings.mjs';
 import { startViewer } from './main.mjs';
+import { PRODUCT_NAME } from '../product.mjs';
 
 const execute = promisify(execFile);
 const pause = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -61,6 +62,48 @@ async function probe(state) {
   } catch { return false; }
 }
 
+async function serviceProcessIdentity(pid) {
+  if (process.platform === 'win32') return null;
+  try {
+    const options = { timeout: 2000, maxBuffer: 64 * 1024 };
+    const command = (await execute('ps', ['-p', String(pid), '-o', 'command='], options)).stdout.trim();
+    const started = (await execute('ps', ['-p', String(pid), '-o', 'lstart='], options)).stdout.trim();
+    return command && started ? { command, started } : null;
+  } catch { return null; }
+}
+
+export async function stopOwnedViewer({ store, expectedState, timeoutMs = 3000, inspectProcess = serviceProcessIdentity, signal = (pid, name) => process.kill(pid, name), alive = processAlive, health = probe }) {
+  const directory = path.join(store.dataRoot, 'viewer');
+  const stateFile = path.join(directory, 'service.json');
+  try {
+    await requireWithin(store.dataRoot, stateFile, { allowMissing: true });
+    for (const file of [store.dataRoot, directory, stateFile]) {
+      try { if ((await lstat(file)).isSymbolicLink()) return { status: 'preserved', reason: 'service-state-symlink' }; }
+      catch (error) { if (error.code !== 'ENOENT') throw error; }
+    }
+    if (!await readJSON(stateFile)) return { status: 'absent' };
+    return await withLock(path.join(directory, 'startup.lock'), async () => {
+      const state = await readJSON(stateFile);
+      if (!state) return { status: 'absent' };
+      if (expectedState !== undefined && JSON.stringify(expectedState) !== JSON.stringify(state)) return { status: 'preserved', reason: 'service-changed-after-inspection' };
+      if (!validState(state)) return { status: 'preserved', reason: 'invalid-service-state' };
+      if (!alive(state.pid)) return { status: 'absent', reason: 'process-not-running' };
+      const recorded = state.processIdentity;
+      if (!recorded || typeof recorded.command !== 'string' || !recorded.command.includes(' --service') || typeof recorded.script !== 'string' || !path.isAbsolute(recorded.script) || !recorded.script.endsWith(`${path.sep}src${path.sep}viewer${path.sep}lifecycle.mjs`) || !recorded.command.includes(recorded.script) || !recorded.started) return { status: 'preserved', reason: 'process-identity-unknown' };
+      const matches = identity => identity && identity.command === recorded.command && identity.started === recorded.started;
+      if (!matches(await inspectProcess(state.pid)) || !await health(state)) return { status: 'preserved', reason: 'process-or-health-mismatch' };
+      const current = await readJSON(stateFile);
+      if (JSON.stringify(current) !== JSON.stringify(state) || !matches(await inspectProcess(state.pid))) return { status: 'preserved', reason: 'process-or-state-changed' };
+      signal(state.pid, 'SIGTERM');
+      const deadline = Date.now() + timeoutMs;
+      while (alive(state.pid) && Date.now() < deadline) await pause(Math.min(50, timeoutMs));
+      if (alive(state.pid)) return { status: 'preserved', reason: 'stop-timeout' };
+      if ((await readJSON(stateFile))?.instance === state.instance) await unlink(stateFile);
+      return { status: 'stopped', pid: state.pid };
+    });
+  } catch (error) { return { status: 'preserved', reason: 'service-state-or-stop-unverifiable', code: error.code ?? error.name }; }
+}
+
 export async function openViewerBrowser(url) {
   if (!/^http:\/\/127\.0\.0\.1:[1-9][0-9]{0,4}$/.test(url)) throw new Error('로컬 뷰어 주소만 열 수 있습니다.');
   const command = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'rundll32.exe' : 'xdg-open';
@@ -76,7 +119,8 @@ export async function runManagedViewer({ store, port = 4317, openBrowser = openV
     if (previous && !validState(previous)) throw new Error('뷰어 실행 기록 형식을 확인해 주세요.');
     if (await probe(previous)) return null;
     if (previous && processAlive(previous.pid)) throw new Error('기존 뷰어가 응답하지 않습니다. 중복 실행하지 않았습니다.');
-    const state = { service: SERVICE, pid: process.pid, instance: randomUUID(), url: null };
+    const identity = process.argv.includes('--service') && process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) ? await serviceProcessIdentity(process.pid) : null;
+    const state = { service: SERVICE, pid: process.pid, instance: randomUUID(), url: null, ...(identity ? { processIdentity: { ...identity, script: fileURLToPath(import.meta.url) } } : {}) };
     await atomicJSON(files.state, state);
     let viewer;
     const clear = async () => { if ((await readJSON(files.state))?.instance === state.instance) await unlink(files.state); };
@@ -93,7 +137,7 @@ export async function runManagedViewer({ store, port = 4317, openBrowser = openV
       state.browserOpened = false;
       await atomicJSON(files.state, state);
       try { await openBrowser(viewer.url); state.browserOpened = true; }
-      catch { onWarning(`Taskweave 뷰어는 실행 중이지만 브라우저를 열지 못했습니다: ${viewer.url}`); }
+      catch { onWarning(`${PRODUCT_NAME} 뷰어는 실행 중이지만 브라우저를 열지 못했습니다: ${viewer.url}`); }
       await atomicJSON(files.state, state);
       return { ...viewer, state, close: async () => { await new Promise(resolve => viewer.server.close(resolve)); await clear(); } };
     } catch (error) { if (viewer) await new Promise(resolve => viewer.server.close(resolve)); await clear(); throw error; }
@@ -131,5 +175,5 @@ if (entry && import.meta.url === pathToFileURL(entry).href && process.argv.inclu
     if (!viewer) return;
     const stop = () => viewer.close().finally(() => process.exit(0));
     process.once('SIGTERM', stop); process.once('SIGINT', stop);
-  }).catch(error => { process.stderr.write(`Taskweave 뷰어 자동 실행: ${error.message}\n`); process.exitCode = 1; });
+  }).catch(error => { process.stderr.write(`${PRODUCT_NAME} 뷰어 자동 실행: ${error.message}\n`); process.exitCode = 1; });
 }

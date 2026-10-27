@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="72" viewBox="0 0 100 72" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">CDPower</title>
+  <desc id="desc">다음 작업을 움직이는 힘을 나타내는 배터리와 번개 심볼. 실제 배터리 잔량을 뜻하지 않습니다.</desc>
+  <rect x="7" y="13" width="77" height="46" rx="12" fill="#E7F2EB" stroke="#293D39" stroke-width="5"/>
+  <path d="M89 28v16" stroke="#293D39" stroke-width="6" stroke-linecap="round"/>
+  <rect x="14" y="20" width="63" height="32" rx="7" fill="#158774"/>
+  <path d="M49 18 32 39h15l-5 16 22-25H49z" fill="#FFFFFC"/>
+</svg>
