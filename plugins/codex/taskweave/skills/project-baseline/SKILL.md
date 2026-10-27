@@ -29,6 +29,7 @@ description: 새 프로젝트의 구조·기능·원천 위치를 코드로 분�
 
 ## 목적별로 추가할 문서
 
+- 복잡한 구조·기능 흐름 분석: [코드 흐름 시각화](../../references/code-explanation-html.md)으로 실제 코드·호출·분기·확인 근거를 연결한다. 현재 Workplan 또는 허용된 산출물 위치를 사용하고 HTML 때문에 새 Workplan을 만들지 않는다. 단순 질문·파일 생성 금지 요청에는 강제하지 않는다.
 - `bootstrap` 또는 원천 목록을 조사할 때: [원천 자료 발견 계약](references/source-discovery-contract.md). 기획·Figma·API·BLE/FW·데이터·운영 원본의 위치·revision·접근 상태를 찾되 관련 없는 원문은 정독하지 않는다.
 - `bootstrap` 또는 기능 목록을 조사할 때: [기능 인벤토리 계약](references/capability-inventory-contract.md). 제품·Facade·화면·공개 API뿐 아니라 이벤트·스케줄러·저장 쓰기에서 자동 프로세스도 발견한다.
 - 지속할 기준선을 쓰거나 준비 상태를 판정할 때: [기준선 결과 계약](references/baseline-contract.md). 얕은 지도·심층 추적 항목과 두 준비 체크리스트는 이 문서의 단일 원본을 사용한다.
@@ -46,6 +47,7 @@ description: 새 프로젝트의 구조·기능·원천 위치를 코드로 분�
 
 ## 기록과 보고
 
+- 복잡한 코드 분석을 보고할 때는 $taskweave:explain-code로 실제 코드·호출·분기·근거와 해당 HTML을 설명한다. 분석만으로 변경·테스트를 실행했다고 보고하지 않는다.
 - 공유 기록은 논리 프로젝트 ID·remote·commit·초 단위 조사 시각을 사용한다. 개인 절대경로를 공유 원본 주소로 삼지 않는다.
 - `bootstrap`·`refresh`는 중앙 `<ID>/<ID>.md` Investigation 계약을 사용한다. 제품 저장소의 `docs/`·`.codex/workplans`·새 Markdown으로 대체하지 않는다.
 - 분석만으로 Product Memory의 Event·verified Current를 만들지 않는다. 지식 반영은 기준선 준비와 사용자 승인 뒤 회사 승격 절차에 인계한다.

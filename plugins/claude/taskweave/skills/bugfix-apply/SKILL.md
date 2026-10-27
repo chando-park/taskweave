@@ -16,6 +16,7 @@ description: 현재 승인 bug Workplan 범위에서 원인을 수정하고 직�
 - 실제 위임: [모델 라우팅](../../references/model-routing.md)과 [구현 인계](../../references/implementation-handoff.md).
 - 회사 티켓 시작: [티켓 절차](../../references/ticket-lifecycle.md).
 - 결과 기록: [검증 근거](../../references/verification-evidence.md)와 [Workplan 양식](../../references/workplan-layout.md).
+- 모든 구현 시작·구현 중 문제 판단: [공통 인계의 설계 완료·문제 처리 기준](../../references/implementation-handoff.md#승인-전-설계-완료-판단). 승인한 수정안을 적용하며 새 구조를 고안해야 하면 해당 경로를 중단한다. 같은 승인으로 고칠 오류·설계 변경·원복은 이 기준으로 구분한다.
 
 ## 코드 수정 시작
 
@@ -26,6 +27,7 @@ description: 현재 승인 bug Workplan 범위에서 원인을 수정하고 직�
 
 ## 원인 수정과 검증
 
+- 구현 결과 보고 직전에 /taskweave:explain-code를 적용한다. 실제 변경 전체의 코드·원인 제거 방식·분기·호출 흐름과 테스트 목록·결과·커버리지를 설명하고 복잡한 결과는 실행·데이터·조건 흐름을 먼저 그림으로 보여 주고 단계별 코드·이유·테스트를 연결한다. 사용자 최종 완료 요청까지 미루지 않는다.
 - symbol·caller·implementation 변경 직전 [Serena 절차](../../references/serena-code-intelligence.md)로 승인한 원인·수정 경계를 확인한다. 정확한 단일 text/resource/literal만 textual 예외다.
 - 원인을 제거하는 가장 좁은 수정을 적용하고 정상 동작·사용자 변경을 보존한다. UI 편집 직전 필수 rule leaf·실제 component/token·external layout 선언을 읽으며 승인 tier·영향 state만 검증한다.
 - 직접 회귀 테스트부터 실행하고 위험에 비례해 빌드·정적 검사를 추가한다. 유효한 동일 입력의 증거를 재사용하고 마지막 변경의 영향 검증만 다시 실행한다.
@@ -35,4 +37,4 @@ description: 현재 승인 bug Workplan 범위에서 원인을 수정하고 직�
 
 호스트 파일 도구 또는 `record_save`로 실제 diff·계획 편차·검증·미실행 범위를 Completion.md에 기록한다. 실제 직접 검증이 통과하면 awaiting_completion, 미실행은 verifying, 외부 차단은 verification_blocked로 구분한다. 원천 비교 실패를 다른 테스트 성공으로 덮지 않는다. 제목·필드·설명 부족은 경고하고 끝에 한 번 보완하며 문서 completion 검사나 같은 테스트 반복을 요구하지 않는다. 저장 실패·충돌은 [플러그인 실행 연결](../../references/plugin-runtime.md)에 따라 해당 저장만 처리한다.
 
-최종 응답에서 실제 변경 전후 핵심 코드·원인을 제거한 방식·호출 흐름·검증을 설명한다. 승인 전 설명이나 링크로 대신하지 않는다. 지식 평가·게시·Jira/Workplan 종료는 /taskweave:complete-work가 사용자 완료 요청 뒤 수행한다. 기존 revision·Details·gate 이력은 보존하되 과거 문서 gate를 새 Taskweave 편집 선행 조건으로 승계하지 않는다.
+구현 결과를 전달하기 전에 [구현 결과의 빠짐없는 설명](../../references/verification-evidence.md#구현-결과의-빠짐없는-설명)을 읽는다. 실제 추가·변경·삭제한 타입·프로퍼티·함수·분기와 호출 흐름, 변경 전후 코드·원인을 제거한 방식·유지한 동작을 빠짐없이 설명한다. 테스트 목록과 결과 집계·커버리지 또는 미측정 이유도 함께 보여 주며 승인 전 설명·합계·결과 링크 하나로 대신하지 않는다. 지식 평가·게시·Jira/Workplan 종료는 /taskweave:complete-work가 사용자 완료 요청 뒤 수행한다. 기존 revision·Details·gate 이력은 보존하되 과거 문서 gate를 새 Taskweave 편집 선행 조건으로 승계하지 않는다.

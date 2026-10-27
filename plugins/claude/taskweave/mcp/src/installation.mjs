@@ -6,6 +6,7 @@ import { promisify } from 'node:util';
 import { randomUUID, createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { IntegrationService, PROVIDERS } from './integrations.mjs';
+import { SettingsStore, canonicalPath } from './settings.mjs';
 
 const execute = promisify(execFile);
 const CLIENTS = ['codex', 'claude'];
@@ -86,9 +87,10 @@ export function replaceManagedBlock(text, content) {
 }
 
 export class InstallationManager {
-  constructor({ home = os.homedir(), dataDir, runner } = {}) {
+  constructor({ home = os.homedir(), dataDir, settingsPath, runner } = {}) {
     this.home = path.resolve(home);
     this.dataDir = path.resolve(dataDir ?? path.join(this.home, '.local/share/ai-workflow'));
+    this.settingsPath = settingsPath ?? path.join(this.home, '.config/ai-workflow/settings.json');
     this.stateFile = path.join(this.dataDir, 'installation.json');
     this.runner = runner ?? (async (command, args) => {
       const env = { ...process.env, HOME: this.home, CLAUDE_CONFIG_DIR: path.join(this.home, '.claude'), XDG_CONFIG_HOME: path.join(this.home, '.config'), XDG_DATA_HOME: path.join(this.home, '.local/share'), XDG_CACHE_HOME: path.join(this.home, '.cache') };
@@ -183,9 +185,14 @@ export class InstallationManager {
       const listed = await this.runner(host, ['plugin', 'list', '--json']);
       let plugins;
       try { plugins = JSON.parse(listed.stdout); } catch { throw new Error(`${host} plugin list JSON 확인 실패`); }
+      const entries = Array.isArray(plugins) ? plugins : plugins.installed;
+      if (!Array.isArray(entries)) throw new Error(`${host} 설치 플러그인 목록 형식 확인 실패`);
+      // 관리 폴더 이름(ai-workflow)은 플러그인 ID가 아니다. 실제 식별 필드만 비교한다.
+      const identities = entries.flatMap(entry => typeof entry === 'string' ? [{ id: entry }] : ['pluginId', 'id', 'name'].filter(key => typeof entry[key] === 'string').map(key => ({ id: entry[key], marketplace: entry.marketplaceName })));
       for (const name of ['ai-workflow', PLUGIN]) {
-        const present = new RegExp(`(?:^|["/@:])${name}(?:["/@:]|$)`).test(JSON.stringify(plugins));
-        const otherCatalog = [...JSON.stringify(plugins).matchAll(new RegExp(`${name}@([a-zA-Z0-9._-]+)`, 'g'))].some(match => match[1] !== 'my-ai-toolbox');
+        const matches = identities.filter(entry => entry.id.split('@')[0] === name);
+        const present = matches.length > 0;
+        const otherCatalog = matches.some(entry => (entry.id.includes('@') ? entry.id.split('@')[1] : entry.marketplace) && (entry.id.includes('@') ? entry.id.split('@')[1] : entry.marketplace) !== 'my-ai-toolbox');
         if (otherCatalog || (present && (!state.clients[host] || installedName(state.clients[host]) !== name))) conflicts.push({ client: host, reason: `기존 미소유 ${name} 플러그인 보존` });
       }
       const catalogs = await this.runner(host, ['plugin', 'marketplace', 'list', '--json']);
@@ -254,7 +261,9 @@ export class InstallationManager {
           throw error;
         }
       }
-      return { ...preview, installed: completed, version, loadedVersion: '새 세션에서 확인 필요' };
+      const store = new SettingsStore({ configPath: this.settingsPath, dataRoot: this.dataDir });
+      const records = await store.initializeRecords({ clients: completed, confirmed: true, confirmationSource: '사용자가 승인한 플러그인 설치의 공통 기록 준비' });
+      return { ...preview, installed: completed, version, records, loadedVersion: '새 세션에서 확인 필요' };
     });
   }
 
@@ -351,29 +360,36 @@ export class InstallationManager {
 }
 
 export async function interactiveSetup({ store, ask, output = console.log, client = 'both', currentPath = process.cwd(), providers, hostObservations = [] }) {
+  const records = await store.initializeRecords({ clients: selected(client), confirmed: true, confirmationSource: '사용자가 요청한 Taskweave 초기 설정' });
   const state = await store.load();
-  output(`현재 작업 폴더: ${currentPath}\n관리 데이터: ${store.dataRoot}\n기존 기록은 원래 위치에 보존합니다.`);
-  if ((await ask('이 관리 위치를 사용할까요? [y/N] ')).toLowerCase() !== 'y') return { saved: false, reason: '관리 위치 선택 보류; 호스트 setup에서 지정 가능' };
+  output(`현재 작업 폴더: ${currentPath}\n공통 기록 위치: ${records.projectsRoot}\nCodex·Claude가 같은 기록을 사용합니다. 기존 등록 경로는 보존합니다.`);
   const root = await ask('프로젝트들이 들어 있는 상위 폴더 절대경로 (빈칸: 나중에): ');
-  const connectionPlan = async () => {
-    const chosen = providers ?? integrationSelection((await ask('필요한 연동 serena,figma,jira (빈칸: 나중에): ')) ?? '');
-    return new IntegrationService({ store }).plan({ clients: selected(client), providers: integrationSelection(chosen), hostObservations });
-  };
-  if (!root.trim()) return { saved: false, reason: '프로젝트 등록 없이 선택 연동만 확인할 수 있습니다.', connectionPlan: await connectionPlan() };
-  const workspaces = state.workspaces.personal ? undefined : { personal: { root: path.join(store.dataRoot, 'workspaces/personal'), trusted: false } };
-  const patch = { confirmed: true, confirmationSource: 'interactive CLI: 사용자가 관리 위치·탐색 root 저장 확인', clients: selected(client), projectRoots: [...state.projectRoots.filter(item => item.path !== path.resolve(root)), { path: path.resolve(root), maxDepth: 3 }], ...(workspaces ? { workspaces } : {}) };
-  output(JSON.stringify(patch, null, 2));
-  if ((await ask('위 비밀 아닌 설정을 저장하고 이 범위만 탐색할까요? [y/N] ')).toLowerCase() !== 'y') return { saved: false };
+  const connectionPlan = () => new IntegrationService({ store }).plan({ clients: selected(client), providers: integrationSelection(providers ?? []), hostObservations });
+  if (!root.trim()) return { saved: true, records, projects: [], reason: '공통 기록 위치 준비 완료. 프로젝트는 나중에 등록할 수 있습니다.', connectionPlan: await connectionPlan() };
+  const scanRoot = await canonicalPath(root.trim());
+  const previousRoot = state.projectRoots.find(item => item.path === scanRoot);
+  const rootOptions = previousRoot ?? { path: scanRoot, maxDepth: 3 };
+  const patch = { confirmed: true, confirmationSource: '사용자가 지정한 프로젝트 폴더', projectRoots: [...state.projectRoots.filter(item => item.path !== scanRoot), rootOptions] };
   await store.save(patch);
-  const discovery = await store.discover({ root: path.resolve(root), maxDepth: 3 });
-  output(JSON.stringify(discovery, null, 2));
-  for (const candidate of discovery.candidates) {
-    const projectId = await ask(`${candidate.repositoryPath} 등록 ID (빈칸: 제외): `);
-    if (!projectId.trim()) continue;
-    const executionTrusted = (await ask('등록과 별개로 이 프로젝트의 확인된 실행기를 신뢰할까요? [y/N] ')).toLowerCase() === 'y';
-    await store.confirmProject({ discoveryId: discovery.discoveryId, candidateId: candidate.candidateId, projectId: projectId.trim(), workspaceId: 'personal', confirmed: true, confirmationSource: 'interactive CLI: 발견 후보·ID 확인', executionTrusted, ...(executionTrusted ? { trustSource: 'interactive CLI: 별도 실행 신뢰 확인' } : {}) });
+  const discovery = await store.discover({ root: scanRoot, maxDepth: rootOptions.maxDepth ?? 3, excludedNames: rootOptions.excludedNames ?? [] });
+  // 기존 프로젝트는 ID·기록 위치·실행 신뢰까지 그대로 재사용한다.
+  const reserved = new Set(Object.keys(state.projects));
+  const projects = [];
+  const pending = [];
+  for (const candidate of [...discovery.candidates].sort((a, b) => a.repositoryPath.localeCompare(b.repositoryPath))) {
+    const existing = Object.entries(state.projects).find(([, project]) => project.repositoryPath === candidate.repositoryPath);
+    if (existing) { projects.push({ projectId: existing[0], ...existing[1], reused: true }); continue; }
+    const base = path.basename(candidate.repositoryPath).replace(/[^a-zA-Z0-9._-]/g, '-').replace(/^[^a-zA-Z0-9]+/, '').slice(0, 70) || 'project';
+    let projectId = base;
+    for (let suffix = 0; reserved.has(projectId); suffix++) projectId = `${base}-${candidate.candidateId.slice(0, 8)}${suffix ? `-${suffix}` : ''}`;
+    reserved.add(projectId);
+    pending.push({ candidate, projectId });
   }
-  return { saved: true, connectionPlan: await connectionPlan(), services: '인증·실제 읽기 확인은 각 호스트에서 수행하세요. 토큰을 입력하지 마세요.' };
+  output(JSON.stringify({ records, existing: projects.map(project => project.projectId), newProjects: pending.map(({ candidate, projectId }) => ({ projectId, repositoryPath: candidate.repositoryPath, records: path.join(records.projectsRoot, projectId) })), truncated: discovery.truncated, warning: discovery.warning }, null, 2));
+  if (pending.length && (await ask('위 새 프로젝트를 등록하고 기록 폴더를 만들까요? [y/N] ')).toLowerCase() === 'y') {
+    for (const { candidate, projectId } of pending) projects.push(await store.confirmProject({ discoveryId: discovery.discoveryId, candidateId: candidate.candidateId, projectId, workspaceId: 'personal', confirmed: true, confirmationSource: '사용자가 발견 프로젝트 목록의 등록을 확인', executionTrusted: false }));
+  }
+  return { saved: true, records, projects, truncated: discovery.truncated, connectionPlan: await connectionPlan(), services: '선택 연동과 실행 신뢰는 별도로 설정합니다. 인증은 각 호스트에 맡깁니다.' };
 }
 
 async function main() {
@@ -382,30 +398,36 @@ async function main() {
   const actions = ['--install', '--check', '--setup', '--update', '--uninstall', '--rollback', '--link-instructions'].filter(name => args.includes(name));
   if (actions.length > 1) throw new Error('관리 작업은 한 번에 하나를 선택하세요.');
   for (let index = 0; index < args.length; index++) {
-    if (['--client', '--purge-record', '--integrations'].includes(args[index])) { if (!args[index + 1] || args[index + 1].startsWith('--')) throw new Error(`${args[index]} 값 필요`); index++; continue; }
+    if (['--client', '--purge-record', '--integrations', '--project-root'].includes(args[index])) { if (!args[index + 1] || args[index + 1].startsWith('--')) throw new Error(`${args[index]} 값 필요`); index++; continue; }
     if (![...actions, '--dry-run', '--apply', '--confirm-records', '--with-archify', '--with-serena', '--replace-legacy', '--preserve-legacy-skills'].includes(args[index])) throw new Error(`알 수 없는 인자: ${args[index]}`);
   }
   const client = get('--client', 'both');
   selected(client);
   const mode = actions[0]?.slice(2) ?? 'dry-run';
+  if (args.includes('--project-root') && mode !== 'setup') throw new Error('--project-root는 --setup에서만 사용하세요.');
   const apply = (args.includes('--apply') || mode === 'install') && !args.includes('--dry-run');
   if (mode === 'dry-run' && apply) throw new Error('--apply에는 관리 작업 선택이 필요합니다.');
   if (args.includes('--replace-legacy') && !['install', 'dry-run'].includes(mode)) throw new Error('--replace-legacy는 설치/미리보기에서만 사용하세요.');
   if (args.includes('--preserve-legacy-skills') && !['install', 'dry-run'].includes(mode)) throw new Error('--preserve-legacy-skills는 설치/미리보기에서만 사용하세요.');
   const purgeRecordIds = args.flatMap((value, index) => value === '--purge-record' ? [args[index + 1]] : []);
   if (purgeRecordIds.length && mode !== 'uninstall') throw new Error('--purge-record는 제거 작업에만 사용할 수 있습니다.');
-  const manager = new InstallationManager();
+  const manager = new InstallationManager({ dataDir: process.env.AI_WORKFLOW_DATA_ROOT, settingsPath: process.env.AI_WORKFLOW_CONFIG });
   const providers = integrationSelection(get('--integrations', ''));
   if (args.includes('--integrations') && !['install', 'dry-run', 'check', 'setup'].includes(mode)) throw new Error('--integrations는 설치/미리보기/검사/설정에서만 사용하세요.');
-  const { SettingsStore } = await import('./settings.mjs');
-  const integrationStore = new SettingsStore({ configPath: path.join(manager.home, '.config/ai-workflow/settings.json'), dataRoot: manager.dataDir });
+  const integrationStore = new SettingsStore({ configPath: manager.settingsPath, dataRoot: manager.dataDir });
   const integrationPlan = async (options = {}) => prepareIntegrations({ store: integrationStore, client, providers: providers.filter(provider => provider !== 'serena' || !args.includes('--with-serena')), manager, ...options });
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
   const pkg = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
   if (args.includes('--with-serena') && !['install', 'dry-run', 'check'].includes(mode)) throw new Error('--with-serena는 설치/미리보기/검사에서만 사용하세요.');
   if (mode === 'setup') {
+    if (args.includes('--dry-run')) throw new Error('--setup은 실제 초기 설정입니다. 프로젝트 등록은 목록 확인 또는 --project-root와 --apply로 요청하세요.');
+    if (args.includes('--project-root')) {
+      if (!apply) throw new Error('--project-root로 초기 설정하려면 --apply가 필요합니다.');
+      const answers = [get('--project-root'), 'y'];
+      console.log(JSON.stringify(await interactiveSetup({ store: integrationStore, ask: async () => answers.shift(), output: () => {}, client, ...(args.includes('--integrations') ? { providers } : {}) }), null, 2));
+      return;
+    }
     if (!process.stdin.isTTY) throw new Error('--setup은 대화형 터미널이 필요합니다. 호스트 setup 스킬도 사용할 수 있습니다.');
-    const { SettingsStore } = await import('./settings.mjs');
     const { createInterface } = await import('node:readline/promises');
     const terminal = createInterface({ input: process.stdin, output: process.stdout });
     try { console.log(JSON.stringify(await interactiveSetup({ store: integrationStore, ask: prompt => terminal.question(prompt), client, currentPath: process.cwd(), ...(args.includes('--integrations') ? { providers } : {}) }), null, 2)); } finally { terminal.close(); }
@@ -452,7 +474,7 @@ async function main() {
     const { provisionArchify } = await import('./diagram.mjs');
     console.log(JSON.stringify(await provisionArchify({ destination: path.join(manager.dataDir, 'tools/archify'), confirmed: true }), null, 2));
   }
-  console.log('설치 캐시/세션 실제 로딩은 아직 확인하지 않았습니다. 관리가 필요할 때만 --setup 또는 새 세션의 Taskweave setup으로 위치·프로젝트 보관 폴더를 확인하세요.');
+  console.log('공통 기록 위치를 준비했습니다. 새 세션의 Taskweave setup에서 프로젝트 폴더만 지정하세요. 실제 세션 로딩·서비스 인증은 별도 확인이 필요합니다.');
 }
 
 if (process.argv[1] && await realpath(process.argv[1]).catch(() => null) === fileURLToPath(import.meta.url)) main().catch(error => { console.error(error.message); process.exitCode = 1; });

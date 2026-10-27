@@ -15,10 +15,13 @@ description: 현재 Workplan의 수정 피드백을 같은 범위·재승인·�
 
 ## 필요한 문서와 기능
 
+- 코드 Workplan 수정 결과 보고 직전: /taskweave:explain-code로 이번 추가·변경·삭제 전체와 흐름·검증을 설명한다. 동일한 앞선 설명은 재사용하고 새 변경을 빠뜨리지 않는다.
 - symbol 경계 조사·변경: [Serena 절차](../../references/serena-code-intelligence.md). 정확한 같은 범위의 text/resource/literal correction은 textual 예외다.
 - Swift 편집 직전: [Swift 코드 규칙](../../references/swift-code-conventions.md). 최종 diff에서 간격·체인·동시성·Preview를 확인하며 테스트 작성/수정 시 연결된 Swift Testing 계약도 읽는다.
 - UI feedback: [디자인 시스템 계약](../../references/design-system-implementation-contract.md)과 [UI 검증](../../references/ui-verification.md). 같은 source·render root·visible region인지 실제 영향으로 판단하며 관계가 넓어지면 필요한 rule leaf·선언과 공통 render root의 원천을 확인한다. 문서 manifest·gate 영수증을 새 Taskweave 편집 허가로 요구하지 않고 실제 독립 원천·candidate 비교는 유지한다.
 - 결과 기록: [Workplan 양식](../../references/workplan-layout.md)과 [실행 계약의 보고](../../references/execution-contract.md#사용자-상태-보고).
+
+코드 피드백 수정 결과도 [구현 결과의 빠짐없는 설명](../../references/verification-evidence.md#구현-결과의-빠짐없는-설명)으로 이번에 추가·변경·삭제한 타입·함수·분기와 호출 흐름, 실제 코드·테스트 목록·결과·커버리지 또는 미측정 이유를 함께 보고한다. 앞선 결과와 같은 부분은 위치를 재사용하되 새 변경을 '추가 수정'이라는 말로 생략하지 않는다.
 
 같은 source·state의 누락된 부모 화면 근거 보충은 evidence repair이고 다른 디자인·state·revision·제품 동작은 재승인이다. 여러 같은 범위 피드백은 모아 직접 영향 검증을 마지막에 한 번 실행한다. 제목·필드·설명 양식 부족은 경고하고 마지막에 보완하며 실제 원문 부족·제품 검증 실패와 구분한다.
 

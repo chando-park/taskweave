@@ -28,6 +28,8 @@ cpm은 테스트·빌드·lint를 자동 재실행하지 않는다. 사용자 �
 
 관련 파일만 stage하고 git diff --cached --stat, --check와 실제 diff를 확인한다. 저장소 규칙이 없으면 제목은 <type>: <subject>이며 type은 feat/fix/style/refactor/comment/docs/test/chore/rename/remove/build다. 임의 공동 작성자·기본 skip ci·ci.skip·no-verify·force push를 사용하지 않는다. 요청 모드에서만 확인한 remote branch로 push하며 upstream이 없을 때만 -u를 사용한다.
 
+현재 승인 Workplan이 연결된 변경을 PR/MR로 게시할 때는 그 계획·실제 diff·기존 결과 설명도 대조한다. 설명에서 빠진 동작은 사용자와 리뷰어가 읽을 수 있게 보완하고, 미승인 설계가 있으면 [공통 인계의 문제 처리](../../references/implementation-handoff.md#구현-중-문제가-발견됐을-때)로 먼저 해소한다. MR 요청·테스트 성공을 미승인 설계의 승인으로 쓰지 않는다. Workplan 없는 변경에 사후 Workplan을 만들거나 과거 기록을 전역 검색하지 않으며 이 대조 때문에 테스트를 다시 실행하지 않는다.
+
 PR/MR은 공식 template을 우선하고 fallback만 render-mr-body.rb와 lint-mr-body.rb로 만든다. 공식 양식은 --official로 검사한다. 생성 전 target·reviewer/assignee·제목·본문을 확인하고 target을 명시 옵션으로 전달한다. 미확정 target·전역 reviewer 추천을 자동 확정하지 않는다.
 
 GitLab은 지정·저장소 설정으로 확정된 reviewer를 reviewer와 assignee에 넣는다. 성공 후 source·target·reviewer·assignee가 계획과 같음을 재조회한 뒤에만 select-reviewer.rb increment를 실행한다. GitHub reviewer를 GitLab 전역 파일에서 추정하지 않는다. 자동 병합·CI 취소를 하지 않는다.

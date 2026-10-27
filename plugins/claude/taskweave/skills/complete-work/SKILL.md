@@ -38,4 +38,4 @@ approval-memo-v1은 기존 Completion.md의 실제 diff·검증 identity가 같�
 
 개인 Workplan은 사용자 명시 완료 요청 뒤 현재 결과·실제 승인 범위·유효한 직접 검증을 확인하고 행정 상태 completed와 completed_at을 기록한다. 회사 adapter나 문서 completion validator를 새 허가 조건으로 사용하지 않는다. 기존 schema·승인 hash·Details·회사 승격 이력은 보존하고 새 양식으로 바꾸지 않는다. 문서 형식 완화는 실제 제품 실패·필요한 회사 권한을 우회하는 근거가 아니다. 저장 안전·미저장 보고는 [플러그인 실행 연결](../../references/plugin-runtime.md)을 따른다.
 
-[사용자 상태 보고](../../references/execution-contract.md#사용자-상태-보고)에 따라 실제 변경 전후 핵심 코드·이유·흐름·검증·미실행 범위·Git 상태를 직접 설명한다. 회사 종료는 지식 평가·게시 locator와 Workplan/Jira 결과도 포함한다. 앞선 설명·링크로 실제 코드 설명을 대신하지 않는다. 수행하지 않은 commit·push·게시를 완료로 보고하지 않는다.
+[사용자 상태 보고](../../references/execution-contract.md#사용자-상태-보고)와 [구현 결과의 빠짐없는 설명](../../references/verification-evidence.md#구현-결과의-빠짐없는-설명)에 따라 실제 추가·변경·삭제한 타입·함수·분기·호출 흐름의 설명 누락을 보완하고 코드·이유·테스트 목록·결과·커버리지 또는 미측정 이유·미실행 범위·Git 상태를 보여 준다. 이 보고는 구현 결과 전달 때 이미 제공해야 하며 여기까지 미루지 않는다. 앞서 온전히 설명한 동일 코드·검증은 반복 복제하지 않고 전체 변경 목록과 해당 위치를 연결하며 마지막 보고 뒤 달라진 부분을 직접 설명한다. 회사 종료는 지식 평가·게시 locator와 Workplan/Jira 결과도 포함한다. 링크 하나로 실제 코드 설명을 대신하지 않는다. 수행하지 않은 commit·push·게시를 완료로 보고하지 않는다.

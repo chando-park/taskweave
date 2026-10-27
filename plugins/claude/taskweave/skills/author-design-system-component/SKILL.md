@@ -18,10 +18,12 @@ description: 승인된 디자인 시스템 컴포넌트 Workplan의 API·token·
 
 ## 구현·검증
 
+구현 결과 보고 직전에 /taskweave:explain-code로 실제 변경 전체와 호출 흐름·이유·테스트 목록·결과·커버리지를 반드시 설명한다. 복잡한 결과는 흐름을 먼저 그림으로 보여 주고 단계별 코드·이유·테스트를 연결한다.
+
 1. 제시한 계획에 대한 실제 사용자 승인을 확인하고 한 번 기록한 뒤 호스트 도구로 수정한다. 기록 형식 검사·기술적 승인 처리를 구현 시작 허가로 삼지 않는다. 현재 구현의 피드백은 /taskweave:apply-workplan-feedback으로 이어간다.
 2. 연결 회사 티켓은 정책상 시작 상태로 한 번 동기화한다. 직접 경로이면 부모가 수행하고 새 public 계약·불확실성 등 위임 조건이면 source·선언·consumer·generation pipeline·승인 코드·테스트를 실제 담당에게 전달한다.
 3. Design System repository의 승인 범위만 수정한다. public API·Variant/property·semantic token·asset/codegen·event·accessibility를 적용하고 생성 결과물을 직접 편집하거나 Figma/public token에 없는 값·상태를 발명하지 않는다.
 4. 변경 Variant의 Preview를 유지하고 승인한 compile·직접 test·대표/경계 Snapshot과 공식 source/candidate 대조를 실행한다. Canvas·모니터·다른 worktree 이미지로 대신하지 않는다.
 5. source 불일치는 승인 범위에서 수정·재렌더한다. 새 token/API/Variant/state·제품 repository·공식 source 변경은 재승인한다. conformance/full은 source → candidate → machine comparison → pre-golden authorization → Golden 승격 → Snapshot 순서를 지키며 현재 렌더를 정답으로 먼저 쓰지 않는다.
 
-같은 Workplan에 실제 component before/after·caller/codegen·render/test·미실행 범위를 기록한다. 형식 보완은 끝에 묶고 자동 문서 검사를 보고 허가로 삼지 않는다. 실제 필요한 검토가 통과했을 때만 awaiting_completion이며 미실행·외부 차단을 구분한다. UI 비교 실패를 다른 검증 성공으로 덮거나 상위 제품 화면·작업을 자동 재개하지 않는다. 실제 코드·이유·흐름을 설명하고 최종 종료·지식 평가는 사용자 명시 완료 요청 뒤 /taskweave:complete-work에 맡긴다. 기존 기록·증거는 보존한다.
+같은 Workplan에 실제 component before/after·caller/codegen·render/test·미실행 범위를 기록한다. 형식 보완은 끝에 묶고 자동 문서 검사를 보고 허가로 삼지 않는다. 실제 필요한 검토가 통과했을 때만 awaiting_completion이며 미실행·외부 차단을 구분한다. UI 비교 실패를 다른 검증 성공으로 덮거나 상위 제품 화면·작업을 자동 재개하지 않는다. 구현 결과 전달 때 [구현 결과의 빠짐없는 설명](../../references/verification-evidence.md#구현-결과의-빠짐없는-설명)으로 추가·변경·삭제한 타입·API·함수·Variant 분기와 호출 흐름을 실제 코드로 설명하고 테스트 목록·결과·커버리지 또는 미측정 이유를 함께 보여 준다. 최종 종료·지식 평가는 사용자 명시 완료 요청 뒤 /taskweave:complete-work에 맡긴다. 기존 기록·증거는 보존한다.

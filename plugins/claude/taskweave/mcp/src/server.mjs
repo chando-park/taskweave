@@ -11,6 +11,7 @@ import { SettingsStore, requireWithin } from './settings.mjs';
 import { RuntimeBridge } from './runtime-bridge.mjs';
 import { IntegrationService, CONNECTION_STATES } from './integrations.mjs';
 import { RecordService } from './records.mjs';
+import { ensureViewer } from './viewer/lifecycle.mjs';
 
 const text = z.string().min(1).max(512_000);
 const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,99}$/);
@@ -103,7 +104,7 @@ function definitions({ store, bridge, verification, diagram, integrations, recor
 
 export function createServer({ store = new SettingsStore(), bridge = new RuntimeBridge({ store }), verification, diagram, integrations = new IntegrationService({ store }), records = new RecordService({ store }), legacyTools = false } = {}) {
   if (bridge instanceof RuntimeBridge && verification) bridge.verification = verification;
-  const server = new Server({ name: 'taskweave', version: '0.3.1' }, { capabilities: { tools: {} } });
+  const server = new Server({ name: 'taskweave', version: '0.3.6' }, { capabilities: { tools: {} } });
   const tools = definitions({ store, bridge, verification, diagram, integrations, records, legacyTools });
   server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: tools.map(({ name, description, schema }) => ({ name, description, inputSchema: z.toJSONSchema(schema) })) }));
   server.setRequestHandler(CallToolRequestSchema, async ({ params }) => {
@@ -125,7 +126,12 @@ export function createServer({ store = new SettingsStore(), bridge = new Runtime
 export async function startServer(options = {}) {
   const store = options.store ?? new SettingsStore({ configPath: process.env.AI_WORKFLOW_CONFIG, dataRoot: process.env.AI_WORKFLOW_DATA_ROOT });
   const server = createServer({ ...options, store });
-  await server.connect(new StdioServerTransport());
+  await server.connect(options.transport ?? new StdioServerTransport());
+  // 뷰어는 부가 기능이다. 자동 실행 실패가 MCP 연결·자료 조회를 막아서는 안 된다.
+  if (options.autoViewer !== false && process.env.TASKWEAVE_VIEWER_AUTO_OPEN !== '0') {
+    Promise.resolve().then(() => (options.launchViewer ?? ensureViewer)({ store }))
+      .catch(error => (options.onViewerWarning ?? (message => process.stderr.write(`${message}\n`)))(`Taskweave 뷰어 안내: ${error.message}`));
+  }
   return server;
 }
 

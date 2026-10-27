@@ -158,6 +158,22 @@ export class SettingsStore {
     }
   }
 
+  // 두 호스트가 같은 설정과 기록을 사용한다. 기존 외부 경로·신뢰·서비스는 덮어쓰지 않는다.
+  async initializeRecords({ clients = [], confirmed, confirmationSource }) {
+    confirmation({ confirmed, confirmationSource });
+    if (!Array.isArray(clients) || clients.some(client => !['codex', 'claude'].includes(client))) throw new Error('지원하지 않는 클라이언트입니다');
+    return withLock(`${this.configPath}.lock`, async () => {
+      const settings = await this.load();
+      const managedRoot = await requireWithin(this.dataRoot, path.join(this.dataRoot, 'workspaces/personal'), { allowMissing: true });
+      const projectsRoot = await requireWithin(managedRoot, path.join(managedRoot, 'projects'), { allowMissing: true });
+      await mkdir(projectsRoot, { recursive: true, mode: 0o700 });
+      settings.clients = [...new Set([...settings.clients, ...clients])];
+      settings.workspaces.personal ??= { root: managedRoot, trusted: false };
+      await atomicJSON(this.configPath, settings);
+      return { recordsRoot: managedRoot, projectsRoot, configPath: this.configPath };
+    });
+  }
+
   async save(patch) {
     checkKeys(patch, ['confirmed', 'confirmationSource', 'clients', 'projectRoots', 'workspaces', 'services']);
     confirmation(patch);

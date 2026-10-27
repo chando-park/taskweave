@@ -8,6 +8,18 @@ For code and configuration changes—even small ones—the AI is instructed to s
 
 This repository is a **GitHub-hosted plugin marketplace**. Add its address once, then install Taskweave through your host. It is not an entry in the default OpenAI or Anthropic directory. No separate Taskweave server or ZIP download is needed; its MCP process runs locally.
 
+## What changed in 0.3.6
+
+Codex and Claude receive packages built from the same shared rules. This release includes:
+
+- Concrete code and responsibility decisions before approval. If implementation requires a new design outside that agreement, the AI must explain it and ask before proceeding.
+- Explanations of all added or changed types, functions, branches, and call flows, with test lists, actual results, and measured coverage—or an explicit “not measured.” Complex changes can link a code-flow visualization to the real code and tests.
+- Plain-language progress updates: what was checked, what went wrong, what happens next, and how that affects the code or records.
+- Reuse of the existing ticket key you designate, including keys outside an implementation project's usual prefix. Existing tickets and document names are not automatically renamed.
+- Shared project records for both hosts and a read-only local Workplan viewer that starts when the Taskweave MCP starts.
+
+These are instructions and supporting tools, not a guarantee that every model response follows every rule. Company-specific adapters and credentials remain separate.
+
 ## What Taskweave helps you do
 
 - Review a concrete change instead of approving a vague implementation summary.
@@ -99,12 +111,14 @@ Setup is optional for a plain conversation task. If you want project and record 
 
 1. The folder containing your projects. Do not assume everyone uses the same folder layout.
 2. The specific project you intend to work on. Discovery results need confirmation; a Git remote alone is not the task.
-3. Where to keep work records, or the location of records you already have.
+3. Any existing record locations that should remain connected. New records use the managed location below; you do not need to choose another record folder.
 4. Which existing integrations to reuse and which missing ones you want to connect.
 
 For example:
 
-> My projects are in `/example/projects`. Use `example-app` for this task. My existing work records are in `/example/work-records/example-app`; keep them there. Reuse the Figma connection and do not create Jira tickets unless the project policy requires them.
+> My projects are in `/example/projects`. Register `example-app` and use Taskweave's default record folder. Preserve existing settings and records, reuse the Figma connection, and do not create Jira tickets unless the project policy requires them.
+
+Run `$taskweave:setup` in Codex or `/taskweave:setup` in Claude. Setup registers the confirmed project and creates `Workplans`, `ProductMemory`, and `Instructions` under `~/.local/share/ai-workflow/workspaces/personal/projects/<project>/`. Both hosts use the same settings and records. Previously configured external record folders stay connected; setup does not move or delete them.
 
 Those paths are examples. The setup skill can guide you through the management CLI when available; otherwise it asks for the needed choices and reports what has not been saved. It must not claim that registration, authentication, or a read operation succeeded without confirmation.
 
@@ -142,12 +156,13 @@ Approval to implement does not also authorize commit, push, MR/PR creation, exte
 
 ## Skills: choose by the work you need
 
-The bundle contains 14 personal workflow skills plus `setup`. The names below work with the Codex `$taskweave:` or Claude `/taskweave:` prefix.
+The bundle contains 15 personal workflow skills plus `setup`. The names below work with the Codex `$taskweave:` or Claude `/taskweave:` prefix.
 
 | Skill | When to use it | What it does |
 | --- | --- | --- |
 | `setup` | Configure projects, records, or integrations | Guides the necessary setup; reuses existing connections |
 | `code-change` | A small, well-understood code or configuration fix | Shows before/after and checks, waits for approval, then implements |
+| `explain-code` | Understand code, a Workplan proposal, or implementation results | Shows the execution/data/branch flow first and connects each step to code, rationale, and tests; HTML is only the display medium |
 | `project-baseline` | Understand a new project or trace a feature | Investigates structure and sources; a persistent baseline is recorded only when requested |
 | `feature-plan` | Plan a feature with a wider impact | Produces a concrete Workplan proposal; does not implement |
 | `feature-apply` | Implement an approved feature plan | Makes the agreed changes and reports direct checks |
@@ -183,15 +198,15 @@ GitHub: chando-park/taskweave
 Your computer
 |-- host plugin cache                     Installed copy; do not edit by hand
 |-- /example/projects/example-app/         Your code or source material
-|-- /example/work-records/example-app/     Existing records, if you connect them
+|-- ~/.local/share/ai-workflow/workspaces/personal/projects/example-app/
 |   |-- Workplans/                        Plans and work results
 |   |-- ProductMemory/                    Reusable knowledge, if configured
 |   `-- Instructions/                     Project guidance, if configured
 |-- ~/.config/ai-workflow/settings.json    Configuration and location index
-`-- ~/.local/share/ai-workflow/            Managed state, backups, and optional records
+`-- ~/.local/share/ai-workflow/            Managed state, backups, and viewer state
 ```
 
-This is a logical example, not a promise that installation creates every folder. You choose the project and record locations. New managed records can use the data root's `workspaces/<workspace>/projects/<project>/` structure; existing external records stay at their original location. Compatibility paths retain the `ai-workflow` name.
+Installing the plugin supplies its files; setup creates project record folders after you confirm the project. You select the folder containing your projects, not a new record location. Existing external records stay at their original location. The shared configuration is `~/.config/ai-workflow/settings.json`. Compatibility paths retain the `ai-workflow` name.
 
 For a complex task that needs a Workplan, a record can look like this:
 
@@ -228,6 +243,12 @@ These tools do not approve plans, run app tests, or call other MCP servers on th
 
 Existing connections should be reused. Authentication happens in the host or provider's official flow, not by pasting tokens into Taskweave. Tool visibility, successful authentication, and a successful read are different checks. Platform guidance is included, but a working SDK, simulator, device, or project build is not installed or guaranteed by the plugin.
 
+## Read Workplans in the local viewer
+
+When the host starts Taskweave's MCP, it starts the local viewer and opens the browser once. A running viewer is reused across Codex and Claude without opening a duplicate tab. This happens on MCP startup, not merely when you install the plugin or open any conversation.
+
+The viewer shows recent work, search, status, rendered Markdown details, code-flow pages, and recorded test results. It is read-only: it does not edit plans, approve work, or change tickets. It listens only on the local computer; if a port belongs to another application, that application is left alone. A viewer startup error does not block the MCP's record tools. Set `TASKWEAVE_VIEWER_AUTO_OPEN=0` in the MCP environment to disable automatic startup and browser opening.
+
 ## Update, remove, and troubleshoot
 
 ### Update
@@ -238,7 +259,7 @@ Codex:
 codex plugin marketplace upgrade taskweave-marketplace
 ```
 
-This refreshes the catalog. Check the installed version in the host's plugin manager and apply the available version there; do not assume an already running conversation has changed.
+This refreshes the catalog. In Codex's plugin manager, apply the Taskweave update and confirm version **0.3.6**; do not assume an already running conversation has changed.
 
 Claude Code:
 
@@ -247,7 +268,7 @@ claude plugin marketplace update taskweave-marketplace
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-Start a new conversation after an update. Updating Taskweave does not mean moving or rewriting your existing records.
+Confirm version **0.3.6**, then start a new conversation and select the Taskweave skill you need. Updating Taskweave does not mean moving or rewriting your existing records. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link.
 
 ### Remove
 
@@ -274,10 +295,10 @@ The MCP process runs on your computer, but material returned to the AI is also s
 
 Do not put credentials in chats, Workplans, or Product Memory. This package excludes personal work records, company-only skills, product repositories, and authentication files. Documented safeguards and package checks are not a complete security audit.
 
-Current package version: **0.3.1**. Package/MCP tests and macOS CLI installation have been checked. The wording of the rules and a successful installation do not prove end-to-end model behavior in every new task or environment.
+Current package version: **0.3.6**. Release checks cover generated Codex/Claude packages, MCP connections, shared setup, and viewer behavior in isolated local tests. Installation on another computer and Windows/Linux operation are not verified by those tests. The wording of the rules and a successful installation do not prove end-to-end model behavior in every new task or environment.
 
 Report problems through [GitHub Issues](https://github.com/chando-park/taskweave/issues), without private logs, personal information, or credentials.
 
 No open-source license has been selected for Taskweave itself. Public visibility does not grant an additional project license. Bundled dependencies retain their own licenses and notices: [Codex notices](plugins/codex/taskweave/THIRD_PARTY_NOTICES.md) and [Claude notices](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
 
-Maintainers generate this distribution from a separate development source. Users do not need that source checkout to install it. The 0.3.1 bundle is based on source commit `93a1f50aac3a7c40155df8976380cbc5768d8b88` plus the approved small-change approval rules; unrelated uncommitted development changes and the source repository's history are not shipped.
+Maintainers generate this distribution from a separate development source. Users do not need that source checkout to install it. Version 0.3.6 includes the approved shared rules, MCP, and viewer changes from source baseline `e6f3514`, plus release-version metadata. Personal records, credentials, and the source repository's Git history are not shipped.

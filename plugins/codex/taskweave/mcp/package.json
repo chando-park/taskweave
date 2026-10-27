@@ -1,17 +1,23 @@
 {
   "name": "taskweave-plugin",
-  "version": "0.3.1",
+  "version": "0.3.6",
   "private": true,
   "type": "module",
   "description": "Taskweave — 스킬 중심 공통 작업 흐름과 자료 조회·현재 작업·안전한 기록 저장",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "build": "node scripts/build.mjs",
-    "start": "node src/server.mjs"
+    "start": "node src/server.mjs",
+    "viewer": "node src/viewer/main.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.32.1",
+    "marked": "18.1.1",
+    "sanitize-html": "2.18.1",
+    "yaml": "2.9.1",
     "zod": "4.6.7"
   }
 }

@@ -1,10 +1,11 @@
 {
   "schemaVersion": 1,
   "host": "claude",
-  "version": "0.3.1",
+  "version": "0.3.6",
   "personalSkills": [
     "cpm",
     "code-change",
+    "explain-code",
     "bugfix-plan",
     "bugfix-apply",
     "feature-plan",
@@ -24,7 +25,7 @@
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
-      "sha256": "fd16f4600e424d0e34be79dd363336f2f66689ad647ee1f6254501df2deb19ca"
+      "sha256": "6e41761cb40a5b68708c387cf1a56f5e3c130abe46bc9d509d7fadc7f75df7ad"
     },
     {
       "path": ".mcp.json",
@@ -32,31 +33,63 @@
     },
     {
       "path": "CLAUDE.md",
-      "sha256": "0dfcf7bac49bb9305dbb6bea1f724b815de15914281541c85645a6f19830f342"
+      "sha256": "11aa169b0ea97ba647a2dd0ece64e36e8e8e48e5c5f9a734ae0f5e08ee551d9a"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
       "sha256": "4884bc4946cf3344b4885f202edd1cea8fa4cbed3300863e6280e440613a9f59"
     },
     {
+      "path": "agents/general.md",
+      "sha256": "8d2baeda99ed9948611181d3deef7de2a5166c8a08ed7ebf9996b5b5864c43f4"
+    },
+    {
+      "path": "agents/high-risk.md",
+      "sha256": "bf6003cf29d3936ee599ebed8576c4c0faf427e9e71723d37e12fba43b66ade9"
+    },
+    {
+      "path": "agents/routine.md",
+      "sha256": "61cdb3ce0e2edda0fb66f08e82d3974f18226c16db67faaab43d91df0215d304"
+    },
+    {
+      "path": "agents/ui-narrow.md",
+      "sha256": "fcd4e9b04cdbb6ae8b3fa82e6c3c6e06f0f0ad5ea4bef7dfad26970daa9b20ae"
+    },
+    {
       "path": "core/AGENTS.md",
-      "sha256": "c78386fda07313f28f0a84f38c9ea320f95210426bae286223d7fdbb0c41f9bb"
+      "sha256": "cb79815f92e264f2a4a306eedfb84ec5c7c7c9e1d964a4ad0682036f8dfddc37"
     },
     {
       "path": "core/CLAUDE.md",
-      "sha256": "0dfcf7bac49bb9305dbb6bea1f724b815de15914281541c85645a6f19830f342"
+      "sha256": "11aa169b0ea97ba647a2dd0ece64e36e8e8e48e5c5f9a734ae0f5e08ee551d9a"
     },
     {
       "path": "core/agents/general-terra.toml",
       "sha256": "8802d55a30f606996d4001bc1b0af88c8c279f71ecd2295cc0a776c47e94675d"
     },
     {
+      "path": "core/agents/general.md",
+      "sha256": "8d2baeda99ed9948611181d3deef7de2a5166c8a08ed7ebf9996b5b5864c43f4"
+    },
+    {
       "path": "core/agents/high-risk-sol.toml",
-      "sha256": "6d698c15a11657264a6a5fca5fd25dd6b5ed68ab6b03bd6a018055b7685bbeb6"
+      "sha256": "4366d58b0b701e464277a49a4677a117d4b958d7f3f21b6110d6d6128d2880ec"
+    },
+    {
+      "path": "core/agents/high-risk.md",
+      "sha256": "bf6003cf29d3936ee599ebed8576c4c0faf427e9e71723d37e12fba43b66ade9"
     },
     {
       "path": "core/agents/routine-luna.toml",
       "sha256": "3197edcc90df8dee9293ed2d3148634a6f9328858d3d81c393c4e0fe349fa3e3"
+    },
+    {
+      "path": "core/agents/routine.md",
+      "sha256": "61cdb3ce0e2edda0fb66f08e82d3974f18226c16db67faaab43d91df0215d304"
+    },
+    {
+      "path": "core/agents/ui-narrow.md",
+      "sha256": "fcd4e9b04cdbb6ae8b3fa82e6c3c6e06f0f0ad5ea4bef7dfad26970daa9b20ae"
     },
     {
       "path": "core/agents/ui-spark.toml",
@@ -64,15 +97,19 @@
     },
     {
       "path": "core/references/acceptance-feedback-loop.md",
-      "sha256": "73bfc314895e2b2ec1eb6b3f04e01d29e7c62204c2b5e37feeec23d94aa25cce"
+      "sha256": "6882eec49c1f6d88013b970662cdfc3014295bfcd9cae25ffc142a1a1f87d3cf"
     },
     {
       "path": "core/references/code-comment-contract.md",
       "sha256": "b4d972eb5afc679671d70dfd0eef5dc9e97d4527d0068b96f9fe6a2fe43a36c0"
     },
     {
+      "path": "core/references/code-explanation-html.md",
+      "sha256": "160487769b0741a1ece51840f3b0952365a1cef9329006cca897634e7ad0f083"
+    },
+    {
       "path": "core/references/company-workplan-adapter.md",
-      "sha256": "a7133c32f36b31ee7c8ca4e4349d5a51800036ca61dfe92edc525727cc13e91f"
+      "sha256": "6915b57e290c18c32c9b7c47790bcf97ec229ae8a730155c4bac5bc1393704bc"
     },
     {
       "path": "core/references/context-pack.md",
@@ -88,7 +125,7 @@
     },
     {
       "path": "core/references/execution-contract.md",
-      "sha256": "d89f0033c8540136d52bac7844079cb4e2b6b28f0ca9af79cecbbf125b321e82"
+      "sha256": "3e3938ea070bcf9d1505e271728a5b6c79acddc330f0abd2528e3671ca46c8cb"
     },
     {
       "path": "core/references/git-operation-contract.md",
@@ -96,7 +133,7 @@
     },
     {
       "path": "core/references/implementation-handoff.md",
-      "sha256": "33a4e856c871de335c27641a34dd011c01b05f9d8e4ccf5f36f8aeb5b8350031"
+      "sha256": "015159076f1c1f7151c36882a284ccb4621ed0b707a62a3f008c8596816aeeff"
     },
     {
       "path": "core/references/knowledge-lifecycle.md",
@@ -108,7 +145,7 @@
     },
     {
       "path": "core/references/model-routing.md",
-      "sha256": "318078f8e516c3b91bb15f297fe1a5381f231963717fc2321259e9f6a3b342db"
+      "sha256": "5fcbd018f0e48930e343c3e6403a72622306445922f9f6239cc50c9b6d07d464"
     },
     {
       "path": "core/references/personal-runtime-domain-markers.yml",
@@ -152,11 +189,11 @@
     },
     {
       "path": "core/references/task-workflow.md",
-      "sha256": "c4e1e481c4d10e43719968b01a8c63f357dba8fb85b9d2fba7c67f054e75881d"
+      "sha256": "2f1772d33eab1024d29069e3c651e98be34fbfb16dab95f11ee192f8656f6e4b"
     },
     {
       "path": "core/references/ticket-lifecycle.md",
-      "sha256": "bc6eb202eaff22f16583632c56cc36d213872e8287e548009a7f507df3591d91"
+      "sha256": "3298f5c83a5b0c41db801ae7e688ea3d7bc3a0a96d0e1c5d9cee55849f75c1f6"
     },
     {
       "path": "core/references/ui-source-coverage.md",
@@ -176,15 +213,15 @@
     },
     {
       "path": "core/references/verification-evidence.md",
-      "sha256": "9da1bc1d45e7dc9c028d2f204cc165591ed3f8cacf0f8b7e9b96cf95f8aa5ec0"
+      "sha256": "805f9969e05acd4fbb3b8943e62923978b4e8216dce75ec9daee3681a78320b6"
     },
     {
       "path": "core/references/verification-planning.md",
-      "sha256": "d97afcd516aeaf356a83dff87ebb9d93adc69c91f6d2c3c54ce99f53b2bef1d3"
+      "sha256": "e79ebedb5a7980c51c20130807796d6723384d98ea5632b752b122e25cbdfb62"
     },
     {
       "path": "core/references/workplan-layout.md",
-      "sha256": "bb724834ccc4c3974d1080d43a60e6b03bbde1f31a029b453c81cc70bd6c0fb2"
+      "sha256": "78ef53b48c20e6567067b533e0829c2999350d2629f9fd732fcf963e4d45ab62"
     },
     {
       "path": "core/references/workplan-metadata.md",
@@ -196,7 +233,7 @@
     },
     {
       "path": "core/runtime-inventory.yml",
-      "sha256": "5af68b227eb0c8572e51b60ec250199741e5f2bd19e986e9e24d20d004313a98"
+      "sha256": "13dc18fe886bb9a5ff02470566b6b30288b6e17c74ed02fc42470e9e9ef72841"
     },
     {
       "path": "core/runtime-rules.yml",
@@ -260,7 +297,7 @@
     },
     {
       "path": "core/scripts/model-route.rb",
-      "sha256": "366df3ebb66baf94d44cba464f9b577e9a65c76eceb5bf0fb926fe244bbd2199"
+      "sha256": "95fad1b0531885a9493ba8d2c65eb2269a6a887af9575d4490e9da6141e5e184"
     },
     {
       "path": "core/scripts/record-workplan-approval.rb",
@@ -348,7 +385,7 @@
     },
     {
       "path": "core/skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "8a7d4810fd7bbccfc91fe345c36dc2310744e7b060b53718529e620780f88cc1"
+      "sha256": "6bdf82e64f278f526df7dc75eb1a2055ee6c89391914052b91b8db762a3485e7"
     },
     {
       "path": "core/skills/apply-workplan-feedback/agents/openai.yaml",
@@ -356,7 +393,7 @@
     },
     {
       "path": "core/skills/author-design-system-component/SKILL.md",
-      "sha256": "af05161845812f13bbbba8f6d0f1f29e2abeb736fe1edae04b2377c372378e31"
+      "sha256": "4466d57b99df4d1c898e2a3028e4003bb698c32c95b98a6fd3e3002049c44c64"
     },
     {
       "path": "core/skills/author-design-system-component/agents/openai.yaml",
@@ -368,7 +405,7 @@
     },
     {
       "path": "core/skills/bugfix-apply/SKILL.md",
-      "sha256": "97a10ee97b4be9d75dd32b945790a8d556992650bab103cac7d828c1467d6337"
+      "sha256": "20843c86315d42b2dfe5b97f6123349bc7260d7291c1490bcff9614bdc9de825"
     },
     {
       "path": "core/skills/bugfix-apply/agents/openai.yaml",
@@ -380,7 +417,7 @@
     },
     {
       "path": "core/skills/bugfix-plan/SKILL.md",
-      "sha256": "b2b280b023de3c5a733e72da9f93cc701a37f3aecdbac65e0cee65d8a78faef6"
+      "sha256": "5ce16cf2bf3b1f0edff22fbf64f9f853e295c6d7254a7e1000efcfcf505b1b01"
     },
     {
       "path": "core/skills/bugfix-plan/agents/openai.yaml",
@@ -388,7 +425,7 @@
     },
     {
       "path": "core/skills/bugfix-plan/references/approval-packet.md",
-      "sha256": "ab5d1f267daa48ad56e5f3a89fec29c6b63533ff5dea8c46581770c697ec03db"
+      "sha256": "51cb05b4b6269521437c769c638be7a0547fed56626f66ece9317708d1c4e2b7"
     },
     {
       "path": "core/skills/code-change/SKILL.md",
@@ -400,7 +437,7 @@
     },
     {
       "path": "core/skills/complete-work/SKILL.md",
-      "sha256": "43d2305cf921dcccc4415517a6078be748692049153fd75fcf2ca0cc5e1c6a5e"
+      "sha256": "7c079e0f2f3e72271b7b022bd4621c268ee0c0a9bdeb6e7d5d9bc7b2f256fb94"
     },
     {
       "path": "core/skills/complete-work/agents/openai.yaml",
@@ -408,7 +445,7 @@
     },
     {
       "path": "core/skills/cpm/SKILL.md",
-      "sha256": "63e47b81664662ac09f5c493e7a016cec3a76dcb82008bd7d8ef04f2dcd4cc5d"
+      "sha256": "38ac8ec4fa307ef4176dcf7f9524604ca0c0d2f7c8ba64c522dbb409a9f691d3"
     },
     {
       "path": "core/skills/cpm/agents/openai.yaml",
@@ -451,8 +488,12 @@
       "sha256": "34a22f003da53b554ee7b5888d37adc2920f0ad5951188c86906d0293a46edb0"
     },
     {
+      "path": "core/skills/explain-code/SKILL.md",
+      "sha256": "b8226d3e2fb87590612884090047c8dee07e53de1fbc4bc3c4a602b855b620ca"
+    },
+    {
       "path": "core/skills/feature-apply/SKILL.md",
-      "sha256": "206f0fc5cf7a04d257535adc9f44943b4a2e867f6cffe9783f28134b500d7bec"
+      "sha256": "630fa651af3429ce01abbd8915f6b2fd35b1f1e83c730f6a46eee9521f50e67d"
     },
     {
       "path": "core/skills/feature-apply/agents/openai.yaml",
@@ -460,11 +501,11 @@
     },
     {
       "path": "core/skills/feature-apply/references/reapproval-rules.md",
-      "sha256": "fc26a5dbe2684f61afb2fa350dcfc6951b624d4715555102983e3f8cdecb2ab3"
+      "sha256": "6deca1bf8a8fcccc091d32443df25ddfecec5303ef47bbe74506115b66d62a29"
     },
     {
       "path": "core/skills/feature-plan/SKILL.md",
-      "sha256": "0d39002c9e9ab06acf1cefdce8b78002c3ae285b1d0888785cd08e0400ac08f1"
+      "sha256": "a9693f626d80c4eab7eca271c11bc4c2e015594839e44f1d59702068caa3cdb0"
     },
     {
       "path": "core/skills/feature-plan/agents/openai.yaml",
@@ -472,15 +513,15 @@
     },
     {
       "path": "core/skills/feature-plan/references/feature-plan-template.md",
-      "sha256": "4b3caf7200c18618661763027ce0b412303cbaf3cfa30bd9ac1b5117050d2b76"
+      "sha256": "1b995351d408b4190bf25ab1a2ae6caf6a2a6714d7fdf70ef8d6bdd614d078f1"
     },
     {
       "path": "core/skills/feature-plan/references/readiness-checklist.md",
-      "sha256": "68099ad3890773dc5ec9adc7f93162c297d98efc4987936ebe693a0f787cccc1"
+      "sha256": "bff3a3bc5186c643d144475a7c9feb06a7ba28eab8d4e8e4468eef1af4769e3b"
     },
     {
       "path": "core/skills/implement-ui-with-design-system/SKILL.md",
-      "sha256": "cebf0487fdb35c299a9bb1528befef2262ae445e1a5133d7b0cd07dc3f3237ce"
+      "sha256": "fc2e58f21a55a7c9a94757d95c2e36a97658a291946948562f53cd3178d3af53"
     },
     {
       "path": "core/skills/implement-ui-with-design-system/agents/openai.yaml",
@@ -492,7 +533,7 @@
     },
     {
       "path": "core/skills/plan-design-system-component/SKILL.md",
-      "sha256": "c8d7123c13a21dc1298df4faac87c2b96c0332f0d8b99ea76b7f4529b8a5e062"
+      "sha256": "c8f5897f7d202e663e188528b2913540a49b9f8f2abec8ae9df2c5f804cbdab7"
     },
     {
       "path": "core/skills/plan-design-system-component/agents/openai.yaml",
@@ -508,7 +549,7 @@
     },
     {
       "path": "core/skills/project-baseline/SKILL.md",
-      "sha256": "2d16adac41d2eb251b5a1b437ac8a8b4f3db121ee8b83d675384814e246a9858"
+      "sha256": "4cf3eca73660a6a87c79b49b625d574a85d78c1c1d5afbc2cae82643bf5b5206"
     },
     {
       "path": "core/skills/project-baseline/agents/openai.yaml",
@@ -5759,6 +5800,1810 @@
       "sha256": "2e106cd9b4ae4e34ead35218371a0d4e172da72515a4f8f97d69a2e1fe3dee82"
     },
     {
+      "path": "mcp/node_modules/dayjs/.editorconfig",
+      "sha256": "e8e6b55b340e22596760b73609352f3db9964fc8c6b03ae17ace9e4a85c021d3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/CHANGELOG.md",
+      "sha256": "f24794d36bfd3fd88cf135c27cad9c5a0231471ec11ee82807f8899d093313b1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/LICENSE",
+      "sha256": "5faab7526d055651be3aab769d58897be6bd91f3d39d137f25f12dba1b31d5dc"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/README.md",
+      "sha256": "900c80d1b626c1a777f977111322badede124381407b3f6de23e314c05239b27"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/dayjs.min.js",
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/constant.js",
+      "sha256": "d2880954dab789fd7e2e11d43781325c7e046f1918c71957a4c5831f9f250c11"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/index.d.ts",
+      "sha256": "3c5bb5207df7095882400323d692957e90ec17323ccff5fd5f29a1ecf3b165d0"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/index.js",
+      "sha256": "3bdb239683d55d3840653af69ab382dbe5797be8170e26545a79d42a9d5e8170"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/af.js",
+      "sha256": "ffa68b38b2b5fc2488abe605b2cb72097ffdbafde80749c73d450eaa0f2c8c6c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/am.js",
+      "sha256": "06bef65192b465443a7b371cf9ad3a84db135f34a9ff61f99903d5f0c18ce0b5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar-dz.js",
+      "sha256": "5996008639860fbab38ca51750e2053d38098402d189c8dc710130e454555e25"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar-iq.js",
+      "sha256": "f1fd1ad753251fc8d846e9a63896266cd0a879b2044b390c44e210faedd0387d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar-kw.js",
+      "sha256": "f51374aa074ff18811fc27ed609f9b13f763f601b01dbeaa2e7e4aa40251fc9f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar-ly.js",
+      "sha256": "b8e14e9c9f49561ef657700ac16cf6bf31cd607a29f60393a77c43df47b65004"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar-ma.js",
+      "sha256": "0a4ddbb1a09bbbb409b4bb9d500385c0c0dcfb2b220a8718960d3bcd85e38bed"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar-sa.js",
+      "sha256": "3495b530bba6242eba9fa2c2dc6acc07ea16a73bbc4fa38ce7ddc24a8507fac2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar-tn.js",
+      "sha256": "f73cf85610dcde6f69593e8f08922a904ef815d847669696a57384f3b6a5f432"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ar.js",
+      "sha256": "c8169ef93b479a7ee134dcd96ef738ac5cdcc3e04baaf6d34f88de44d5938172"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/az.js",
+      "sha256": "0692cd968ab8a55ac0497a9ee47e7d554cf7cbfcdc122cc066635a9024bd35a3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/be.js",
+      "sha256": "f37ab979a1c470776314f58db4fd2cca69f255103c8982fe2e9e3e174916de54"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/bg.js",
+      "sha256": "fe65cebe13222990dbb34f5671ebae1a42efa741b104b15a5d26034b55446e90"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/bi.js",
+      "sha256": "28ad66147bb39b60d403a731db40ec0e09ca23c2aee60c5bfd625673d0a04bf8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/bm.js",
+      "sha256": "ec8b839f29abcbf17e11ce7d16c497ebc2e1b11b6b14ca32cf318f77f26d807b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/bn-bd.js",
+      "sha256": "2ea45182ba928c41e9d52935abb765c3e99ce602859fed22e12c10fb88f79f94"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/bn.js",
+      "sha256": "635815083ad310975c5037e1043274c017b7dc6e5bbfd6c4fe984355a84c9c6f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/bo.js",
+      "sha256": "f606c89d54834c5a69b0acea9346376115fab44a9105a1fa699130758274a3f1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/br.js",
+      "sha256": "88b962f0f7af58be132c2ce7adfeb8ca2e2e9ed6972fd8790ae126799d56da96"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/bs.js",
+      "sha256": "fef8225f633aaebbdf86b261bc07736b57099ab5228fb55c64ad57d8ce0cd7bc"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ca.js",
+      "sha256": "1125cffd6442c243a8223749951e258c27da022ad4c32800b24230006b32ae8e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/cs.js",
+      "sha256": "6419dab2f60ada6e0fc5ec01116668aa4ed5a1241c14ffc303a9cf553681555d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/cv.js",
+      "sha256": "4d82a93ceeccc4ecd6c27228ceaaa842c542e532aca95e5f18d66fff094a87e5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/cy.js",
+      "sha256": "83491e3b826c0670ac7dba06deba7e3bb80f3a3ab677a040a063d10b57eab6a8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/da.js",
+      "sha256": "2f5fdc040b19a0f06946909f76fc7f61b84f0a5f5dc98ebf408dafb18e66ad1c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/de-at.js",
+      "sha256": "1a110bc8b41300343491fc761f6e5b092ff26b0f39dc7086c844f67fee65058a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/de-ch.js",
+      "sha256": "8eaf3b6cec3f3115eef7db7e5291605c4cecfb9a88eee6f208fff724d5bd1f8e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/de.js",
+      "sha256": "9a258751e178c992c6fe2749fd2fb31938b192fcde7374538269deaa6f74cd17"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/dv.js",
+      "sha256": "e5873f6b53def46a23c418ad86ece2176cd8c76fc3b676bdad9d2ab802b4ee20"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/el.js",
+      "sha256": "a7334493abbb760679e0a1c5bc1bfcef203f0be6d6e4ae4b5f0016c56d4ebc01"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-au.js",
+      "sha256": "a561c28471d7fa6de5792acaf77f30f092114a4417ef747a36083a0456a1bfdf"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-ca.js",
+      "sha256": "2f9d60d86aac99eabe2ecc1f929e51bdaafcef2c89def7cdd2b496a9217eeff2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-gb.js",
+      "sha256": "e10726d8fe0ab6689bfae5313ad690cd8585f74cbbf5febe696e5e22e3fb902a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-ie.js",
+      "sha256": "3a748bd4bc474898c3d521abf74e49244248907fd08c9ac5e24af46ee46127cf"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-il.js",
+      "sha256": "befc553dbaafaec58461700764bd00df2fdd7559c2a2b28e0e7baefc69dfd3c7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-in.js",
+      "sha256": "668871861a836da27ec6520fe8af89883828250e8fb16c30fac1d47d7dab1d59"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-nz.js",
+      "sha256": "a81ae7f39aa72b81c7ed7712bb3d8cf7bcbab2ecb66453f3c81840978899811f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-sg.js",
+      "sha256": "d545bd58fd142a89f10cc1636d51720a68b0a941a8fb3cdbd9039e668b853a56"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en-tt.js",
+      "sha256": "c0f4bb2748f42ec9f84c19e97a79ee1b8402ae6ba6a61a1d73e56a8e8b95d55d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/en.js",
+      "sha256": "074ebbd9be60c61942e88ab8a3d605b0d73aeeb4a805006c96dcf8170c055b70"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/eo.js",
+      "sha256": "9a6d611f931930a03b455fffdcbb39569d8f27d9d611355420ac594fceff5a5c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/es-do.js",
+      "sha256": "ecdb9a2fc02316e1236ab775cf9100df872c03edfdca57a6685d6747f2a96a60"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/es-mx.js",
+      "sha256": "28d1b83b76116c5b416aa10d80139a0047bbd3795b0afd5dffb8afaa8d217674"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/es-pr.js",
+      "sha256": "ce4ab683b69569f31bd2fcec10ad3f432f81e16e77547834004fa7218e0bb92f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/es-us.js",
+      "sha256": "49f877f80bcc7e702542e60c50977f89455758c5874de750458456e8fff57265"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/es.js",
+      "sha256": "fa6674dfe96ba02e37fdcd1ed53a687595e6fef543f8059f084c961395672a68"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/et.js",
+      "sha256": "6a58530c17e6e009a3177a7228b13b4de38c58182a79eff3a147f4dfead3d539"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/eu.js",
+      "sha256": "b0d98e22ee856b29cf5f057a7df799a3b834cdfc24b32e96cab2b577931ad17d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/fa.js",
+      "sha256": "467e2c27939c5fbee984b6b6bbc72a0d5faa5feea1ad682a52ec6358a59c23d7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/fi.js",
+      "sha256": "6d19bf48f307ffc83bc0509d7677f34904c805dd2f793d8555b1f26f5db477c2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/fo.js",
+      "sha256": "bbd931b0e8a9c4ede9d62ec9e9b536eabb7ea70aa2def297bacb3ac8b3c80b6a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/fr-ca.js",
+      "sha256": "88bca61072584cf8a8888ed89816e596f08677888134d10b5c544600f06153cc"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/fr-ch.js",
+      "sha256": "1a44d0b8411e333d12755fd7a3aadaff260047407a8a38d6f7eeec1b9a5da0eb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/fr.js",
+      "sha256": "ed5201b652c1109b369442cc03b4fa91622aa3b669052b20e2ebcf14973025f7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/fy.js",
+      "sha256": "d847b979731235043f689a6ce40b7919cc3480bc46e952ca24cf6993954c30a4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ga.js",
+      "sha256": "eae4c64fa5e8f711b88e4ebcad1c6cee5351aad3d164ba5babd79a3e46e9e977"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/gd.js",
+      "sha256": "f4d2d1e23aa7c0d268b1dce7f62ca528bab3bbbe7a151b0ab0a39f124834921b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/gl.js",
+      "sha256": "981e439ab6127cb9f44ae3bc08e33a546e7b511245f79c5bd4a61038e384382e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/gom-latn.js",
+      "sha256": "30400aaa0ae8c4ed50b95fe358e3cccfbe9614d0b6c40effa48b90bacc827e2f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/gu.js",
+      "sha256": "460abedc6ed50de02fff306f28da3edd5c9cd33c088196dc468d370f43f50029"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/he.js",
+      "sha256": "ee6662e52387befb9a5d3cf843d4b8bfff09e6455010a37c358a64eade1763ca"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/hi.js",
+      "sha256": "d83850efe85ede0cb9da685716ee89021363b5e9aa58f852151408a756bd1442"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/hr.js",
+      "sha256": "6cd210b59678caf4b82b455b094860cd086c2037a27f27730b158ca7a9c4c51a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ht.js",
+      "sha256": "7a6b1f638cf5ac00119c5ad2b1341b2381fd533499f7f028154fc484d714f1a3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/hu.js",
+      "sha256": "c94710d9dcd90e954f1bd69023521b648149a37310f2abca40dfd346400bd54b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/hy-am.js",
+      "sha256": "6c7ce1075cf2ef0b291f17f63a7521a16abbc6f9055749441118bf6577efa316"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/id.js",
+      "sha256": "a4f5430914004e95f53de410bc167855229d03e3f3560d46cdb89629c093e4af"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/index.d.ts",
+      "sha256": "7f0717e1c516c7b6b6acbc2177d1bd910a5d1abb757c85182ca8d089c9b6e398"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/is.js",
+      "sha256": "d162a1d74505e4aaa5f5cd71b13aec9dd08ed0fa926a633dc2d64cdc7c19ca98"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/it-ch.js",
+      "sha256": "d938a4f0f38599d88249ce8aa0f3ea5df557b45d2ecbf85a945f1b01244595cb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/it.js",
+      "sha256": "2f89f6e909042cb38c0518704aa7520928b62e4d51e1244d182da23b143db489"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ja.js",
+      "sha256": "128cb7da27bf23032cb2e2bca05e572624ba4ba522e41405937da7cb83c13e01"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/jv.js",
+      "sha256": "7364ea932987a2710769b2fefc4b01f37893566f59116926b0ad1fb2f1704087"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ka.js",
+      "sha256": "0d0f26acf64fa0c31e5e0cf234b0af8081fd2e5b04d246e1b1a3f6ec05b43c7b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/kk.js",
+      "sha256": "27877f54304152d0c1bbb77a9a6feaba053caed6974d87a228bcaaf3c93d78cb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/km.js",
+      "sha256": "c969130fdbba1de434261e5bd53a4713d1dd2ab40976053cf93907535874d18f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/kn.js",
+      "sha256": "b50976ba590911f41a17f59f3fd3890622c3bea446d1a5d7c5ba00dee8c9dd90"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ko.js",
+      "sha256": "9fc930beb50e8f9fac4046fdaaeecf83687c0f7b97ed56e97dd9d746d167df68"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ku.js",
+      "sha256": "a88c17fe9b65e0f21dc6fe3d3f8db7963d448944b389507cdd397d1b1fbc4659"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ky.js",
+      "sha256": "4bf2be908ea93c0e47cb8b7eed7eb93a845e38d056eebaabb0cd2c5c885c7f15"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/lb.js",
+      "sha256": "4c017e507e05a305454e3b205abb66e6ce593de32171fd1932d43b197f588227"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/lo.js",
+      "sha256": "ddf077749566aea6e4a333a8fc70b889b3d4c2966c774ba76a10af0a356e2627"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/lt.js",
+      "sha256": "764e9ed08bef072edf81b46fd35d74b5012013c77fd2a9ce52f6f1230352fa3e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/lv.js",
+      "sha256": "971f416736cdc83b45620c4f23893951095f0031b9feb8802e8523325c4e2e14"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/me.js",
+      "sha256": "ba99867d9081784ad4cd7f5f67c8c5f9897c3341c393f945c2facd2673799d9c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/mi.js",
+      "sha256": "fd005cdc05c16c87ad424c4f7d3f064979d1ce5c10a32b4fd0ec8b77a2edfa27"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/mk.js",
+      "sha256": "e4abb613ff88a710187b0c7b90825ef672f6448e5a62d628c181032a9ce3cb19"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ml.js",
+      "sha256": "ed43257a0e783e7ca7504ba6ec03febfca49bed54843a317fe3328aca6abf1eb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/mn.js",
+      "sha256": "47cafb5b6ff97ed886967460eeb035a432318df552369c8dae322286fc6e16a7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/mr.js",
+      "sha256": "e8feaacd360d657e81cbb7c5f188ae957a1680af1f79aa25a738d0df16da0776"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ms-my.js",
+      "sha256": "c03b4efe3ad14eb2024ebda4af26bbe0f890e03abde05840a009a80f8a7959dd"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ms.js",
+      "sha256": "b6bf9cfcec66dc1c14dec8be6da4b4dccbf5eefd7e2ee9c43004e7a26507d886"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/mt.js",
+      "sha256": "5d17cf8a1a99b5904ee36fb39686d5577446f3ab79aeed1286c391e524fc98fa"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/my.js",
+      "sha256": "1c05b53bff32b15f76810b220e39667bbcf8333d3884441cd9ee7fb8b0c169b5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/nb.js",
+      "sha256": "175b406222da93ae3df97c3bf5f92a04fabf3054e48495b9ae33870ae77208cb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ne.js",
+      "sha256": "d9ab4fd675976c2fb9d624fc5c60766882b64b356bf4aa1612823bd80f7575dd"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/nl-be.js",
+      "sha256": "d7a53795567b0c64c8cdb5cf56a85e26ab475f5ba090873b4e5f6579e66c19dc"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/nl.js",
+      "sha256": "e40d1b4a571be7945b4fed8ed96f59587dc2f6c00e470db569cc1c141de1ddae"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/nn.js",
+      "sha256": "7d92a958943fe12db9ed90fa58c37caa00eeedcca945d2b39f764ceabcfc30f6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/oc-lnc.js",
+      "sha256": "6f70731c3afc17bd888cb068303c51e43121c09531fa3559c7c80f529e9c26e0"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/pa-in.js",
+      "sha256": "2adb4cec78fe16952a95efe9282212e21f6c1fdd40b7d10672fac6c0fd230376"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/pl.js",
+      "sha256": "b042b173373ae14946614d00559729a01082c0aa9c436e93ebdfee8f245b082c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/pt-br.js",
+      "sha256": "e557f6a455dd7c274fb57a59818fe030879937eacb267796e7512bc2bef1e15c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/pt.js",
+      "sha256": "951905a8a258c7d6ea923c7cdd9aa96ebfeda5c2cdd20eaede192bbbe8f3dbc8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/rn.js",
+      "sha256": "30988e6316b6cfb0c61879282613b4d8d5397eb7cb1e6e8dc5a642030f39d2d2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ro.js",
+      "sha256": "868e7ab29b07617c08dc09874b63dbcd51c6a50b7469aeb8c02149cc801c84f6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ru.js",
+      "sha256": "9682cff0787d0a43516828a3225ff54e123c676bc049a75ebb857d23d722d609"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/rw.js",
+      "sha256": "c7041941f22829875c6dfb699b50851d70916cf0dd119919a152310f474568d0"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sd.js",
+      "sha256": "aad1a3760412f8979a82873b0eb301a1c4e750d654c55712daf04f1778487ec5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/se.js",
+      "sha256": "aa00126e7c4b44dff4227146bfff8ffe78d4413274f11d24f6d2e24e2a14c454"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/si.js",
+      "sha256": "b161d77591b877d2849106b040ac50a1f746ff61ac4a99267a9120935bb57f84"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sk.js",
+      "sha256": "3ea6fe6685e21cbe81c5763cdf197b0cf35928495765060db2b6e8a12d0cfb6d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sl.js",
+      "sha256": "5cdf9fa15a99160ed34fa83304c66485646f077a51a1093f9b4e711442d2a38a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sq.js",
+      "sha256": "6b32325c5dfba0dddf807b4d5aa031dad208b45315d9116e848c2d593630c65d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sr-cyrl.js",
+      "sha256": "bfd57b1f2853921181f5077ae1e654cc656156909416b70041e90a3efd71af73"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sr.js",
+      "sha256": "193906f04afd4b536a131c67c6501dde690de14360a3ebd33b0e75a7c9b16e87"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ss.js",
+      "sha256": "3458cabfddcd0f173e11ce058d4eb6cc74da4899d012501e2aedd58e0d04fa11"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sv-fi.js",
+      "sha256": "f6d17d56e087729e6fb46c0d6f626d61b66c4384e6b3aea7d42b086899f14a50"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sv.js",
+      "sha256": "820ee9c05134bbda46ed61b7f5406c9df9f19577ade61946a786d4f8fd3352c8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/sw.js",
+      "sha256": "e4965f7230dcb2c753a0b7a80681ee12eee86f3d101c3cb286522f6f5c31c9c4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ta.js",
+      "sha256": "ff386f7ba823a10481da140a02f251d58075c2449a6a8135d5dba6f29a0d00d2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/te.js",
+      "sha256": "b08e0b7b0966102d1c2207eda56faeddcb6a5261fd330ef65c1f45c9cf530458"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tet.js",
+      "sha256": "6429ca6893042be9fdeca27418ac633e38dbe9ceee1f100dd4a5fcf68df7cc8e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tg.js",
+      "sha256": "b30b45f1bd2a9780ac9dbe5d09a8f8e270bddaa7f9330c5897ea8491b387979b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/th.js",
+      "sha256": "222bb4eef45aebcf8d32dca88dff9259d4ba979b77ec5ad59aa0e4ef9155918a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tk.js",
+      "sha256": "fa874d9c2ab63e4386c2c63e82115a0faf2899c4cd209543d35b9746cbfd84c5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tl-ph.js",
+      "sha256": "06866729e17c2c46cf83fd52867e80a509dc64a4c4747687cbb7d0b1dd6a12de"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tlh.js",
+      "sha256": "20c672896503686cd5f610e8b83a8f47dfc3b35136208f0c3fdbf057ad9ead90"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tr.js",
+      "sha256": "ff1b485353f2cebfe89023cb777977ca2298c7f15e438c5cb515b06023188ba3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/types.d.ts",
+      "sha256": "73a0ee6395819b063df4b148211985f2e1442945c1a057204cf4cf6281760dc3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tzl.js",
+      "sha256": "2dc13c306218547a3663860121efbb84fb39b30ed4f6d3495bfd9acd720237c5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tzm-latn.js",
+      "sha256": "c65fed74ffee807e1ffcdf9992cbd4c5e1a2a61da8370bbc9f7c212cd9fab9e2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/tzm.js",
+      "sha256": "8e74a59dcb4d5e714ecdd69e89014ae33b4905549cbf28e1ae4110e3c5f47e4f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ug-cn.js",
+      "sha256": "2b18b59fa0e79987a6de029b7f6481f8e52a3dfbbed43e4a50dbc1e761203df8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/uk.js",
+      "sha256": "18c24a7efd1f412add277b04b77d87f7153c5969b2957002d5f119e781b1cdc4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/ur.js",
+      "sha256": "171b1b2622af220bfb1cd7a87ed6e7dc3772366f140e46b13d204e08d96f9c5c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/uz-latn.js",
+      "sha256": "c47cbb9495fdf840eeea2b2c43dd2ca046b4649c07b7ec802f022703e396f08a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/uz.js",
+      "sha256": "213a8d90ef89984c542454496f4ad9ca78c584f97c9cb8cdac29fd898cdb160a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/vi.js",
+      "sha256": "4bfc82490518807b31f5b2b5259a6d26170b9eaed4886dca10beec470bf1fa9e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/x-pseudo.js",
+      "sha256": "76427c816283491edde5814f6e275741f37778e708517db1a011a49f85dc51a9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/yo.js",
+      "sha256": "8a2f294a1f7f3b39f23f371950402837989e88127e57d8c970e795998a7e2d97"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/zh-cn.js",
+      "sha256": "e8279d862be02c60f256e98e42a6bde251b56a94851f9a3488b08924de2ec2eb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/zh-hk.js",
+      "sha256": "f3e1dfd81c70d8ce4a591accae62883823bfca55baa5dd7b456d3215ca43b18e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/zh-tw.js",
+      "sha256": "4458abe36eb0df6c51ca6b6e21a11319deeaa4e5af938611298730ffde50863d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/locale/zh.js",
+      "sha256": "9439e7f99def16d3cecb776442d55992505e95ef8031d8bf85ba8e2479e090a7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/advancedFormat/index.d.ts",
+      "sha256": "bee3a33f4e676e3af284f325790b604d9ded7a85012ad98060fd50c457525871"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/advancedFormat/index.js",
+      "sha256": "257659d141fc2ffd9550a37a0301db8e824e1ea62d62637ecbc587d9bf39cf49"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/arraySupport/index.d.ts",
+      "sha256": "db0bf286cd5772cf956e80f26cf48a8fa26e0451d964bd03bce6da65452c8e8c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/arraySupport/index.js",
+      "sha256": "cc2d76d9c7fd22029903ff7ca44526b6fa9c81a36db23886b6b6f98bcb364629"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/badMutable/index.d.ts",
+      "sha256": "bee3a33f4e676e3af284f325790b604d9ded7a85012ad98060fd50c457525871"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/badMutable/index.js",
+      "sha256": "399d7a36dc22a7df46acf36f4a9212403d992f70537336ae944acf70c0f464b6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/bigIntSupport/index.d.ts",
+      "sha256": "46f4a2670a554feda6d63e2f232e8915c5068c721a58467724210102aeb924cd"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/bigIntSupport/index.js",
+      "sha256": "0b0ef99d74b126223f11c974b77e4d02cb1338892be3badf4f6385f03268e8a6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/buddhistEra/index.d.ts",
+      "sha256": "bee3a33f4e676e3af284f325790b604d9ded7a85012ad98060fd50c457525871"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/buddhistEra/index.js",
+      "sha256": "0037b1b4eac59e066637a0b3204f6d7b906ebb15099a73fe313e12eadd8fd46b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/calendar/index.d.ts",
+      "sha256": "88285e18d330c659d48cd69033a35e62ce9f51937c87723157f894d7d4828cf4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/calendar/index.js",
+      "sha256": "9d4778ee024c5795afe1d3dfc55bf5d377ef1c74c6aa087bbcc0251989a0ed84"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/customParseFormat/index.d.ts",
+      "sha256": "5ad5481abf93c0d89ff4e214b82917f01ca8780bb192e3ec93542a3a57c9ca22"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/customParseFormat/index.js",
+      "sha256": "d72a1f0fba478a872e4efa27e4f48639437e2f9369d38c6fb48c51b3fd4f79de"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/dayOfYear/index.d.ts",
+      "sha256": "7638e29f87e6d1a74f2ed34eaa5bf33f54f5b01126d9812edd9d99ded6a27fa3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/dayOfYear/index.js",
+      "sha256": "3b0b1a3f530b9652b24b6bf09f69e4b4b44b7e335690326b36cb9098ed5ec444"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/devHelper/index.d.ts",
+      "sha256": "bee3a33f4e676e3af284f325790b604d9ded7a85012ad98060fd50c457525871"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/devHelper/index.js",
+      "sha256": "2930d09ad3f163ca1ad817097877215df7be9978b5644f93ea4207a0d8dd4596"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/duration/index.d.ts",
+      "sha256": "85d344cfd8a223344d7e6e1fcb6f631509d6ae6356839120d7e865a770a239ed"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/duration/index.js",
+      "sha256": "e595d67b6691d50604836e54993db40fac28f4d49eb40538f851af63511fdb3a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isBetween/index.d.ts",
+      "sha256": "f0fb210698082281fe8a46ec628d847c7036cb278f61577c500054dc454c3ad1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isBetween/index.js",
+      "sha256": "6950d982717d536faa52d4b3b8e5d7f10aea5f1e1ab913fc5b5f8e141855dbec"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isLeapYear/index.d.ts",
+      "sha256": "5d9c61f28b7157923df2cc9ef19b6c055f4c422d13405bc2ca625cbca2a10e9c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isLeapYear/index.js",
+      "sha256": "9ca4db64394d08e5efc523dd7aa516a383991274c4bd60176b4eda27b9cde637"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isMoment/index.d.ts",
+      "sha256": "302320dc03c2465b25b12d7b2defffc6512fcf75ae3918bbf01f7dd2761f2751"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isMoment/index.js",
+      "sha256": "93aa532693b363c67f1c7f238bf2f79aa6047748b2df58bc61c3e3943e3aeaf3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isSameOrAfter/index.d.ts",
+      "sha256": "3ee64fe7ffe26a293c81940f6fec2de6ae0269dd3fd1023a9ae863353f0a4059"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isSameOrAfter/index.js",
+      "sha256": "64fcc2bdf664f945d78c8a8c3d1ecf8d1988bf505f7624e48b880941deae9814"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isSameOrBefore/index.d.ts",
+      "sha256": "097455e3556de5a63153789cd66031856d0993c4c11e62ebd5fa83f200455331"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isSameOrBefore/index.js",
+      "sha256": "c149587953771cbcd3e36f0766ae8b389a8fe8094f66d3eec1c03dafc73e2a99"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isToday/index.d.ts",
+      "sha256": "b01d2c8551710e8b96c55a6ddcedfb2c300a960725c991894c1e4c4df1d0da1a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isToday/index.js",
+      "sha256": "9dde37014a54b24924d60530cfba7f83a5c4bdf86aa776c15df864e009e836a1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isTomorrow/index.d.ts",
+      "sha256": "1bd3ff282356ba8c7df6c3fc3bd66d9e1a13063d057e6ecf1f9e8104b8c8ed28"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isTomorrow/index.js",
+      "sha256": "9ba29a4a90aa63a010ba98951b8bad522d587d0462f6bde4cba79d8f7d2e11b4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isYesterday/index.d.ts",
+      "sha256": "9106a5ac595c97b906fec2c685f05f3348f45f579eb97b42109b6259122f2e38"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isYesterday/index.js",
+      "sha256": "8aedc0e4bfa3fb592ada98fbd90275b472e4233dd498174e9a78fdb19523c657"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isoWeek/index.d.ts",
+      "sha256": "8ee318d461fd56059e26287fd937f697658ef31cf67650c1cd06ca5b269724b7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isoWeek/index.js",
+      "sha256": "bc1454f3c54c1ebe3956ca1d0579b07f272128f3cfa96d5337eb8ea0c215b031"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isoWeeksInYear/index.d.ts",
+      "sha256": "0e143712c24b9f9417d388ed75d6ca1d157f325c687c91e68a6d70f3d5ab1a57"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/isoWeeksInYear/index.js",
+      "sha256": "1b8de26838625992a5412eebffeb64d44be3a33840013d63ed5af9a429ccbc49"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/localeData/index.d.ts",
+      "sha256": "b5cf64892d4156cd4036a35a4cf894625c0753b624d6a0c86707acb6d2b2df25"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/localeData/index.js",
+      "sha256": "944e37e932bd8ee399ed45aa49930d6c21b282082230b068539247dd43ff21e4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/localizedFormat/index.d.ts",
+      "sha256": "bee3a33f4e676e3af284f325790b604d9ded7a85012ad98060fd50c457525871"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/localizedFormat/index.js",
+      "sha256": "5236e528ffbada0e67416b1de859ff27c11ae1b5fb614044ece623b2ee143751"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/localizedFormat/utils.js",
+      "sha256": "52ac7b69fd51c3db9cf23ae05b22a8f65c03cb9647f52e1600f46a2fd36bc619"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/minMax/index.d.ts",
+      "sha256": "2a36219d8f897847b8a222a3131272b2b0368cbb85a277fe1785048e0648d83a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/minMax/index.js",
+      "sha256": "54a83df35be880fd21eadb11d91291e6e2f9e550467bf329dfeaf5506f1021b2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/negativeYear/index.d.ts",
+      "sha256": "cfd177085ff613c3e764e60a86819bd5a4f6c473b45a4193a9a9fa4057fb111d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/negativeYear/index.js",
+      "sha256": "b3138fced0a7f15d46ac65d09a8058598f0345b9b939dcf480bf115387275355"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/objectSupport/index.d.ts",
+      "sha256": "de59c97a9d034bc53ea37ef34d4bffc1f97cb4c9c2b97064457da57722fdc17d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/objectSupport/index.js",
+      "sha256": "45646e25d39ee1c6560b109a2f1108394b63ea6c7eaebb711fa22ce732d0e002"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/pluralGetSet/index.d.ts",
+      "sha256": "60f2a54cb62a4eef4b6bb377497cedb7e0b236000bc49a41498b9fe1df899c1e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/pluralGetSet/index.js",
+      "sha256": "e9c3fb061d7bdf707f990b36b08d00909c01c249850441858c10c49812b7f0d9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/preParsePostFormat/index.d.ts",
+      "sha256": "bee3a33f4e676e3af284f325790b604d9ded7a85012ad98060fd50c457525871"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/preParsePostFormat/index.js",
+      "sha256": "6762f8328e3d40157165c348399dbb787d43daf7f924db0d8950e9f57982188e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/quarterOfYear/index.d.ts",
+      "sha256": "5d8e167b0627965147891f2f2811a3bf02eda27ab88e50d0d302b1fa9380d15e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/quarterOfYear/index.js",
+      "sha256": "1cbb64962d8cd16ccf3fa72c8ed8f5d0139e28ba4b155be597d41a9cf61d8d1d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/relativeTime/index.d.ts",
+      "sha256": "53a091beff4c1a013e5b49da4136c3cf01a82eca57731e06254e179274b4e381"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/relativeTime/index.js",
+      "sha256": "a5ca861fba3a6fb0f73931e7ec1ef0762c873d1e7897c611346111c282c79a87"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/timezone/index.d.ts",
+      "sha256": "8a35630c7cf5128e6e232cdb41c54e324f0cd79e9b57735ad90c683f72bbdb01"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/timezone/index.js",
+      "sha256": "ed3c19b4d53ea7ef9c11369ce301bc5747f02e03d8203f4b1f25fd4df2ea83d1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/toArray/index.d.ts",
+      "sha256": "48a362b5371a26416d665e0fe39480e7e4fee4cf1139983e631c4ba9c34cd270"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/toArray/index.js",
+      "sha256": "bbb545da482d30dd80f881b7a13d1c3dac144067ed57d6a2bc68a98370169bf0"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/toObject/index.d.ts",
+      "sha256": "2197d8e7a4edd0d2211bf3aaf3d5851026d57c4e66c8bbade9c2a2adaa796958"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/toObject/index.js",
+      "sha256": "b75a8ed1aca1e0302afb456c08359eb27d77164a63fd0471cdb89ef5bd0a8241"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/updateLocale/index.d.ts",
+      "sha256": "0fcf919fe477758d72dfb40f86b70c46d1dfd2eccf1ffbe988bed01b53f84f74"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/updateLocale/index.js",
+      "sha256": "2f5b9f7b65b047e8df6589f3ca31ac65b553c80dd4753dc0a3236a5502ccfb53"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/utc/index.d.ts",
+      "sha256": "6003f9a303f96bd4a2cd982c29430db84325c390a926c3d2c3ed5845c42f9e42"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/utc/index.js",
+      "sha256": "3a15eb6c9e2fdd2515c8a451ee99a225a04a85111cb6c69dd38ff8f42e20a6ff"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/weekOfYear/index.d.ts",
+      "sha256": "bef3344291a5376aa1623daf4fdc1a3c4c711ce7c9f02a404ee43396649ba616"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/weekOfYear/index.js",
+      "sha256": "8375780ab37ae42e6f6a2913b0761720c72507630b0f4fed6511aeae908b60d5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/weekYear/index.d.ts",
+      "sha256": "2583ed584b8d9b3e839bd059d24e64953df2e9ed975f9a89c1b37a2aa9499d06"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/weekYear/index.js",
+      "sha256": "d516c99609178043caba848fb95932c0aa02f8e2ccb79b50e7a1f2d571fc737a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/weekday/index.d.ts",
+      "sha256": "17a5d07dc6ce4343d625f594693fd887ca453702b5c21299b29cadb4e48b540a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/plugin/weekday/index.js",
+      "sha256": "439ae9775dce642087b71f45e50e927c9e5d334a2f445e765b41f96678a3a61a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/esm/utils.js",
+      "sha256": "3446043bb743ac699ab6a04b440d70d697150bd88572cf67fd28bc2c35b16219"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/index.d.ts",
+      "sha256": "3c5bb5207df7095882400323d692957e90ec17323ccff5fd5f29a1ecf3b165d0"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/af.js",
+      "sha256": "c9c619b8bb8efe1b2f4d5f061561e14cdd2b9464c4cace1b645578b6d688f03b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/am.js",
+      "sha256": "c5ad321a79cf3e266edc8f1946d20804670c3389459b6618ee153944d2afb19b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar-dz.js",
+      "sha256": "d4704c92458b4b3bc23ffd7395a2a5809a1211e6d0d4ad898798c42924ee5e8e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar-iq.js",
+      "sha256": "3b68dbd73d3c8aa22fdb13f83a324a141c018b56fb3b2f2b34712b7ddd0f23d7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar-kw.js",
+      "sha256": "f0554b3acbe15aa933b3e6811264a3cce3d83ec7915cd6eb4453317ba3b76283"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar-ly.js",
+      "sha256": "c8320bdecab7ffa4eafde3858efb7baae9bd1394a4f9bdd14156ce48b2267d31"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar-ma.js",
+      "sha256": "5a21e7f4dae4df73c18bfd8e1ad5cf23f6a123cead69c7d76caf378a6195a849"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar-sa.js",
+      "sha256": "4844d982a423d205714a5c9dd0dc064f5c43c48bab298bba2e7da19d9be7734b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar-tn.js",
+      "sha256": "ffd3d7eb16c537f3f7c74fb8ffed7d955dc8303b1a011f79951fda64a7555886"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ar.js",
+      "sha256": "2797e1990d083491347cc2b3582af147f386e5bdf2ebad90496a76314d306607"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/az.js",
+      "sha256": "586bd2488d4a77593a39af53fc846d149c7b34275211cf0c59e81f57a5610d00"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/be.js",
+      "sha256": "a5224ebe66c028fd645bc5f1d26ed3bc3a0adeb4fc055211aa1a2db8b11730d8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/bg.js",
+      "sha256": "f607e69bcdad404b78d9d4b233218231cd2dfbb280f57f8c99bb0af33e9bc495"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/bi.js",
+      "sha256": "b87766e94bff34c8aa91a9a85f4015abcc74429e417bcd6ce5bb95b6ed0719ea"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/bm.js",
+      "sha256": "5634c98659ee9aa615087b8559bb5612d0300472ee3bf67d1137017bbd6458fd"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/bn-bd.js",
+      "sha256": "cb14f3ec2cb6ea7cb6e25f614c46d5b29552e5f94a0b630bb5799748f4e9220a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/bn.js",
+      "sha256": "49481eaa850b6bf72bf2104352520ea71460b5193c60793edaa442c70d004b01"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/bo.js",
+      "sha256": "4d9538125cafe50af6cb9c0d7e75a6fcd14b4fa69d1f98c1f1eef727d7edfaa2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/br.js",
+      "sha256": "539cdafb02e7517727f86f034bd5b9bc36b123c1b4950d99147ca37f5bcd2b92"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/bs.js",
+      "sha256": "a1399feee5a89618d0f58335083dbd3b396d8f388f98950636459763d5767515"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ca.js",
+      "sha256": "e7958d3325b6c25489e52c446818681adb76354fa0cfb26fe32d960ca07671fb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/cs.js",
+      "sha256": "990677ebe2b1743fb574594d35839a86b4e81df39ab4f2d0aee8f1081becb682"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/cv.js",
+      "sha256": "aa5ad5b7ea2676e7e3eb3f84a93941eef1a47a2ac5621e4c8ef929efc7cc4d38"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/cy.js",
+      "sha256": "083a5182f407e537a01ca0c6c39e7b95914127be78c07edd518748881b09e04a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/da.js",
+      "sha256": "a497c10832b7a3cbbf913c3281c15265e6c9eddd77d3b25f4a2215c444a69238"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/de-at.js",
+      "sha256": "d346ccc5064e7bf38fa576f8576555f692f1f2c9fa292f1b6dd4670c39bf95b1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/de-ch.js",
+      "sha256": "eb6bc46bac0a0779f04d2a948d77fb904caaf3dde4bfccbc3804569a1d701949"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/de.js",
+      "sha256": "3596deca0b5145ee014c77399ea17544ba8981a2fb8706097d82f10d3549599c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/dv.js",
+      "sha256": "7291d7731fba3fb5228d8f89576828c76a8c3546af7c7c0a90d9fa68be0d6bab"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/el.js",
+      "sha256": "6e1a34370719c1b3f6a203289dc8b1cc288a97f18ab048dcf25ce7dc2a56b0f9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-au.js",
+      "sha256": "2e5928c2f76d07b837e605e79245b4a5b813f0aceb428a3d4c72f88273554cd7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-ca.js",
+      "sha256": "45f0c44fd74b874a20e003f51e078dedbe45b4547db00755cd09a442457b4f23"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-gb.js",
+      "sha256": "568b48aab0d3c9595c0da291a579af34d6e35e1b155bdd49a8ae3decc2af15da"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-ie.js",
+      "sha256": "5d08d7e953df5a07d6eb37a69b4c900b6bf08b8539bca51e8a143675e6f0ad75"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-il.js",
+      "sha256": "dd74256a8fb8cbd4156a633f9278081665ac8df714bd022819508624969035ac"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-in.js",
+      "sha256": "3241b5b548c861f298619890fe5a88e431ce5be7d5a75a979274aa63e8308aeb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-nz.js",
+      "sha256": "9e7a7a41fc5aa02d88b3042f6ed824ab0175ec21edb0af3e15a1f3fd9a2ae489"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-sg.js",
+      "sha256": "4260f16f587962c22d502e28a6f9debdfadc6b96bfba3903f3920e4f9ea5b507"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en-tt.js",
+      "sha256": "470e6634aaf4ce736ad23f117676813d6f163e1f3b0c2e7ed0ba6be45713cf66"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/en.js",
+      "sha256": "def38160741cbf3169a800394148fe5ef89db95bd9445c1d5a93fdaf91d8889f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/eo.js",
+      "sha256": "58748be14f634f6a1d58a88013be8a536dcbdd3fd0532cd3554b5a964754a60d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/es-do.js",
+      "sha256": "cc1974b3384a5b8fc11380a5824a842f9af826a7a5109ca350074316c2b23b94"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/es-mx.js",
+      "sha256": "13d2ac289d324edca63a2612a04445122ed7dffac1ebceb3448c63764e590bde"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/es-pr.js",
+      "sha256": "850a9eb44ac3a9a1010ff92d3b11db8ace4a2ca1325f90566f3123142b17f257"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/es-us.js",
+      "sha256": "e83b89340dd666ead6b0ecbc21cfd6ea61275a351aaee5be5a842466a3a45f93"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/es.js",
+      "sha256": "d1b6db8523ad28948c14f2ad77fe93bf25e325c56cc7d1f4179879b29e9828a7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/et.js",
+      "sha256": "1e59486d3abf70850fad0d7a12e7a4ca65c171dbb9762ffc8e2ff0859773f2dd"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/eu.js",
+      "sha256": "c8c55f0091419e7ad8d15f79cd75a4bf2ec9549c374cbf48e7b957dfc12cab42"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/fa.js",
+      "sha256": "0723c8f2d3a10b6ad455af1d292c8733c0175daa2b779462f08465ae4807b9a4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/fi.js",
+      "sha256": "cf0b090b794a45d05aeaef013680552472bec4c7d82e7a3874f272e9dc4d67e7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/fo.js",
+      "sha256": "b164c50c12f63c7b0ea0c961a2320ae77d848fdb65fd97f9daced48380a66539"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/fr-ca.js",
+      "sha256": "4d147fb2da3f1a3dad3c3eb04e8ce8c710208a71379fa7d9b2ebeb3c49fd42ed"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/fr-ch.js",
+      "sha256": "f6d5c433518a9d66a802a261fd45f745172e5eae7718644df0d2c7e526825b44"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/fr.js",
+      "sha256": "a1ad1b3e844785d50522e91f60993d360ec6221011c2593bb06f8727cdd6fcbf"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/fy.js",
+      "sha256": "e8be6bd0f000bb09d2891943e94be438d0c36ebbc7f5e04f0909cdb297b5169b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ga.js",
+      "sha256": "e202b1a8063b5f19b2daca2d280813408b1c8bbe727368d01351dd58b07ea632"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/gd.js",
+      "sha256": "de9a224871889515b045290e23fc5c75769446f87a2b950109ef4071159aa577"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/gl.js",
+      "sha256": "5399e41a6b45eb33d487a1af6215276db8228c2e53d0cb690ace394075e0ce37"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/gom-latn.js",
+      "sha256": "b914dbd96829fd69171efe61e2b45f20525c859839d3521b1cfd78ccaaaa9d8a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/gu.js",
+      "sha256": "16dfc27a68171f979987223b89158feb57945c8c0e3291a3720fefd43b9d2c29"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/he.js",
+      "sha256": "295255a605a2d9fa1b0042967e2b1bd11d6775ba0c4c8a3e7edb299b52e1bd8d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/hi.js",
+      "sha256": "9e209a5f9e21517964c6b751bb75f012ec86703d00ec177bd7dc357bf1b4c4d6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/hr.js",
+      "sha256": "0d4ebcb318d9c0c83eb281218b7fd4f8d8b7037291891d3066ed938ab182e98d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ht.js",
+      "sha256": "9e3c28e2947165ae37ff01314d750b4da987dcee2c14e4338a0b38c68fb6997c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/hu.js",
+      "sha256": "f0bd3bf9d167cf7a0d9cd1656cdf71f113c96c365f78ea1ec749ceb0a488f146"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/hy-am.js",
+      "sha256": "436deee65762dc2cd01329405c06d70bdb6b349796e5d40bfefb81aa6526802d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/id.js",
+      "sha256": "b4cacf90a3a3cc339e6515ffb7fa5b03daf56350e1e23fe0b35d4ee2c4210969"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/index.d.ts",
+      "sha256": "d05d8c67116dceafc62e691c47ac89f8f10cf7313cd1b2fb4fe801c2bf1bb1a7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/is.js",
+      "sha256": "d60d34fca715d40bdd40ffaedc8cf7b3fb25e7e522f04a6aae90c59cb1f272d3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/it-ch.js",
+      "sha256": "0b1f20d4249511bf7d4bb783555bbf261848aa2edcf4668c38bc1849fd62d4d9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/it.js",
+      "sha256": "aad920e4b8dc2adac6bd49048879ce28b22908d416d3be9d23b0fe9c98bb82cb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ja.js",
+      "sha256": "93e9ea15b7405c0cccb50e3d6267e2802128fb61a38ee268569b76301d3074ac"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/jv.js",
+      "sha256": "b75e7c27864234a2ff32dec936de673fef64b9b89848888b823dc2ee87e96db9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ka.js",
+      "sha256": "e6a887900c5ae147f35046915db6a62e200bcffbdcbb9ab0ff0fa94ef850c2c5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/kk.js",
+      "sha256": "0ff7a3d3d01b9b1e18b75be440a576997b347aba36437baedede771a072fa87c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/km.js",
+      "sha256": "566aed6c7a826a0598f1106134d66b23ae46ef3c20854022f9b3eeec17c418a9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/kn.js",
+      "sha256": "980e5169552fea14cc2afad099f461cfc0046d90aaaf5a7a68d590217beb455c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ko.js",
+      "sha256": "6b1d41fb525eb9898c19b374bf5277891c232e35fc2be129e3eb9b6d1e60a64f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ku.js",
+      "sha256": "046805acb0a76fd8300ddaa089a19c09cf459013d93006af66fc5ef938376a65"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ky.js",
+      "sha256": "b2e252a646c9de830abe4e612d67d3d1a4d51e83650c8a10f515c0efd67e59eb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/lb.js",
+      "sha256": "dd5cbd0d94086f081eb17159bf14fa4a52f2e56d4cd6293382c40d164129f15c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/lo.js",
+      "sha256": "4d85d4e3a8aa326363be22aa6f2f343571a0969f951ba269d6c89376d52fac16"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/lt.js",
+      "sha256": "3c933be43f969c0166d1ac4b28a8ecb655e9b9af1b81966abd4211c5f4962f62"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/lv.js",
+      "sha256": "a1c1814392ea630694b81991824971c92569c298470be13ca3785b74aec67655"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/me.js",
+      "sha256": "4181d09c7c02a6782680f338da6310abfbb4981ea4d1334a8ff1bee0a34dda1a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/mi.js",
+      "sha256": "bd1d389a503881081db1052745e71870ee46a1595ab4fc6748e188497f665a52"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/mk.js",
+      "sha256": "48cda8293a9b9c7ce2b8c1a04d10f3e891f2156c0fce930a51fcd03724a57d43"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ml.js",
+      "sha256": "a9a84ff099cd03e64da2f980556d492f891c906fadccba8c9334c728a96d3637"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/mn.js",
+      "sha256": "41670be3521593e1069527489fc37d5105b5928d889999b5327832078f1c937b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/mr.js",
+      "sha256": "b168463498af8dd2dabb67ac873ecb6fc692a195f84fbe40096b287648f9c424"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ms-my.js",
+      "sha256": "2f8ddd66bf77d8b247f77b70ac66b9869c6037f4b9b47ba70a2ce355dd567aae"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ms.js",
+      "sha256": "06f187d9c0c36f65f40cebb57695df3471ec961ec515f899b843a73e8d11b975"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/mt.js",
+      "sha256": "3fa2f459af271e7edc9a8bce9edbf7ab3cf331a3bef73ce2050b8bd97cb616db"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/my.js",
+      "sha256": "924a152b5dd45f26d5c7a95cbe5ea26a8a03d1924d10f4df6738dfe005a30def"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/nb.js",
+      "sha256": "b1e59b099dd5922d904cdff9bf0e7961905038a13d3a751ce71374a2dc6013be"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ne.js",
+      "sha256": "db512ff7f913f75903949b47be18ec0e02bec5324d826eac0ae93ca9ca671d70"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/nl-be.js",
+      "sha256": "ef916c2b2be1945226eb1c7d9b13250e070337ffc04a714a9a49ad2b7a142c5d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/nl.js",
+      "sha256": "bd3ab491877cf6737dea460739d06e99f1e26b69645b452aa94c3d704125a0e9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/nn.js",
+      "sha256": "593391a73ae927223cdc601b6a1e1562b6c561b6aeb24d8cf6ae70a34b9f96d3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/oc-lnc.js",
+      "sha256": "2937b11bd6b7bea906bba52dcc8f9d5993274f60678ad88afa7d30f28178e0c6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/pa-in.js",
+      "sha256": "10e96ded65e325f6563415da3ac40374f13930ddfb1affd05715977ca9113f0e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/pl.js",
+      "sha256": "1bd90fb6e1f0907bac9943799a0136460446fd62ce2f256bb240085a3cd7566d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/pt-br.js",
+      "sha256": "284c01ef0aa3183632315ad4fb95838a0ed70926747d534cb93aebdb6b4299b2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/pt.js",
+      "sha256": "9117b792a4ed3ddb4b328f3d19d2d1337293973d7a1a1c8f2187ebc0f51bc989"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/rn.js",
+      "sha256": "3b3d6be70a0af38aa18c6c2c352555db48a4114c7ab38e335e4df32bce6cfab9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ro.js",
+      "sha256": "74f28cf256f165feb2e70d5f4088ce69254d002b33f5c45024b209fbd522e386"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ru.js",
+      "sha256": "daf993577450babfdfd86ff503b2add6ca1519420943c53a69e249c6068dab4f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/rw.js",
+      "sha256": "4e7617ed42c4cd4e2264f84fd8273e840cdd4859054b86cac6a31fd3f1a6ff8c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sd.js",
+      "sha256": "7703096becb5df186966857571882ebfc7fe498dc05c4299314a1c1da1351dc7"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/se.js",
+      "sha256": "458e8348348a3ec71db02948fd36198ca10a9233948087d25416848effa182a8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/si.js",
+      "sha256": "6cce0ed35c694730c32188da84280d78b2afd7715a93c01a56ed425dfd0d49b5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sk.js",
+      "sha256": "e177f1986759a4eb809e78d3a01bdd79c8a043e3f07222eabc61de39c80b268c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sl.js",
+      "sha256": "565e490b90d3ecf1b98638dad0cd4d2b58f586c79b69237ccfd16c23646ac538"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sq.js",
+      "sha256": "2d0e338ac1fb23f277c88611d881cc92a9455b37cbb24561801164839e356ae9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sr-cyrl.js",
+      "sha256": "8ca9addb5927c1f4cb8421704449774a4fa60e777093a3ea747d2afb282ad8ea"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sr.js",
+      "sha256": "af1066eecfd56dc03c59b3db61b2ebebc8b7f755ad9d4523376788e904f30d85"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ss.js",
+      "sha256": "11e33ccd0430f7722be1fa1f85d9637e8c1de65a64d2e9252ff80a58727ca529"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sv-fi.js",
+      "sha256": "2f315e81474c2d6fa742b61197ed7d3a4b3660f4501629474b7e16b3b81a625c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sv.js",
+      "sha256": "e899b6a49df9dae2166d32c4b2822ecff73662231f2b6970018ec632918b1c0a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/sw.js",
+      "sha256": "f40b3f852bafcd4b16e6ee36a5ffad58d0e88878e84fe1b0e0a81caaf495c0a2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ta.js",
+      "sha256": "3fe104e9602fe51a5927a22dbe293f48817e3b07c090bfa9d97cce409556dfcd"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/te.js",
+      "sha256": "b259e05746affd63339992a811faeb401c3f52b5007ad46f29e63d3b6a5d94d6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tet.js",
+      "sha256": "b9fe9e7bcf3c7b0fe95970a9c482c1054606e859d6b0510feebd5dfe4b9b4947"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tg.js",
+      "sha256": "3be189d9102a37d9d09d676315b7c435145d5b642d3893bf99ed8b55925a6cbe"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/th.js",
+      "sha256": "c49fb06b5c666c1bb48454a3743b4a21aff63ce6f571b03a529112b5da982f40"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tk.js",
+      "sha256": "58346eb1da97294c17b563362e0759fa9cea189782de0c17c5396c0486e568b2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tl-ph.js",
+      "sha256": "dd9bc80b0628048d1567c8971fafbb276159b5e230fb948708e6eb85ca40fa6c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tlh.js",
+      "sha256": "3d469e41aea9da1caac426df61eb4105d5f83768aa0ddaf87254d5dc337a624a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tr.js",
+      "sha256": "48181960ebddb6b9ff04914a9d00f2cebe56c6acd71731b71b1374224e92476d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/types.d.ts",
+      "sha256": "73a0ee6395819b063df4b148211985f2e1442945c1a057204cf4cf6281760dc3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tzl.js",
+      "sha256": "cc167f4f881b2a942e6d2e56722aa49b3fc7e3be13b848bfe92196ca6febb505"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tzm-latn.js",
+      "sha256": "8f705a6c86b815e41bc91e48b0038e03c6422f707e8f4c9060810e670ab8122b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/tzm.js",
+      "sha256": "d4cef7a0108ff568497a52625f84678e94873f5c4a7a6adfe45d0ed9f401a654"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ug-cn.js",
+      "sha256": "ba03343557e7e14d156fa22ad51b800b858bd9075f58921c856387de0f1ba48b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/uk.js",
+      "sha256": "3be5fa8d4a26199fb8af8fd260ba869c9ef78c0529c27b2bccfe1f18d0105eca"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/ur.js",
+      "sha256": "8acc64ac5b45300ed34cb85e6c2173362ed14029ab20ffee1ad4e0aec3605ae9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/uz-latn.js",
+      "sha256": "07779fc271620893debffc460e16f00d0d4528d8e5644c4fe0030e5570238578"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/uz.js",
+      "sha256": "26c133b45b9ecd82f90ca8dce74ea106ece6c67f297ee59af9191e502bd2b076"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/vi.js",
+      "sha256": "b10538e2f1a695b9ee72b6684d2931b0ba4ae04dc310411296593cadb21adbe2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/x-pseudo.js",
+      "sha256": "470948b2b32e157b4c11ce072e58a3325802c2d3d52d8a6848b7bca750a380ba"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/yo.js",
+      "sha256": "0f02f1a048081906afe5dfeb0b5782b3f447bd692d5e8828d6561739229050b1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/zh-cn.js",
+      "sha256": "d93b074de4a1f0b5b7de810b1b4a7d180c6af6011b1f31a4455ca34e3411947b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/zh-hk.js",
+      "sha256": "bdf03db84171e486bae1edc99093abc8c810a94674fe296f6f08544be9e589e4"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/zh-tw.js",
+      "sha256": "780f79ee8e7ce0b36ea61c2e6e82dcf759c7cd99171b3f8f8b19547aa405b826"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale/zh.js",
+      "sha256": "97811d3be2661c3557eee0d7677cbf41ad9532eae1b4d38cb9c9e1241aed7c85"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/locale.json",
+      "sha256": "b7a237e55cc86f7e51ce88386cd4d8e43f737e81377919d67aa507b637787840"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/package.json",
+      "sha256": "680d74784223a074188617adc534fa5460171176d9904501241bbea087c3963b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/advancedFormat.d.ts",
+      "sha256": "49123f65d0f1270a60f5cdb7220dea12d9fcbff320447c933511cb1f7168a11b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/advancedFormat.js",
+      "sha256": "6f9ca609c4af60f2a03033e72dec5714f4f8e7b240381934040f547a0282463f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/arraySupport.d.ts",
+      "sha256": "6d975e0a3fa8b330cdb14433a30eb5a56d70c87fa648684ed929379291e576ba"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/arraySupport.js",
+      "sha256": "e2cb919327920f5a7cee7a86ee6692298b60424f78688bba8032c9c1946b3cf3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/badMutable.d.ts",
+      "sha256": "49123f65d0f1270a60f5cdb7220dea12d9fcbff320447c933511cb1f7168a11b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/badMutable.js",
+      "sha256": "56fd282bd15c83b052a63eaa8100281c5ba5a092f74146f4caf8fccedef10ded"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/bigIntSupport.d.ts",
+      "sha256": "bdc3c4083138b3602303dd55fa539ebb9fad949add47516e67c1750afd27d100"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/bigIntSupport.js",
+      "sha256": "b6ae2a92ca8fb8f99f42f40ecf4544467719a6feefe7489740747ab97da37a2d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/buddhistEra.d.ts",
+      "sha256": "49123f65d0f1270a60f5cdb7220dea12d9fcbff320447c933511cb1f7168a11b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/buddhistEra.js",
+      "sha256": "40638da2be2a2c97aceeb09bc7a64a3ca05728fdf3f62a726e8b83c1184395e2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/calendar.d.ts",
+      "sha256": "9fa47adb82f68bf566407e8bb04ed59a0e40cfd7eaa5a86319682839a2097cd1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/calendar.js",
+      "sha256": "79db0b0cd841cca1e730fc17141e48c7d4175edc733cb54f03ed6de0093fed33"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/customParseFormat.d.ts",
+      "sha256": "f9800ee41019d4c7612364fd1eb3862dd535166959e139c8e54c61c421fdb799"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/customParseFormat.js",
+      "sha256": "b199a58d0fbbdc519a072eb9b140a2ca3d4775ea1b054a0c0e5aeed86603c941"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/dayOfYear.d.ts",
+      "sha256": "8636b9832683d5b63293d888bf8a209b370e4050c400eb71ba652e962c39e148"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/dayOfYear.js",
+      "sha256": "2e2b9b9bf4342965d6b7b1b1133fc0e503948bbf95f982689134eefdf48ad6e2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/devHelper.d.ts",
+      "sha256": "49123f65d0f1270a60f5cdb7220dea12d9fcbff320447c933511cb1f7168a11b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/devHelper.js",
+      "sha256": "b15d6c6d4ce249f849c1fcdadd53af77063ff1282c0ce37f4759abe393af79ac"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/duration.d.ts",
+      "sha256": "112dc31db3c5f45551532c2f0ddd2b55c98762c3cb5fd113f7c255825e6e04b2"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/duration.js",
+      "sha256": "7dac282a770e1d475181d428babda30129a0a56907c57defaec9a361b9a8189d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isBetween.d.ts",
+      "sha256": "2081363e701e5aa935f0a0531644845225eeaf90b2b97984b65f07cd1860083a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isBetween.js",
+      "sha256": "00d079ea67e5afd2bcdfd972cdaa4a46d6389d3f1110c753acda28da86fe72d9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isLeapYear.d.ts",
+      "sha256": "84ae68420410fb0359b1b2e372d5ea5bdf2b69426b48e6afa6ce8e68d9d44f8e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isLeapYear.js",
+      "sha256": "386b1ac95b07da44f687cb5d55e1f6af75fc05cf89a49b6929bc63bab5cadef9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isMoment.d.ts",
+      "sha256": "4a0ae416c650d89b84b7f0e7359f29acba940d817c9e32ec5afdfa380d37f4ff"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isMoment.js",
+      "sha256": "7acd891dcef46b03538291b113756ff7051df19a0812bb15d26b35d929f40e95"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isSameOrAfter.d.ts",
+      "sha256": "34ea3d601b42b23165eaaffc0ff1f45c7eace8e64c790b70155bedb27f25ffbf"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isSameOrAfter.js",
+      "sha256": "ec4f67ae45b6c9ccc1a2b6d0d69419600e81792bf8aa93ea419d6adce98deb37"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isSameOrBefore.d.ts",
+      "sha256": "7db744875aa83438068f12214dfc90b01f38263e8067b70d8e8645f00b4cfdb9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isSameOrBefore.js",
+      "sha256": "8d224646d3a5f834861c98eb46b8b0003092b1a063f9f19fda46d94f0a4fe4e6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isToday.d.ts",
+      "sha256": "1aaededa2ff9719b5f1babb9c91ca8b680f51308ffa941a8baf2bc7a8940847e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isToday.js",
+      "sha256": "f0e72ffd346d2b052fe0369cfe1c819af30086f3f773fd86e501ba6fa54f94d5"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isTomorrow.d.ts",
+      "sha256": "f0bc8d999ada506e55d63308f9ed720e9331bdaa0b49d0a1c98727c6a88b5b4a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isTomorrow.js",
+      "sha256": "50b3ede3f3afe4156f7244de7bc998c7773209475207a7bcd64932a03972d9b3"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isYesterday.d.ts",
+      "sha256": "19836a9526f2b7907bf9853af6667e76b974a5fb4a1705e3da7398d81eb7c7c1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isYesterday.js",
+      "sha256": "bdad8e52d9c2c719b0d2c59e9ea60955c01ceabfda660adbb3eb6b6d4a4710d9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isoWeek.d.ts",
+      "sha256": "9ff194a196707954313c197ff74831edf396ee89f6b6e50cd5fe9e07b8d7d46b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isoWeek.js",
+      "sha256": "9937b6f6e7f852fd180a75d02f223298a4541a8cec415d0cadad5dfde7d40929"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isoWeeksInYear.d.ts",
+      "sha256": "e8a631bd9e14f661d40655fe059cc1026b389cf43380d1e2e1a8072c90070936"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/isoWeeksInYear.js",
+      "sha256": "8e1b4a6e0fd64380555d81be9c4675168afa62127c5c508ab67f45bc9fc5773f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/localeData.d.ts",
+      "sha256": "f756256561f113e45196130d3be26b0fdcd76396749ba213741c2a5d0d9584f6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/localeData.js",
+      "sha256": "16e8ff612ead60f8c36e8045c486e4320acd5e53e61db7d644d343236248e78a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/localizedFormat.d.ts",
+      "sha256": "49123f65d0f1270a60f5cdb7220dea12d9fcbff320447c933511cb1f7168a11b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/localizedFormat.js",
+      "sha256": "83e8319b5c6646ae0879c491ba3bf678ac940a8fe2d5be6446758d7126d810ed"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/minMax.d.ts",
+      "sha256": "adc74266e02e7c5d77c27110ccf21a6789795d5af89cc35933761c43c5768480"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/minMax.js",
+      "sha256": "4e883d40b753248ae2ede48811a2a78d4013a8dbfe7e178a1bfd4e8241856455"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/negativeYear.d.ts",
+      "sha256": "c457b823d532a90a20d624bb442190faef97adac9c854564ab39dac5459864e6"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/negativeYear.js",
+      "sha256": "fa79f7931473e5a244719fff9c7d7c1d2ccca2c7417a47d7bb29c020aafacf30"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/objectSupport.d.ts",
+      "sha256": "782320f76d68752564ef97bb08d09ab7a0faa222178ead1b78de1616954f10df"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/objectSupport.js",
+      "sha256": "2a5b8b99cd30c337372a8971a5a172ff1d859dad72225746e8ded811da2edfec"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/pluralGetSet.d.ts",
+      "sha256": "7a75e12368afc2cfc3bb193532525183a6f8892d03ef8ea41c7e57f11ed2796f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/pluralGetSet.js",
+      "sha256": "8abba44e69a93d716f0b146b10f2d545eb762a464d6abae7486e8aaa78a63229"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/preParsePostFormat.d.ts",
+      "sha256": "49123f65d0f1270a60f5cdb7220dea12d9fcbff320447c933511cb1f7168a11b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/preParsePostFormat.js",
+      "sha256": "1a2e36c203dd74ce7e5ace52a681a3cda2dcb7ee7acc8a211e6917f9ce06d00e"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/quarterOfYear.d.ts",
+      "sha256": "febebb92121cb4058a7cdc882671a1bb74a5a2aad4827256d0399df58e30c0b8"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/quarterOfYear.js",
+      "sha256": "ac0de30250d6ae30a9c230efaace353a0914a461ac86e5e8c7c27b4ab37bd560"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/relativeTime.d.ts",
+      "sha256": "f684f2969931de8fb9a5164f8c8f51aaea4025f4eede98406a17642a605c2842"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/relativeTime.js",
+      "sha256": "9aeaf25ce3c591525c24ed5816686e2b25d89860d3d93615c62bc6d0c0a04738"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/timezone.d.ts",
+      "sha256": "56b2090352084289a1d572dfbddeed948906c0a0317a547ceb0ae6436ae44037"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/timezone.js",
+      "sha256": "3847eee9b494500ac874aea0e08fbeb759b5ec92fbe8d6cde967cd3818fc1bfb"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/toArray.d.ts",
+      "sha256": "4d48b2185fb07bb4ccb99243830973c283748fceee9830319fea6c0148143506"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/toArray.js",
+      "sha256": "13e91a4c4a9387dacd0e05e6ba9f3bdf999ff8f0b4a40865f07ccfa78eee3d1c"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/toObject.d.ts",
+      "sha256": "69b519061f49b11933633343e614010ec85a15f6b2ffca9c4b4657d454302bc9"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/toObject.js",
+      "sha256": "8a520555c6890cb63245ba37a863f6c4f7d4dda34e38bafac92e6c0f6cf46d02"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/updateLocale.d.ts",
+      "sha256": "622ae255870bc51ae3ae6a08f319379087a13ff6cc8c24c33cd0ec12bee2448d"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/updateLocale.js",
+      "sha256": "35e30d2fade81bbfcbf05acb7339689999b0b6f55cd98c0169e36ef0d822cd95"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/utc.d.ts",
+      "sha256": "c868f50837eedd81fa9f61bd42de6665f74e7eb7a459135c6a14ac33ddc86798"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/utc.js",
+      "sha256": "7e01072e6f1f2e646506a083ccc500ed19c5a657a5a6645b3fafeccdf3ce9c0a"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/weekOfYear.d.ts",
+      "sha256": "da1de218850a5710c84587f9ceecac7106c62f92a75a121cb1106fca10aed46b"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/weekOfYear.js",
+      "sha256": "fb7e9b4b213b2b7294fd5236bb4878b62e688292cf2c07745f0c7ff00762833f"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/weekYear.d.ts",
+      "sha256": "e07e8ad944e11080473becbc5129b162302dd991b438f97dbff930e59d94ff98"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/weekYear.js",
+      "sha256": "c3e73c56b2351e2bb14fd79bca54c6af4048202e77ce6da529785a85edb65ba1"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/weekday.d.ts",
+      "sha256": "5ca304fec79973de875ecd1de44cb90568d3a979692383cdacca51b703018e87"
+    },
+    {
+      "path": "mcp/node_modules/dayjs/plugin/weekday.js",
+      "sha256": "c5ffac8fb7deb86ff2920f6a4f123f9053ced09c81f6e784bf3b60b63ac49b96"
+    },
+    {
       "path": "mcp/node_modules/debug/LICENSE",
       "sha256": "3a61c6c96caf5c1d9b623fb9b04c822b783dfcb78aa7e49c76a3f643e6ed7f95"
     },
@@ -5809,6 +7654,294 @@
     {
       "path": "mcp/node_modules/depd/package.json",
       "sha256": "5a3659bcc2e47b25ebf9f23f38eb9452a58920bfe4b59410bfa6fe84639a3b99"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/LICENSE",
+      "sha256": "fd495b1bdd024995c6b3bd612584a4e37513250317bb5a6586f62c7756f9aff1"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/README.md",
+      "sha256": "ea6997d19831dba6a8239ab1063b8cee2bd4628e2f24356ba6b1ba15376b6aab"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/foreign-names.d.ts",
+      "sha256": "f627e65417a01d620a6c7afc99e91edef42557ce9b0c815712c44f4bcdf32104"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/foreign-names.d.ts.map",
+      "sha256": "a5b2b6dc8fb6321606c90074342288a3c46f9993d0375a46de4966dc9722dcb8"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/foreign-names.js",
+      "sha256": "0dd864533becc828ad35ff1dff5d29aae3420e51c916ad013796932b843393a0"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/foreign-names.js.map",
+      "sha256": "31ba533838389b269402859578b34e3afca7e15f633f9c705355d68df1619ac9"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/index.d.ts",
+      "sha256": "3bb82c73b08e5f1667dd0b3976e13124c4aac2022a1f0b6b1768e2ffef7e5384"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/index.d.ts.map",
+      "sha256": "e160ee18ec393bb7bac59697c9ead65bf251a7a85f67c855a4b1732190c67c94"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/index.js",
+      "sha256": "af12c0d016a9f062bffe17e6879274c3bda24c967da8deb4b88cc8fc9a9f7811"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/dist/index.js.map",
+      "sha256": "1adddf762f5ee4d41bfd1d213104d73db575e28c5e1b76a7a3b3f6732d573125"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/package.json",
+      "sha256": "82dcf82f2014284b51039db7009f53c7f2182fe48a6fb14e8da122b11fa7f9ee"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/src/foreign-names.ts",
+      "sha256": "e40285ed0f3ea97610635382d939011721274ba05a0fc9780a6b31f9de23a09f"
+    },
+    {
+      "path": "mcp/node_modules/dom-serializer/src/index.ts",
+      "sha256": "3e188bfc37f53fc680519448c0ecaed3ae9b8f174aa5de901c390ac791265cca"
+    },
+    {
+      "path": "mcp/node_modules/domelementtype/LICENSE",
+      "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "path": "mcp/node_modules/domelementtype/dist/index.d.ts",
+      "sha256": "265a093c44b1c249f761219c8f8ce1ec8bce56cc313b9d16aa9e23d68181858a"
+    },
+    {
+      "path": "mcp/node_modules/domelementtype/dist/index.d.ts.map",
+      "sha256": "93fee911f818758b0a684b82f0229e64d678010eaac4d16ac23f24873b09bfa0"
+    },
+    {
+      "path": "mcp/node_modules/domelementtype/dist/index.js",
+      "sha256": "db54e30134f36dfd2841da8f7cd57cac532139434a729c05f95834e4226e9802"
+    },
+    {
+      "path": "mcp/node_modules/domelementtype/package.json",
+      "sha256": "6aef69cf18e284cbda52541d945e839b99163f537f4d53c0764bb2d1be2b179e"
+    },
+    {
+      "path": "mcp/node_modules/domelementtype/readme.md",
+      "sha256": "1eacf8172e22edf9bcf707613d6f6cf3a4c9d5f5e6be5964fa706e10efd579e2"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/LICENSE",
+      "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/dist/index.d.ts",
+      "sha256": "7a39dc4719f70baaeb63a56561bf1c4a011cb7a1c065774cf230f881ce182145"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/dist/index.d.ts.map",
+      "sha256": "898df75f5d87f7fb04113b3b1c553d127dde166dd1c0c6fa3b54828916ae08a6"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/dist/index.js",
+      "sha256": "b0673f30b5e9b947a3d87137f65e4b0f07a1ee1585551f35983863bb36c3c057"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/dist/node.d.ts",
+      "sha256": "864f06cfcc227df093ed1d8f1e01dd0e920a58d704e2f93dff694518194fb8a4"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/dist/node.d.ts.map",
+      "sha256": "5cdcac140905fab0699ee48c71fd63f047952c28b60be52bb2e1113c0452e364"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/dist/node.js",
+      "sha256": "f76455c2b1263761d98766c84ffdba453bdd9971488dc18be9cb0a029fa5d911"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/package.json",
+      "sha256": "2132f2aabc2f6628cb99040c66a2a4378e30a1df05130e7c706eea7576c38ffe"
+    },
+    {
+      "path": "mcp/node_modules/domhandler/readme.md",
+      "sha256": "e20eeb1fedc04bae8cb9fcbedc7816d51727a5b09176605b5abada0ecdc0a56e"
+    },
+    {
+      "path": "mcp/node_modules/domutils/LICENSE",
+      "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/feeds.d.ts",
+      "sha256": "14830c201d750bca9327f424d0bd54c64f9b05373ff6df12916c857a84d934bf"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/feeds.d.ts.map",
+      "sha256": "776013af9a23f8dbd52d76e9544de39a4136dcdd84b5c7348983d49433856f8e"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/feeds.js",
+      "sha256": "4cd462bcb05f17fd357ce488e2e3bfbef84acfa46d8f912c9d69f9807e638c9b"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/feeds.js.map",
+      "sha256": "9fc4374cf0b4ad3859efa47c6382f361c180fb42b181e4a2bf76d7a9fa2adf4a"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/helpers.d.ts",
+      "sha256": "0e5a0ee3222ae37153296ca3e9c89b39b1b5eee0d337d8e4a0298e24ffdf85a5"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/helpers.d.ts.map",
+      "sha256": "5ecdd742a30cbd63c80a7322de386dfd28e799ae002e565a8bb1b74423bce9b5"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/helpers.js",
+      "sha256": "790376cb7907c671fd8c2b7a5f3910fd06d439161aa06ead576cacb14961bf0d"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/helpers.js.map",
+      "sha256": "251312a63a4cd48d0869b7e623209de27d538cc711a674cd10afd3c8c4d35726"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/index.d.ts",
+      "sha256": "4fab05caaea7e6cad9a2a9eeed49f38be2dcd0eca8a92a72f340413234e253fc"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/index.d.ts.map",
+      "sha256": "2382707f8aa220c99c9d8e38fb83aab73c554ab8b0c4e5d3787dd90522634693"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/index.js",
+      "sha256": "8833c2c735d646f1e60989bad8a9fb7fcfc482bafd0333a44b19763b112bc8fa"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/index.js.map",
+      "sha256": "38152970445066be48ad65c78447d8fbe769f9bad1be768337df3eccbaacd770"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/legacy.d.ts",
+      "sha256": "ae56bb84cb575189212e42d06c1dad92ca09d5692e0f37c8df36c48968ebde7f"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/legacy.d.ts.map",
+      "sha256": "c01bda35ac816cf678b187a9fe87cba209c55cb95bc2d11c2a3ed4156bc39701"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/legacy.js",
+      "sha256": "4d07c21630f2eace1cc4d72b3e6cfbbf1ed369e7698d0d5475297b090bb55a38"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/legacy.js.map",
+      "sha256": "ba2f99385ec9bdcd246a89d998d0e5062c9428f4c3d337722c4a8824aacec898"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/manipulation.d.ts",
+      "sha256": "80cabcc6e9b5d559e716e2187e917d79a290b3ce07e66e2474edbc39294d7e1d"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/manipulation.d.ts.map",
+      "sha256": "3cb14347fee1a698ca0b68fdf81e0f9c5d8d441539cd0f5ab1e2ee122ad00eb0"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/manipulation.js",
+      "sha256": "94999d5ec2ae8836baa55411e952db9214e44b31bfec1101644f8fdc0e393667"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/manipulation.js.map",
+      "sha256": "0e12f352888a8ee610c59bbdc57cde377c154656d42ca01eeb4511bb267a7c54"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/querying.d.ts",
+      "sha256": "57cdb594453ec08893a4a15b74b7511b55e9820fae70b0302dc4743b1f976f54"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/querying.d.ts.map",
+      "sha256": "7510aca4e70d3ba6156ef2bc99424df8a50c72ff06dd231f90a06847da69bf79"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/querying.js",
+      "sha256": "953e2744d9e67d5a8150aeb921670ac2df94c819e0e23b8084cd1b566dcd3c9a"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/querying.js.map",
+      "sha256": "cee87817dd22e0c5774f8cb907b9f1a1293ddab6781488215647b3edbf5502ed"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/stringify.d.ts",
+      "sha256": "e011bd477bfe558e8d462596e4d01946bb5daf9c4951db31baa32e12c7767154"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/stringify.d.ts.map",
+      "sha256": "2417f282daec5db2f0680d7ea80f370835a022b7637cb1c763c6ee9d9ca6ef80"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/stringify.js",
+      "sha256": "356fd2711c3e4b585e7e2ef513d75969193e0c51dafee10036ef0f0530f7ddb4"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/stringify.js.map",
+      "sha256": "0cc1eda2c6e11594ff4d152d56016814772c72ed24c729b242886d37fe77b4ae"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/traversal.d.ts",
+      "sha256": "f394fbe9dc95a0c5a70c5cebab7b7ebf62b849d517aaef81caa1554dd8ebfe6e"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/traversal.d.ts.map",
+      "sha256": "bf32e46ef85aca8690d8af796efd9784f9120892e0de7cceb3b64249a11f225d"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/traversal.js",
+      "sha256": "49f79025756a8cb73eaed53e0921a860c7f47ebaf6c5808274b32791d0e003a8"
+    },
+    {
+      "path": "mcp/node_modules/domutils/dist/traversal.js.map",
+      "sha256": "e3488db3b2a927023039c0aed2d4c5ed335fa1045fb08204e17df4c7c742395b"
+    },
+    {
+      "path": "mcp/node_modules/domutils/package.json",
+      "sha256": "574c1892db5635787664a6da36fb37081496d8dbba6d32e21413805fcae20899"
+    },
+    {
+      "path": "mcp/node_modules/domutils/readme.md",
+      "sha256": "3dbddc0bcdb271cd7697a0e42cdd67c35e858e060d52563ebe106a07e83903a8"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/__snapshots__/feeds.spec.ts.snap",
+      "sha256": "ae6e57d03ccc418525b03c5c054eb1a2f4b04679fc11e015489e670279878b65"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/feeds.ts",
+      "sha256": "b313d9f842d287842e6352a28ba22e6d3988c49a1ef3e756ad6425732caad2de"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/helpers.ts",
+      "sha256": "b2489f03c30acf888f8eb3d170b8e626d5535d24ba92244c8946b8091b1d5da8"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/index.ts",
+      "sha256": "2a9ea11bdcac32fee6209d5496c582333550b9952381ec371fd05cf5b1a57320"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/legacy.ts",
+      "sha256": "f04c91cd4b5dcd07b1bd8e3fea678942ebcf296b1d0474f4e9547256253ddf4c"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/manipulation.ts",
+      "sha256": "5ce4ae3bb30210bde5f72018a17037f1b9aa638ca087aebeea6b069432041c66"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/querying.ts",
+      "sha256": "d6d1f34ba358a3645d4a21a3abbaf6cd52a31f004443b95975e9721b736a3a86"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/stringify.ts",
+      "sha256": "723f231893076aed7cb076b575c8f018d8f94654e5f2b60b9fe2d813ccfeb425"
+    },
+    {
+      "path": "mcp/node_modules/domutils/src/traversal.ts",
+      "sha256": "2fec33a47edc07249683af3e5796b9080dc26e9d110982c2c57414a6242040bf"
     },
     {
       "path": "mcp/node_modules/dunder-proto/.eslintrc",
@@ -5901,6 +8034,218 @@
     {
       "path": "mcp/node_modules/encodeurl/package.json",
       "sha256": "5df10798f4b086da95c24180d7519fa4f68e2057a48e2ff6b76b91d6ffed1e9b"
+    },
+    {
+      "path": "mcp/node_modules/entities/LICENSE",
+      "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode-codepoint.d.ts",
+      "sha256": "d9f14caab5594397d69d789849772b45ab727f074f0c71d6b5b3f6c3f4278b20"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode-codepoint.d.ts.map",
+      "sha256": "9a8363a2f09b5665daa45fdedad4e3c89f52053df80e69438f9cffb403a61f80"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode-codepoint.js",
+      "sha256": "dddf76e72987697316e647f046b2755dafe16308fe83159969b3155e0ebf3beb"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode-codepoint.js.map",
+      "sha256": "e86d216b631af957f33e46bea4b4a6fcdbcbb6468048f47eda1a25ace7f86317"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode.d.ts",
+      "sha256": "94f2d36b0657fa554f412c5b318993310bf7f5e58986acf8baa7579cdb792e54"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode.d.ts.map",
+      "sha256": "5ada403c2b1e37cd496d76562ea5f7e6774563e445a64d80ba66e29c03c443cc"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode.js",
+      "sha256": "6ce0048039ae0f9dab6e21dd1309661bcfe7e3beabfab1f15cdd61adb91e20b7"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/decode.js.map",
+      "sha256": "a7e611b71802b1e9d3fdfb0e52845087e1b8a6de8c52fb56aa9a772d862db163"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/encode.d.ts",
+      "sha256": "afb564062cb1f972ee2e5e83faa5e3b7f3aece6690fae3c0e676eaf64b3e4bb7"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/encode.d.ts.map",
+      "sha256": "9630adaaf10a646f813abaef9cc50daa614ec7d83a665351f63a2161735a57c4"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/encode.js",
+      "sha256": "af4b217937b364425a6303b2febfda0a2d1282b73e1d7a3e6381ac2072b7d0ea"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/encode.js.map",
+      "sha256": "152af19caff63d0a0177a8cbac36acf6fca070747d58b5f5488dcfb19d31f2e4"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/escape.d.ts",
+      "sha256": "8a1089bdd5380823fccbc57189ed28106d272a01881dc4610c8dd8dd6ea340ea"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/escape.d.ts.map",
+      "sha256": "a6c82213e7b1d780866bfe4b793843c15f1ad01c42e5fcf53766d1bdcb42e734"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/escape.js",
+      "sha256": "880426162e6e6a1c65cb67cca4824c529c37192b51b0571927a81d33074f7302"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/escape.js.map",
+      "sha256": "f8ff47b45a3cd74d779c42310d98dddb1dc7a5d96a582c8fd42cf47e14d577a0"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-html.d.ts",
+      "sha256": "b7d93c698f801b98c48953443ce741244a695f27ff2934d135c6689730022b19"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-html.d.ts.map",
+      "sha256": "9dd9ea889ff6eaaa32d12881cdc41499395781ccccc7e2050dc1976f9055444a"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-html.js",
+      "sha256": "1ff1226550125bb8976dd032b2dcfc37ba311863dbf9ae69b4b16922f5a38ead"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-html.js.map",
+      "sha256": "9e32dad499882db79d6364147958726804774071b09537fb1b9fd9e3dd6d3c88"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-xml.d.ts",
+      "sha256": "29d8aa980b3ced0f40d5a1f9821cb17568f078edea29f9dcf6708e1efdf886b0"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-xml.d.ts.map",
+      "sha256": "3d2168dd79184f7682f2e283d803bc386a2daed18ef0c19c5c8e798e9281f916"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-xml.js",
+      "sha256": "e549a5fd573d540a4652c81fab6655f3418c34c1613a30ed245ca017d9a5b730"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/decode-data-xml.js.map",
+      "sha256": "dc23bba80a5f95aa08fd78973650d6ee84dc8d0c94164b7b12654b9d8a0d7efc"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/encode-html.d.ts",
+      "sha256": "fdcc22a53b9182ec28b933d66c199acd9067eddf3c6292ef9ae78c1fafce9e91"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/encode-html.d.ts.map",
+      "sha256": "7ae42f32c18c633a7045d0bcf4632213d04f5dfa4ac6ea67cfa86a2c97665bae"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/encode-html.js",
+      "sha256": "b5fcf3d4d73f5bd5f6a49c9c9da3cc6b824b2e2e5068f74c108649b1185d0a1c"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/generated/encode-html.js.map",
+      "sha256": "1e9efac288c2ea658f9d237f32885e064bb08343d7a32b990b9b5728920c28f4"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/index.d.ts",
+      "sha256": "7d826aab9b5db8367de2c279da26e3f8286e900115c882023444f7f665dcf4b3"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/index.d.ts.map",
+      "sha256": "3f9f381e924ab70ba0c82d931c04e923fc35a196de9af9e80c9f3826ddccdbf0"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/index.js",
+      "sha256": "4ce5bc47aa7a5f3958bc4d42e450d62156efdd043cbad6b7edbdf9604d85dc4f"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/index.js.map",
+      "sha256": "5da1a92ec62496c7980bb6b1f61a14c38173ac6db72cbbf45dd162089b59c8db"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/bin-trie-flags.d.ts",
+      "sha256": "15e43c923d296396131fdcb9eb66babf158b3b62f9e79e9c19d19820e09bcb94"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/bin-trie-flags.d.ts.map",
+      "sha256": "de4c203c623f110bfbd42691a2f36227dbdbf7a7a627418ee2c2b24f6f7da492"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/bin-trie-flags.js",
+      "sha256": "8bb285f9ab41b9fd2525c83902c99b36e7c36da7cb7fa3be574d68f328183de5"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/bin-trie-flags.js.map",
+      "sha256": "a6c9089127499b755a7708bfb7ef75c5f1ee0aa2a3e29c0ff9c8fdea0942e7ba"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/decode-shared.d.ts",
+      "sha256": "4a520a1537e754b8ee0973d9ce81ecf2bbcd914e02ccd336c99dd0daa278296e"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/decode-shared.d.ts.map",
+      "sha256": "52790a6b16eeb690f4309ea30c99fc3f19a73fa4811ddf702cfb266856c75ddf"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/decode-shared.js",
+      "sha256": "cd26388e8ec3fdc2c4b212883e9ae460a4fe6dd37d80d0dacffd6b0087171b6b"
+    },
+    {
+      "path": "mcp/node_modules/entities/dist/internal/decode-shared.js.map",
+      "sha256": "5da63314c91aff57408f6b7c847152a78c89f911387602876e5c3a8688be3189"
+    },
+    {
+      "path": "mcp/node_modules/entities/package.json",
+      "sha256": "b6ff1175be0fa103f032d52e42af95d95c674e3cba08d93670cc8944697bcc42"
+    },
+    {
+      "path": "mcp/node_modules/entities/readme.md",
+      "sha256": "ec0f59ca389c284d126a24bae2b5f28dc7e2a6244e50d6ce28baea1b2f3518f6"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/decode-codepoint.ts",
+      "sha256": "c03b4370101814e1697ec2aab72afaff2f6953da93a0f51f9d03d76dcd7e499e"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/decode.ts",
+      "sha256": "705c06120853183cb4b6dbd6ae66351319df719183d9e276df63c6b055227949"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/encode.ts",
+      "sha256": "0e4ab26d5f0b3ebc0040ba82051b1efa65cddc3f92766242a01bf49bd19597d3"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/escape.ts",
+      "sha256": "7a2de64eeae4f45b0eacc0e90a690d28954824a79c903560651c49a837dacff2"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/generated/decode-data-html.ts",
+      "sha256": "311abce9ef15f739e302c7c561f81f796afef4f3759f12594cfe7c7a2a8881f3"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/generated/decode-data-xml.ts",
+      "sha256": "bd20498d9fcd8687c57c3fd553b39bafe1533d7997518abe17bf678357dcd8e4"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/generated/encode-html.ts",
+      "sha256": "f0c091d10188502f3a909bf2a8e75771229a4bad8c11e13fb5153b99b27a6b66"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/index.ts",
+      "sha256": "da3479534abbec48270f2798fe662510e221af2d150dba6633b91571403e01d8"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/internal/bin-trie-flags.ts",
+      "sha256": "3b86ee5c63f159fed9059c2534d4137b5c5e0e060920bed44c80e77beb2048ff"
+    },
+    {
+      "path": "mcp/node_modules/entities/src/internal/decode-shared.ts",
+      "sha256": "f26884f6f693a7ea5dacd1bc68fe38ee9729f4bcc1adafe1951a0a29d9a2321f"
     },
     {
       "path": "mcp/node_modules/es-define-property/.eslintrc",
@@ -6113,6 +8458,26 @@
     {
       "path": "mcp/node_modules/escape-html/package.json",
       "sha256": "bd320a3e9d23249f5f7d3ce72f2fa426e28a6b2704bd2b281d0c92806a1f5223"
+    },
+    {
+      "path": "mcp/node_modules/escape-string-regexp/index.d.ts",
+      "sha256": "a9fd76613c52aa62a036e7d85d6503601ac3aae1444f4765c738567e5f687f4f"
+    },
+    {
+      "path": "mcp/node_modules/escape-string-regexp/index.js",
+      "sha256": "d7170b45e3faf26da2fcb2b4a2fac19af142b44d2ec5ae7760700896749a5886"
+    },
+    {
+      "path": "mcp/node_modules/escape-string-regexp/license",
+      "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3"
+    },
+    {
+      "path": "mcp/node_modules/escape-string-regexp/package.json",
+      "sha256": "63763f28aefa6c49e6e6599e44b7c9aa5afd6518ae04bcfa534ff3759ad428e8"
+    },
+    {
+      "path": "mcp/node_modules/escape-string-regexp/readme.md",
+      "sha256": "6c8f2d8a0936f0ec24fb52d64ae2eb7a7037a06ed7d957232d00f022d596812b"
     },
     {
       "path": "mcp/node_modules/etag/HISTORY.md",
@@ -9243,6 +11608,118 @@
       "sha256": "169a02072e32d85aacb089ad14b62b027d975479d811f741771fbd0f559fb5c9"
     },
     {
+      "path": "mcp/node_modules/htmlparser2/LICENSE",
+      "sha256": "204cfa747341660e4da64cd23e8c876c6b20279d247f48564993d3fc4a2eab47"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/README.md",
+      "sha256": "23e8164069dd259336bdadc2be391b7580f18240c7fa0b214fed43ecda28f114"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Parser.d.ts",
+      "sha256": "b1d4997ad601e7bbc84db9fcbf1cf4d7d14bbacee6cd85713c876782e679a3c9"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Parser.d.ts.map",
+      "sha256": "249c7577af720ffa443fd63112116ecb0f95a7f8f2a860e56b7c6bfb8011eeb3"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Parser.js",
+      "sha256": "b7bfa388ba057b2c41c899fb6375144b3ef86ce0967c047d7fe6bd37c1c4a45b"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Parser.js.map",
+      "sha256": "b0e38d20eadd862014f7c06c6583335bff5d550d945dfebb2f904c8b38a6eaca"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Tokenizer.d.ts",
+      "sha256": "2c8f850299871267d1843c04e17714554f8ee589bcd8b69dedeaf109fc2fd689"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Tokenizer.d.ts.map",
+      "sha256": "17adf7ee578abb98068073c08870c05d9113d6d827c8bf530f7e272552583195"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Tokenizer.js",
+      "sha256": "a72bbfa5eafa92fdbfb5c3d7e73f7e327ea5a05843f0b2e2821504d433821749"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/Tokenizer.js.map",
+      "sha256": "e265493c470b2eef4cde2ce7570302e7f18e282b90468edd9c0e7b7bff2e0d50"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WebWritableStream.d.ts",
+      "sha256": "04467b886fecf4d571421929bece2436fb7b217ca53283ff525ed7307f09afa8"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WebWritableStream.d.ts.map",
+      "sha256": "e449f13575c9bd667d711b201588fac79ac7fbadbd569f9a7f65f6c5c616a126"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WebWritableStream.js",
+      "sha256": "125ad7e624a042b43c34c5cd3c87cff531dd20f00772d1acd32ad50d3fe0f907"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WebWritableStream.js.map",
+      "sha256": "3e227d03a8b2e1018383e01cda7420aec4bcfad9e19b213d19bde5b2824635de"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WritableStream.d.ts",
+      "sha256": "1cfd5674e6f61dfeb352ebaceb5603301adea2f617aaa860bcc624971c8c627b"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WritableStream.d.ts.map",
+      "sha256": "7a6ab2eb1d32018e8db977261e5abc2684d0cab7cc0ff39889d5c7e9b0eb7b75"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WritableStream.js",
+      "sha256": "20bff799e428f0972f2cd0c4c160560ece891cf47869f11858c2a34419096a8b"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/WritableStream.js.map",
+      "sha256": "f3b8c6c013620ee9fca939c1a9c9370bf025cbc439b568eda852f69c5af6e083"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/index.d.ts",
+      "sha256": "f4df63cf052891c54457a2e124b0d8f01141c6f7e3e0a705ab03690ccadadb65"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/index.d.ts.map",
+      "sha256": "73f862e0eab7dbe53ef9e556c41aa852b493bfc79a5da6471ed89b0dd2489b4e"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/index.js",
+      "sha256": "a87b86d915effe39edf97a54eed19b2d7d86b9d48fca2fd2d345e18307661429"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/dist/index.js.map",
+      "sha256": "55421309cd354976a7c067f7bd2f8c5c695b3f2a1aa5fefc7387b707b0b6cba0"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/package.json",
+      "sha256": "2056f738ff8f63a73ebf931b7d220b2d1b93b0884454f94447cb4c3f54a603b1"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/src/Parser.ts",
+      "sha256": "dd008fe1135ce32ab134d39475033893e4706986d9bc27f4112772271a6ab22a"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/src/Tokenizer.ts",
+      "sha256": "42ac1bb2a272f3659c23419d6cff281bcb7ac330fb70913005a5f820401a15ef"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/src/WebWritableStream.ts",
+      "sha256": "2fa25b9701ab6998f733eb4b20d525002e2dfb08e195cd33635b3acc5a647fcc"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/src/WritableStream.ts",
+      "sha256": "05ccd16f375c0481972068dc991eee6c5a8a2e4d70a06c58c7c4e4e50bfc291a"
+    },
+    {
+      "path": "mcp/node_modules/htmlparser2/src/index.ts",
+      "sha256": "b89e477a8c21da85e7ee8a9974fce2f6b4b9c41cda8c050912ad86e90e46a9dd"
+    },
+    {
       "path": "mcp/node_modules/http-errors/HISTORY.md",
       "sha256": "a3a79172043c3fde7641489904b5ad87dad8e11ce389791edbf1e888e6dc2698"
     },
@@ -9533,6 +12010,30 @@
     {
       "path": "mcp/node_modules/ipaddr.js/package.json",
       "sha256": "fc1071893728a0e78fa40ce0dbe04c5a1021179fdcb5b229f274e3556d6a87cd"
+    },
+    {
+      "path": "mcp/node_modules/is-plain-object/LICENSE",
+      "sha256": "4cd903859549d4b20b571041f96dfae1136ed079c476126268f9d7cc1b611150"
+    },
+    {
+      "path": "mcp/node_modules/is-plain-object/README.md",
+      "sha256": "3a208d33ee1f573845153ac82c1aff1e36d76100e9f3580bcd5b73eea6c331fd"
+    },
+    {
+      "path": "mcp/node_modules/is-plain-object/dist/is-plain-object.js",
+      "sha256": "082f1a1eee67eba44f6413fccdb61c226a35ca32c4e75bb0a5d41ee1dea57b5f"
+    },
+    {
+      "path": "mcp/node_modules/is-plain-object/dist/is-plain-object.mjs",
+      "sha256": "ba930f668f29f986a803ed543170019ea98abbb6819b751eb9c3c97e704c20c9"
+    },
+    {
+      "path": "mcp/node_modules/is-plain-object/is-plain-object.d.ts",
+      "sha256": "73d60e193751a2530e453e1deeb6939e1d185bbca6da682712f1c423fcf1d420"
+    },
+    {
+      "path": "mcp/node_modules/is-plain-object/package.json",
+      "sha256": "0fe1587ff3b255249a880f58ab02fa29ecb384438adac241724ae28c1434a9ff"
     },
     {
       "path": "mcp/node_modules/is-promise/LICENSE",
@@ -9995,6 +12496,90 @@
       "sha256": "8d04cdd834382b5b4e7d3e00fbc1da5654c430d04934c3031fe8f2d79a1625d9"
     },
     {
+      "path": "mcp/node_modules/launder/.travis.yml",
+      "sha256": "b3f1877b79395a6166aef035423cf7f36ea2b0faf535da84a19479d4cc011bea"
+    },
+    {
+      "path": "mcp/node_modules/launder/CHANGELOG.md",
+      "sha256": "af7c93169d1f09d74d2e3bd4e4c8009a35f9b2146b6425ac67a72dc04ffb2519"
+    },
+    {
+      "path": "mcp/node_modules/launder/LICENSE.md",
+      "sha256": "04023acc083d1f83f526f7f7f73c33f4e863df9fb80b300b758324a9e9244a93"
+    },
+    {
+      "path": "mcp/node_modules/launder/README.md",
+      "sha256": "4811e7603a38fb9dc0ee9f9925486e1dcce405ef5aec9457fd03fbf202d767cf"
+    },
+    {
+      "path": "mcp/node_modules/launder/eslint.config.js",
+      "sha256": "4a4f5db0f9092489ced9b5d4fc2b571982f7bafb2ca6333493590f9fb9382afb"
+    },
+    {
+      "path": "mcp/node_modules/launder/index.js",
+      "sha256": "5b3ad195a35e9c7005642073ac7bc7a36e5d140847a62f57865f7e2d3523169f"
+    },
+    {
+      "path": "mcp/node_modules/launder/logos/logo-box-madefor.png",
+      "sha256": "950900561add75eca7577bca04d302ec2708352f981f1b9fe2d77829352c1882"
+    },
+    {
+      "path": "mcp/node_modules/launder/package.json",
+      "sha256": "2cffe08c5efed34318f0e15dd722ad28d537a7602c27a682747b333943fc5751"
+    },
+    {
+      "path": "mcp/node_modules/launder/test/test.js",
+      "sha256": "d8da3a412b47aca2c34ca24d1ac986512f4579a512cc4b176a70c2cd027ac207"
+    },
+    {
+      "path": "mcp/node_modules/marked/LICENSE",
+      "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c"
+    },
+    {
+      "path": "mcp/node_modules/marked/README.md",
+      "sha256": "b2f958f05b55e66a736a99745c3bb2629793867b39c05f1bb8532722dddabd54"
+    },
+    {
+      "path": "mcp/node_modules/marked/bin/main.js",
+      "sha256": "545be57052de24ea974168a657f0c025ab15fce9e5600d51da6aea943ef6b166"
+    },
+    {
+      "path": "mcp/node_modules/marked/bin/marked.js",
+      "sha256": "dc015672ddc613210a6fae6ab123b9295a670a4e7044a8170b41ccf4d8f5af06"
+    },
+    {
+      "path": "mcp/node_modules/marked/lib/marked.d.ts",
+      "sha256": "d28725982912260cc3fd5d85e753f60cd40d2c7a70672c98ed6fffe4ca4c7142"
+    },
+    {
+      "path": "mcp/node_modules/marked/lib/marked.esm.js",
+      "sha256": "930457e5d55439f90465015cc507d3323366e80df5f7a701b61189d4e1046bda"
+    },
+    {
+      "path": "mcp/node_modules/marked/lib/marked.esm.js.map",
+      "sha256": "c20f2e8f29d7b70d68c7327c9423c0f49309f187030eece487d2f1adea934a92"
+    },
+    {
+      "path": "mcp/node_modules/marked/lib/marked.umd.js",
+      "sha256": "b82b9334406d8bdd16b6236c08de1cb65b2a859873ca9503d9cc0b292ca3c12a"
+    },
+    {
+      "path": "mcp/node_modules/marked/lib/marked.umd.js.map",
+      "sha256": "027e68bd0c5d6c4ea54a22e8ba6c519338b09c41222fe1fdd915863c8a6f1595"
+    },
+    {
+      "path": "mcp/node_modules/marked/man/marked.1",
+      "sha256": "0e00a3077755adfdf0aef94c6934854601b5e44abef6a5e3a9bb52a6e82e84a1"
+    },
+    {
+      "path": "mcp/node_modules/marked/man/marked.1.md",
+      "sha256": "13f927f3c3bcf74bf32c586c81b03821e4e646a040459919cda1fd13cd25a7e3"
+    },
+    {
+      "path": "mcp/node_modules/marked/package.json",
+      "sha256": "741412e7c86bad3b51bae1e059fdfa7939b0e6c09414dbd3a380b8fa8d6f2c8a"
+    },
+    {
       "path": "mcp/node_modules/math-intrinsics/.eslintrc",
       "sha256": "945b2b35c8d6dc3bb008e7a6391fb98f8d4103ca0dc64652b13dcbea0dd090e1"
     },
@@ -10251,6 +12836,110 @@
       "sha256": "8bf6c4f414b123ea2a9375b91982882d01d8561ce7d12e3bb4f448c23359f040"
     },
     {
+      "path": "mcp/node_modules/nanoid/LICENSE",
+      "sha256": "da4db1480d9beea3483a2eda5c53b22238d0827d57da162b48f122e04d2d9987"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/README.md",
+      "sha256": "54449254570e72b9eac5e3fafa9232eccffcc2f1de403a4dae02b2ffabee720f"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/index.browser.cjs",
+      "sha256": "27b1e51270ffaa0ddd7640ea72603526763a627c2522a32520bb87cee187a7b0"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/index.browser.js",
+      "sha256": "3c2f3a015fff84db08195101d5a20afb194af46b9a57cff2d5244d7c2b57837e"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/index.cjs",
+      "sha256": "bd73029973939d5d958e132a181da2a62fbb0676428d3f425ac615cbb8b1c7ef"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/index.d.cts",
+      "sha256": "6eed88ce45c41746dee34d61027633a63a9ead098bf4fe8005667e1cf655cb02"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/index.d.ts",
+      "sha256": "6eed88ce45c41746dee34d61027633a63a9ead098bf4fe8005667e1cf655cb02"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/index.js",
+      "sha256": "2194df84a854623bd3dadfe67aa9ac045ee382c101427dca654d67999d42f843"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/index.native.js",
+      "sha256": "99400149e96a2a4d92abf07f9b5e156fe047532b5201dc7d70c421c7982eca4d"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/async/package.json",
+      "sha256": "0e02b9178f3638eba65e96c8643f3bf08ea192dcef7faadaf3c38c50a829b301"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/bin/nanoid.cjs",
+      "sha256": "e4eb9be1a3e3feb3f8979ef08c3bf3ef8430f4f22df9c4e427353a1577accbe8"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/index.browser.cjs",
+      "sha256": "512a7626d7ae6b08beadd901c3468133b547181baf2ec58f05adf5bcd5d95751"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/index.browser.js",
+      "sha256": "765c95cbce86e6597d153fe41f315c5126c9a62d53a83264a742362d5f5aee91"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/index.cjs",
+      "sha256": "c960eaadebd1a0efb76a525bc6ea206a76dd555ba0cf658d494bdea908c40b6b"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/index.d.cts",
+      "sha256": "a45ee7555d019a67fbe092898d1aef0b1d02a9f6679ab84461ff515b4460d706"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/index.d.ts",
+      "sha256": "a45ee7555d019a67fbe092898d1aef0b1d02a9f6679ab84461ff515b4460d706"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/index.js",
+      "sha256": "113bb62a626af833b5d7e06a8d89413748f1db18d303d31e092059f79fc5e530"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/nanoid.js",
+      "sha256": "8d11a2a154f892b392c0c84dbe3cf9515413e1976103e1827e1a90685b78ae32"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/non-secure/index.cjs",
+      "sha256": "73b3dc5bf17d98fc9b9894748907e338c536f47412ae495a5f8052565381ddb2"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/non-secure/index.d.ts",
+      "sha256": "f001cc8fd6bd0ce527923f124a5d7309abcab5927852ebadc0ef71d2b1f3ae7c"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/non-secure/index.js",
+      "sha256": "c899e2811f0c0b89624f11370da64d381ef3f96be2937c1414130895f5622325"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/non-secure/package.json",
+      "sha256": "2f9b8c4bee9312538f388b49c13987f4565ac25d6756fabdbbb771d339945e3e"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/package.json",
+      "sha256": "e2a77185ded1c006171e4e2f8b316d0e3b4c51a135a190851cfc888ea428f6bf"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/url-alphabet/index.cjs",
+      "sha256": "fdb8efafe73e611c45d1fffb25360888e139d5be3ab7982783db22aba2f21518"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/url-alphabet/index.js",
+      "sha256": "6c605b83f3d32f76692741ed948e678b8092ea7d2e1b8b637c4982aff35e6e9e"
+    },
+    {
+      "path": "mcp/node_modules/nanoid/url-alphabet/package.json",
+      "sha256": "2f9b8c4bee9312538f388b49c13987f4565ac25d6756fabdbbb771d339945e3e"
+    },
+    {
       "path": "mcp/node_modules/negotiator/LICENSE",
       "sha256": "553d4d20029a24e315b428a1a54a9e109eaa340f2e958a4f50a92362c2c4070b"
     },
@@ -10499,6 +13188,46 @@
       "sha256": "33840d74c14c94bfb75c76374765b635531b1eacb88d7f1f2f380c94d0ea1328"
     },
     {
+      "path": "mcp/node_modules/parse-srcset/.jscs.json",
+      "sha256": "7bbfeff929ae1f114e86be70c08484b823496b7a7e94592cfda3d7cb3779b55f"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/.jshintrc",
+      "sha256": "ab50769680a8eee11269c5ee3d6658708d7a3cf49cd8960cc7b3cf9ae4d70667"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/.npmignore",
+      "sha256": "df9158d5580e3a0e674e4e6abc423183b6de9783c583f1bd1b64f981df4a74ad"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/LICENSE",
+      "sha256": "240b6a23478dc1b044a457f1e9260c725d50b66b2502f7c3240f54f79c13ab58"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/README.md",
+      "sha256": "09b1aed0ce46f343758b6277c98c1ae13ebb687936ed15531f27d869a8151ee5"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/package.json",
+      "sha256": "85de89bdbb2225109c9af147844db04d0c089e16ecc0e0d7280aa5fddfba42e5"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/src/parse-srcset.js",
+      "sha256": "de420def62ee4e96192248638bfdc62184587d8956fbbbdc7207a89071293f3e"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/tests/he.js",
+      "sha256": "79995fadb53ee3327340f30e7e25e32e69f19800197284a457a3f91a4a046d52"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/tests/intern.js",
+      "sha256": "1c0d1c3e218cc39f662f5a3ea3abfd04e821338f55c3e2289f40393ba6723b7f"
+    },
+    {
+      "path": "mcp/node_modules/parse-srcset/tests/unit/ps.js",
+      "sha256": "2738542f53f18f1b238b7a1d9e33fbad52a4f75ec8b137b336b2c059b2aff339"
+    },
+    {
       "path": "mcp/node_modules/parseurl/HISTORY.md",
       "sha256": "aa6e5cd75ddde03b54623af11e6aeb6f92ccf6a1c69805b20890228182030189"
     },
@@ -10563,6 +13292,34 @@
       "sha256": "3c37dce1e0587231f7c9f63e137dd0ed4d6f25552c89b5b5939c6a3d36113634"
     },
     {
+      "path": "mcp/node_modules/picocolors/LICENSE",
+      "sha256": "6582629e2979466878f6014313dcc2f3756c9616148682227ce3063dde310750"
+    },
+    {
+      "path": "mcp/node_modules/picocolors/README.md",
+      "sha256": "5027b2836551ea0f91fa27b97335de905e24e1459d590eacfa45c0156962b70c"
+    },
+    {
+      "path": "mcp/node_modules/picocolors/package.json",
+      "sha256": "ef2ac226c4811d312e12c64214c453878653e834482125ae475f27cea60de737"
+    },
+    {
+      "path": "mcp/node_modules/picocolors/picocolors.browser.js",
+      "sha256": "a2e045ba16013e35c7045797ae940e3ea1c0e0ada13467bc73f7538690ea091a"
+    },
+    {
+      "path": "mcp/node_modules/picocolors/picocolors.d.ts",
+      "sha256": "8c5f0739f00f89f89b03a1fe6658c6d78000d7ebd7f556f0f8d6908fa679de35"
+    },
+    {
+      "path": "mcp/node_modules/picocolors/picocolors.js",
+      "sha256": "213bb870fcaad4def0215fe34fbb0f529836cc4d2462e02f14f1a49d09781625"
+    },
+    {
+      "path": "mcp/node_modules/picocolors/types.d.ts",
+      "sha256": "590595c1230ebb7c43ebac51b2b2da956a719b213355b4358e2a6b16a8b5936c"
+    },
+    {
       "path": "mcp/node_modules/pkce-challenge/CHANGELOG.md",
       "sha256": "0ff8809c222d5aff98333e7622e88b359a165bcfd5112bdac21a2db25ec8c086"
     },
@@ -10601,6 +13358,226 @@
     {
       "path": "mcp/node_modules/pkce-challenge/package.json",
       "sha256": "74fd5b54078ebad49e15421f928d285f63926caae3220356d95a9afc6fa0e417"
+    },
+    {
+      "path": "mcp/node_modules/postcss/LICENSE",
+      "sha256": "5be1f3465bba68a626777f984878814aaf35e7ef8e9fd314d469bcf887050fb8"
+    },
+    {
+      "path": "mcp/node_modules/postcss/README.md",
+      "sha256": "92b501afb100c2e7f186dc3e45d5064ee47efeed91705c2cbf2f9ffd1fa7c6eb"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/at-rule.d.ts",
+      "sha256": "17f2922d41ddd032830a91371c948cd9ce903b35c95adca72271a54584f19b0b"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/at-rule.js",
+      "sha256": "33b932bda8f304e9838a70232673326b6c0fd5fa030df35071bf36c127042a0b"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/comment.d.ts",
+      "sha256": "6332f565867cf4a740a70e30f31cefba37ef7cebcf74f22eab8d744fde6d193e"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/comment.js",
+      "sha256": "674385438f42526f2c05c19dfb66fcc521f5cf180ccc85b3215ad5c07ac21a40"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/container.d.ts",
+      "sha256": "9a195d8476f48523446ece812e5450b5b1ec8c3b6abf99efb8ee2479524f6f56"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/container.js",
+      "sha256": "e2fc6a559238ac8186ef56d13d340b7c62c04ba9551e2edc027e761eb393ddd0"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/css-syntax-error.d.ts",
+      "sha256": "e16dc2a81595736024a206c7d5c8a39bfe2e6039208ef29981d0d95434ba8fcf"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/css-syntax-error.js",
+      "sha256": "904b4bb371539a6303e4e211f0a8991fde7bc94d8674253d627389ff291d0ec1"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/declaration.d.ts",
+      "sha256": "38cb107048cd8ba54a70014ef9a30cf57bee0d9f10a0ca4cefa974056e1ee460"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/declaration.js",
+      "sha256": "2ccb78406c7a45aab26fc463a0fe5e3e855caf3ab1ba283616ae867046aa3b54"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/document.d.ts",
+      "sha256": "e392e8fb5b514eafc585601c1d781485aa6dd6a320e75daf1064a4c6918a1b45"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/document.js",
+      "sha256": "f66f02fde48389fe1a361a8f71da7ee0236a49c94cf22378e70ba6a2e9f4fab1"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/fromJSON.d.ts",
+      "sha256": "97bccf79859464fcd23ee7f3f3d00c4287089e420b77ff395068eb2b209c3e22"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/fromJSON.js",
+      "sha256": "2d9efb16f305c45f05d30e6727ad3d475c89e08ef893d913c3839f5ce899db17"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/input.d.ts",
+      "sha256": "e5bab5f871ef708d52d47b3e5d0aa72a08ee7a152f33931d9a60809711a2a9a3"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/input.js",
+      "sha256": "52358502e6ea455d421d21a98fc0a3be3b974ca624b96f43b318780f3e150bc2"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/lazy-result.d.ts",
+      "sha256": "a039dc21f045919f3cbee2ec13812cc6cc3eebc99dae4be00973230f468d19a6"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/lazy-result.js",
+      "sha256": "2d716dea3a99836276c67e6d74dc587571a8b7498683044ba3ddc57e3db87104"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/list.d.ts",
+      "sha256": "3eed76ede2a1a14d7c9bb0a642041282dcc264811139d3dd275c9fe14efc9840"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/list.js",
+      "sha256": "212ed2b68528dcfeb697ef6e762df2fe37cda84fa1330eb49ff471192e91864d"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/map-generator.js",
+      "sha256": "800dc6f5f11158db8c691fba7d6d0d8e723566034846348e1005ab3f388e2a91"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/no-work-result.d.ts",
+      "sha256": "3fbe57af01460e49dcd29df55d6931e1672bc6f1be0fb073d11410bc16f9037d"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/no-work-result.js",
+      "sha256": "11e06a9b30ab844b877f489ad7870e2a319507aed4554a58a757b7dfd7699505"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/node.d.ts",
+      "sha256": "3cc8a3d123b6b232d48d34b51b785f9da8d193f5b5817fa521fcd2f3b9315c55"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/node.js",
+      "sha256": "1cc8d56d0c77783fa7fecf702321129936efa3dc504eb4528042a103fe54770d"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/parse.d.ts",
+      "sha256": "526d4d924f94e938d5c81ec74eb0ada1067a31321dcdd830aee4d66d08bd8bff"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/parse.js",
+      "sha256": "7662c5ad1fd5f97a7c1615f0e5e7bc268e762916bcf6fb7bf9dda45537493764"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/parser.js",
+      "sha256": "4afa96a64053fe1df4a41d44e7b481bb39fb4f7497ae3f7eafbccc7dad541d9c"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/postcss.d.mts",
+      "sha256": "8d369483f0c2b9ee388129cfdb6a43bc8112b377e86a41884bd06e19ce04f4c1"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/postcss.d.ts",
+      "sha256": "354a7f8e1287d9d6b7561bc97fdd8cbc2f7c1dd79e4cb37b942e8a5cfaff1085"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/postcss.js",
+      "sha256": "80304467231d94293a4c1ca5549d6d5a6fe9985171f3e64b98c3c1c22d08a4f9"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/postcss.mjs",
+      "sha256": "986ebc2d661a3e93b6e026dd2e1925e18167efdcc963f4043a65e1859974664f"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/previous-map.d.ts",
+      "sha256": "52dcc257df5119fb66d864625112ce5033ac51a4c2afe376a0b299d2f7f76e4a"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/previous-map.js",
+      "sha256": "87e1c0148d0be6cfdb835c531347c43b52bd64f193275f167093dae75adc1394"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/processor.d.ts",
+      "sha256": "f760be449e8562ec5c09bb5187e8e1eabf3c113c0c58cddda53ef8c69f3e2131"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/processor.js",
+      "sha256": "be30ca054e68b4b64c6ae6d7839bd9e56c66d93e42c0529d392380d0c16ff819"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/result.d.ts",
+      "sha256": "44325ed13294fce6ab825b82947bbeed2611db7dad9d9135260192f375e5a189"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/result.js",
+      "sha256": "b4239438538d41187fc9a572c83bb89b09524301764ebd4f46c71fe31edd04dd"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/root.d.ts",
+      "sha256": "19ee8416e6473ed6c7adb868fa796b5653cf0fa2a337658e677eaa0d134388c3"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/root.js",
+      "sha256": "872a512fa232b23f5231070bd981d3eb390316d8776ba5ccb64f723e4b7088bb"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/rule.d.ts",
+      "sha256": "46e4a36e8ddbdfb4e7330e11c81c970dc8b218611df9183d39c41c5f8c653b55"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/rule.js",
+      "sha256": "216ca23a33b1a0145c7925daa442a34e33a9ea41c6f3bb58fca7c4fb355e0166"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/stringifier.d.ts",
+      "sha256": "0807e4031561395faa159ca7ff21991d63f3f7df894907ec447d4a62a8e66214"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/stringifier.js",
+      "sha256": "9652479c2f660511db3e6229097a261b5d9cd150328462c6d5c6dd06dd2d0a96"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/stringify.d.ts",
+      "sha256": "5ed0ab0fc1719c68007cf670abd22f78c7767a3b9f4465ad5a29a255adc0c939"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/stringify.js",
+      "sha256": "520baa093e7a66bf127ad9237f812eeb309090eb402cb1a664f304919a1fcff5"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/symbols.js",
+      "sha256": "eb8ab8b9648d400ec3e8e37e75dc159734b97ba21137f12da11b4afc2547a1b4"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/terminal-highlight.js",
+      "sha256": "27f1eb6cc633f3947e053c96f16b1754bcffcda2742ecc9a1e11cc2a75d70d9b"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/tokenize.js",
+      "sha256": "ddfcaaa01f5eac9e4e8652044df1401ce6cc70295fd3f9fbb214ca66fb2bec72"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/warn-once.js",
+      "sha256": "5683ff69eeb8e77373a4bd0e0b9da611c7575ee434ba3c458c0552ab4806464a"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/warning.d.ts",
+      "sha256": "1328ab4e442614b28cdb3d4b414cf68325c0da0dca07287a338d0654b7a00261"
+    },
+    {
+      "path": "mcp/node_modules/postcss/lib/warning.js",
+      "sha256": "eb7656e1b8501c7b7c3b925b3875363e30b5d23477424bc444dc6289993c16b7"
+    },
+    {
+      "path": "mcp/node_modules/postcss/package.json",
+      "sha256": "2bc68f53bee43580a7229a351c94ba72ebdea65a885746d481586313c5426da9"
     },
     {
       "path": "mcp/node_modules/proxy-addr/HISTORY.md",
@@ -10813,6 +13790,22 @@
     {
       "path": "mcp/node_modules/safer-buffer/tests.js",
       "sha256": "511906fdf6a233c84a9216065d1701dbfd84f380fbd495ae1cf5a002370b9885"
+    },
+    {
+      "path": "mcp/node_modules/sanitize-html/LICENSE",
+      "sha256": "24526b61784870909780321dac50fcd3a33ff0bdfd507549dd63163899237bd1"
+    },
+    {
+      "path": "mcp/node_modules/sanitize-html/README.md",
+      "sha256": "fc9c8b2fa093ff95b67edcf193345345ecf468b29df6be02f4e9b6f074832f39"
+    },
+    {
+      "path": "mcp/node_modules/sanitize-html/index.js",
+      "sha256": "6c2265989d3eb09003e922d959b868dc59659713af395cc3bae797c70e2b4a6d"
+    },
+    {
+      "path": "mcp/node_modules/sanitize-html/package.json",
+      "sha256": "c4a0e545a0ac1ccfbe9855672435113c149630390259bf6a7e6802a2cba721dd"
     },
     {
       "path": "mcp/node_modules/send/LICENSE",
@@ -11103,6 +14096,78 @@
       "sha256": "6346ee4c020f341387588479dd83740a65ab902a462b8c6b3b8bf51f032c6795"
     },
     {
+      "path": "mcp/node_modules/source-map-js/LICENSE",
+      "sha256": "6cb0631f71c7749763fd3dd1d5bee52dd1070ec17f2edc1710079ad070bd2fbd"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/README.md",
+      "sha256": "8e1a57daf01cd2fc8969ecd0afeae51d1c05c7c79e9413ea82016a0f65e97646"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/array-set.js",
+      "sha256": "163bb3055aaea7140167740036a83161fd912c344b14f992754b80f21477d754"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/base64-vlq.js",
+      "sha256": "f3407e528f54ec0787bd0a71eeac0c99fffd98445916fcbe116dc69ca3be928b"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/base64.js",
+      "sha256": "651bf433cf05e9ec8cee0b94639483236a605d48279e83d3d5c5de81c21d6599"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/binary-search.js",
+      "sha256": "c7f4a47a125af0bd860443dfd71d2f412d1a97dcb53ab7038189d63b91dc32bd"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/mapping-list.js",
+      "sha256": "35ddb82861f11a70ab84cb47d620fcb28d7f884bb444644e06bde815b836ef9e"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/quick-sort.js",
+      "sha256": "1e2857cc4f6c9c36b764ce529f39b9243bed27aed809e895d7cec04c8a869266"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/source-map-consumer.d.ts",
+      "sha256": "2ca1c32e3bd72c64662adf034d97df8606ba1e1399cafc75567809ecff4bca95"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/source-map-consumer.js",
+      "sha256": "9ad10db386da13c1f95e6a680d6298dbb306c77f57a9a3539e4595b723a7654b"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/source-map-generator.d.ts",
+      "sha256": "11f9b1e28747ca9cf5f4f7d41a7f261ac98ecde6be7dc146824fa275ac1f169d"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/source-map-generator.js",
+      "sha256": "07894c9ea1e674263e2e7694d43d4fb935e98549b93946205b9536c1420696c0"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/source-node.d.ts",
+      "sha256": "e4a2e40e293158fb2ab29aadb9eaa6400c8d9be5851d45a95a76f9e2a4bb7c8b"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/source-node.js",
+      "sha256": "d1a0ef136bf0e974ba956506c88e91fef5d8681bbf10c486ff9566a7d6d76f3c"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/lib/util.js",
+      "sha256": "0629f3ae2f3049cda3a2e87ea651dcf0cc71108f4681795ab989a8ac1573fc03"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/package.json",
+      "sha256": "9f1ea63b1661d0f6e5fcd50b625d86cddd77de870a0019b23262360987b487f5"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/source-map.d.ts",
+      "sha256": "402e5c534fb2b85fa771170595db3ac0dd532112c8fa44fc23f233bc6967488b"
+    },
+    {
+      "path": "mcp/node_modules/source-map-js/source-map.js",
+      "sha256": "dc098456c2d9ab90a4c0a17cca9be16665b9813df20906553a98b0088a157be7"
+    },
+    {
       "path": "mcp/node_modules/statuses/HISTORY.md",
       "sha256": "17ed5dffdb701302299988d379d0583b2948e2bd61f8a34e676671d03551b41e"
     },
@@ -11269,6 +14334,938 @@
     {
       "path": "mcp/node_modules/wrappy/wrappy.js",
       "sha256": "153453c4d84a3c2f13589c37055a7daff61d48475dcce554f7eedad15fc7b3e5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/LICENSE",
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "path": "mcp/node_modules/yaml/README.md",
+      "sha256": "c8aa393826fb1c55ae195399864e7f454a2c66c4d9491459545b26cac4b958e6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/bin.mjs",
+      "sha256": "faebbf70669988b5be13130907adf7b788145960448eab08e92e66189e72f448"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/compose-collection.js",
+      "sha256": "7fa2b7a37902d99bf924c3e4db7b003202837597a7815d9917736dbd1861b7f6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/compose-doc.js",
+      "sha256": "0ec9140185c6d965783c4d3e9ae427fb4a377935dd20d8872eb35b56ec461579"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/compose-node.js",
+      "sha256": "c6ddd844d89a2086cc1c4cc643cae6361e7fae0728dc0f71066ded02bb7b5d12"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/compose-scalar.js",
+      "sha256": "3b7d0f5876dd7c33b8f2bf896178008283be8e4a82495070dc638a922e202e07"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/composer.js",
+      "sha256": "214e221c39346468e4b7713d775bfa9dca87695463ac795399e66b91a06540cc"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/resolve-block-map.js",
+      "sha256": "ffa61d87f9f0e58a5e05c54073f67c34c4575234f357bcaba6fb164e36996b97"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/resolve-block-scalar.js",
+      "sha256": "2a89c2b128e143a98f61751b9ab7dd08d140105c185ece6a687015ea8e0be036"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/resolve-block-seq.js",
+      "sha256": "7905b607f90dc9078463fd40e3fbb22537e45e0ef2514fc6c662526b4cdc2ec6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/resolve-end.js",
+      "sha256": "e0a32e1b8c5649ea14152b0c0d45fbd64d46dbfa299a7328b71421e49ee48db2"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/resolve-flow-collection.js",
+      "sha256": "957722ee22cb72b48e9d78ed6dabdca97fcbff188cad1f362864a959b184925f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/resolve-flow-scalar.js",
+      "sha256": "5516b92d61fedb6dbfb4523a7aa6c44c12b627e18da5178eafa28324aef4ff7d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/resolve-props.js",
+      "sha256": "4b6c34fe620ddaf31e06c44a1acbbbe8e49a617ae805bb8dca70a278812c16cb"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/util-contains-newline.js",
+      "sha256": "4810ffba0d74ebb913731e1369ea17f6fef20df2feb2ef0bd8553e439f4a6b78"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/util-empty-scalar-position.js",
+      "sha256": "571d615e24fd379998df23e29df09f127349f4757fc4cbad176aecbfe77b7d82"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/util-flow-indent-check.js",
+      "sha256": "ebab50fc461c9eaffe07c807dde4aff4f8c5976f5aa4e8f02608ed57ef52a690"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/compose/util-map-includes.js",
+      "sha256": "584a79bdaf93b530fee951c888daf844a6a329f672ffb57450b39f72b0bdfb95"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/doc/Document.js",
+      "sha256": "6b9c9187a04d13331c07d7193baf29b0547fd20de042e1fd57289f13d61ad196"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/doc/anchors.js",
+      "sha256": "0d5c8fd9bf01e2f4eb0cf08771705e0c0efbd05d9835714fc94850d943003cc6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/doc/applyReviver.js",
+      "sha256": "b653aa07fcd8619637c1dbf6151d9de5e22efcb3becfd4dff86cdcf4bb2f1a97"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/doc/createNode.js",
+      "sha256": "80a8212199fa1591e0836c0b19e05f9734dd5e6a7dcd54d6da1e4f2a20f2450c"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/doc/directives.js",
+      "sha256": "688805b988a34cf7c2f6e5b6c3f1e6a798b22b4eaa450286df095d6b741fedf0"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/errors.js",
+      "sha256": "410bb3397beb0d3a8c649d048b6e087bddf1f7114832eaf94be0fcbb4a8af29b"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/index.js",
+      "sha256": "c7d10350202ee8cb14febfce6b559c93760405cc4738a89c10abcb3c44fd6990"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/log.js",
+      "sha256": "2e7d7edee783c901f36a8f986d126f15f33ac504fe17d4655e6846869d07b9e4"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/Alias.js",
+      "sha256": "0aaa9956d9f965e29f391c268baca1e7f9c50649b900128a9e5e669450d76411"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/Collection.js",
+      "sha256": "f18de1edc4f5a3ae163a6ca894e2b4debd3a8c480338f580ac6cdffebbfc4bc9"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/Node.js",
+      "sha256": "aaf0e1042d4b11f4760f7de032ec99ac49dda1742e55911f5a4df182cbd5471f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/Pair.js",
+      "sha256": "a9f0acf0f06eab7852a99418a07628fd0e26476895c90af3ae66bab8704e9b11"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/Scalar.js",
+      "sha256": "80a4961d380ec00c5eb9a47f29dfb378437d055910e163a9ebd9accf032b6e03"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/YAMLMap.js",
+      "sha256": "42b884f36dfb23248e9f2200bce5e7a6007f90e0adfd228de8079346e9627737"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/YAMLSeq.js",
+      "sha256": "75d12e1a5edbf1e3d04d6310ffdaf553a3a1ff7d12643cfa428330ca7189604d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/addPairToJSMap.js",
+      "sha256": "67cc22455591363a78723876f73640c5712161bb840423e705820666cb0d3ada"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/identity.js",
+      "sha256": "da71af70da393500ab6e3cdbceba9c66965bc89c3401388c9ad422c91abf467f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/nodes/toJS.js",
+      "sha256": "80f2431eaef0c531ab93b1a8883206394ae3fac75732cc683cdabfdcc00dd724"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/parse/cst-scalar.js",
+      "sha256": "e30a85b8b613badfb50039938fbb5bbbafbd5f9f95f3a630300ad3dec5fb3dc8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/parse/cst-stringify.js",
+      "sha256": "275b500e3f1a0067d5d8671af5c536963a46d4921e49cf156547f796067b8810"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/parse/cst-visit.js",
+      "sha256": "0baadd57686b26163ba71e7323a9208fcba81978e9ecebbad80afaa8baa61788"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/parse/cst.js",
+      "sha256": "8bf6c87dc02b9375750d550a9099cb1cd1cd71ca9da68f1a0798844a0f76bf8f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/parse/lexer.js",
+      "sha256": "14d3a6e0f1bf7945a92dfa0366f61bcd122aa3c62addb6fbfdaadd796c634036"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/parse/line-counter.js",
+      "sha256": "2428d1b9a18ad7d8dabc7e12276e0fd90446c9e3433f1501e6bb43e111ad63c0"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/parse/parser.js",
+      "sha256": "761580b1ad5b36b6fd5e2ffb411798cb5603f8fc46ff11ad8e68ca2ba32a405f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/public-api.js",
+      "sha256": "1635da91bae6389b88d38bc99c57fa6ed71c017b026cb80be9cead10bbafa499"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/Schema.js",
+      "sha256": "515d6576e94a5cc96c999cd9da230f7ef79d8fbea1f4c6c6939631ef122fb50e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/common/map.js",
+      "sha256": "6094c4919ff0051a663866cf75df489be51987d808f0862b9b9e36d4090182a7"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/common/null.js",
+      "sha256": "6666e819b0dd4c9eac1498e8520e23943abf2c9d92cee72b9c5607557800eb14"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/common/seq.js",
+      "sha256": "446dc09d297b2b9823d981f3c44e595f8d87c2ce97e2435e1ecc01bc6c31f4b9"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/common/string.js",
+      "sha256": "830740273a4f0a39b94549377cb12183ab8ce558dfb12818f7b295fe261fc08e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/core/bool.js",
+      "sha256": "9d4b1fe540d36d8e09cf5799b8abed53e4ee620425d3d6712e8a50c927752615"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/core/float.js",
+      "sha256": "b24b968b6b714be9650480e07f10d039f145e88e4299ce2268eed57de02673a8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/core/int.js",
+      "sha256": "dc7ae60f465273fd7e5dfd6b7f686ac47887fa02db3fe9ec603290003cc9baff"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/core/schema.js",
+      "sha256": "92e75125989595b02d9b9f8d6788076d4c1ec173bfa4b0f04eabaaff86153dd9"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/json/schema.js",
+      "sha256": "a33036dc6f8916682f9494431ad7ffb1116af7616aa83439b1a956b628e44068"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/tags.js",
+      "sha256": "c8085f537d22c3f7f17ea2906ddc11fc69b0106d5447aac2953eec19c025f136"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/binary.js",
+      "sha256": "ad5b0407d199dda7bc4fbacaee90d2a2a99540c8ced44c13bdf6974cb6dc3ef1"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/bool.js",
+      "sha256": "1d605f63430047574323f352893ba3c52fc73fbd1b52e47fa6dec2eb375301a5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/float.js",
+      "sha256": "40e68189590e6924d063f2b88c7b2415dcb2f796fbd6e9af18e9b119eed3ce23"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/int.js",
+      "sha256": "6c83bf34c4ecfa722eff2c252c8bdf95661777738c9971c4ccda3a5413218d80"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/merge.js",
+      "sha256": "f3ac8d7fb4701053e97d5399bdacde15cdc662420cd7e85de349eb20330dab5e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/omap.js",
+      "sha256": "fb3d04682a48ec1e0ad26c1afc8a85d1e6c814942ca6eba8bfb94a6571d3e9a6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/pairs.js",
+      "sha256": "3c37806050903fd81b51e597bfe7acfff972e788e9a1b3c0148f17b32da3f568"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/schema.js",
+      "sha256": "1e684cad435d9e9601aa56dd4d55243369a010e75edba21ff31d7be84c8600eb"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/set.js",
+      "sha256": "0cdce6c41328c116fc17f5660a79f8995af8d0227e424e89177a30894138b687"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/schema/yaml-1.1/timestamp.js",
+      "sha256": "18fb9beee49f0f3452601ba01b46ae1d6e49bf4a63b499e9eff28366e3dfcb5d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/foldFlowLines.js",
+      "sha256": "1a6360496e3cb52767d4c346655307c978cb2c94853229152f97017c4209745a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/stringify.js",
+      "sha256": "af3ccd112cba318ff9b4686ed9afd0b33fc238da51954fd431dc4c7a9db0b455"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/stringifyCollection.js",
+      "sha256": "0d2babd8428322fe6a9f5cd10fde361a1d8dedae662fd4245c6d151e4a5ae013"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/stringifyComment.js",
+      "sha256": "20d3dc6bebda3efc2394ca162455ce9e4691b6c60995b5b4418b30659e09e03e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/stringifyDocument.js",
+      "sha256": "3ca3818dc9e81ee7e45f0e26792065f47fccee99b6150e76a94fcbb3d0306421"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/stringifyNumber.js",
+      "sha256": "e0d02220e66fedc267b435e5d13d2383e24c8460562d815f670a169dadc2859f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/stringifyPair.js",
+      "sha256": "4074dc125fdad4ef2ec8bab4fbf7ece4b399ecd2fbd1813c4a316e88243f1179"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/stringify/stringifyString.js",
+      "sha256": "0fd2e43243792cfa0a1d8cea13ba8e05ddaf6fb1296a4fde497b956454bfa44c"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/util.js",
+      "sha256": "e6b73d7297c4253e5299d4f97dc2c05e6e30d69ace66962412f6ab9690d4d412"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/dist/visit.js",
+      "sha256": "d9daffd11ec68755a7238684ae3f9c64f59dc86338d0e7cbe521a8fc1d45bd19"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/index.js",
+      "sha256": "5ae196b7abe55bed1d4d11f7eeba63aeda0c49fb73eb3c7359e3d6b9a080696b"
+    },
+    {
+      "path": "mcp/node_modules/yaml/browser/package.json",
+      "sha256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/cli.d.ts",
+      "sha256": "e31d2f97aadbc0ff370a134851af7757885cfcfcfa3a675cd59feb7872e4f91e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/cli.mjs",
+      "sha256": "0ad1d42d88c0648fb6fbd158b21dcc2b4daa2e34e4d4df7aa949d6978d343d4d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-collection.d.ts",
+      "sha256": "88460b54f95b8bc0294d2071430ec0e2c1e8f8aef2206646c027425a94767faf"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-collection.js",
+      "sha256": "a7db11a1a7987d6412df8adbbb85ccd4370171f82265703b2b6af2d13c45d646"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-doc.d.ts",
+      "sha256": "ba8002d807e2b012f40e877b56bdad9ce0a6e215da96dc2319688b56e2a57212"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-doc.js",
+      "sha256": "0f388537747b5c1a241639413f17fc2b5f831451b5017d6902e46db6842a5fe4"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-node.d.ts",
+      "sha256": "8045fa3122bf1c4b97dfb13a404f17d2d2b490521a4607b2ed5eb09b1f9c2a1a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-node.js",
+      "sha256": "86562c85e4e5737d28b24aae2030b97bc9b672e1f2de5da9e4d25c4571e4345c"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-scalar.d.ts",
+      "sha256": "fc7fb9cb5044dfbfc552aed73d8b8e33b7e0de07bd3421f1d28c46b8ef4d5ba6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/compose-scalar.js",
+      "sha256": "37920472755bdaa76399b6d33872f0015ae1fd9ba7faa031c03d501aa8c3e903"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/composer.d.ts",
+      "sha256": "3e7ae921a43416e155d7bbe5b4229b7686cfa6a20af0a3ae5a79dfe127355c21"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/composer.js",
+      "sha256": "509c0bdb4cef641cc784c130b6cc2b350752f6841798daa1a13cbcaf4fc74c46"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-block-map.d.ts",
+      "sha256": "905f841ddfebf6b28a63423c0ff43fc17d4067f4021f7ba0fac4e93bc0c2d449"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-block-map.js",
+      "sha256": "dcfada448c8fc532ebba96d6788a4b41bb015fc5e697a9544ff429b9c4e4c70a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-block-scalar.d.ts",
+      "sha256": "acf6a9b33859e4409b56e68e919061f6daf40132529ec49bd5ba36b7ac2a1f92"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-block-scalar.js",
+      "sha256": "af562e2e3cd7ee7b3cb9342984177f6b5c77de73121e87695db3ff635e12d152"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-block-seq.d.ts",
+      "sha256": "ffd6665710fd9c50d2eb87a584547b4ec583b39e8b639741b770be7ebcb757ea"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-block-seq.js",
+      "sha256": "18f54a39d73b600ebbd74a343e6671d0d08423f125bd86963b72dc24d6261911"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-end.d.ts",
+      "sha256": "df9c83d8eac50c9214400faa415eaee2199288d3b87aaf381fc396799a128407"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-end.js",
+      "sha256": "532bf56299183e75bb7c20db75321367c28393b66ecb8ffd540faedd9817f116"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-flow-collection.d.ts",
+      "sha256": "3f4d40133ff3c69fbb42e7eb758645c4288a52aaa3b1c9b6936339342ca07bd1"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-flow-collection.js",
+      "sha256": "242470b54c0deba1507babba2e879f3005ed2ee3bd53a36affb6ecf82fddd375"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-flow-scalar.d.ts",
+      "sha256": "1e52c1052cad40acf62ba232ff1678c132aff44563e8fd553988c8bd7d282333"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-flow-scalar.js",
+      "sha256": "13bcd9d37afd4ffec4b1b3bc9ae1ecc2cff97e7f7c91b5f58b71c99ddd526b05"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-props.d.ts",
+      "sha256": "f79e69096d500e49deeabf6b4e6bd5d3a51a52170e2ad07300349b963d110547"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/resolve-props.js",
+      "sha256": "0b49c6af0145c309883dbf24d1a00260c0c090412be10aaa301de126dad15983"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-contains-newline.d.ts",
+      "sha256": "29d5bb59a4240ce49fb0bea3689f4a7ea6ba936374029db1f16931f50faecb97"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-contains-newline.js",
+      "sha256": "60182618fc9fa669e74ab74f4231c15b5d24bc52ab0a419684bb827a00d69be6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-empty-scalar-position.d.ts",
+      "sha256": "cd2cc1240eb3720e7154b4ae91116822cc59a5349436ed7631fb9f43302871c3"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-empty-scalar-position.js",
+      "sha256": "460516395ef7e961d5248e047ee6d52084f279b76e8af9f3c2bac92da1c7d656"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-flow-indent-check.d.ts",
+      "sha256": "60a9bbaf35ee0007d0925f376c067a3aa21b32485627cfcba948900a75eb42eb"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-flow-indent-check.js",
+      "sha256": "c7c0c9837a1f828de19eb3ee0947dff39c4f69222c762aed9fa2fe14fc46ee3e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-map-includes.d.ts",
+      "sha256": "5424ca8906bc44d732c1b677a250bc85cd0942461c1d53e6408930cdd9e6e029"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/compose/util-map-includes.js",
+      "sha256": "0330dc34072cb499493176b293228631ca8ebaaaddcdc0e63b02bf24f6a25c2d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/Document.d.ts",
+      "sha256": "df9b266bceb94167c2e8ae25db37d31a28de02ae89ff58e8174708afdec26738"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/Document.js",
+      "sha256": "9bc1c9a56de3902d554e77193125b6aadcfaec743073b3417b22c95a8f7d7923"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/anchors.d.ts",
+      "sha256": "17b91b170b12687f10167b9e0a712e25ef4bfdc8b1f465e0b756e4512be08773"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/anchors.js",
+      "sha256": "ea9a479b1e98d88235ffa6736d0405e2119e9dde7b5249b72185488ab2527261"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/applyReviver.d.ts",
+      "sha256": "bc41a8e33caf4d193b0c49ec70d1e8db5ce3312eafe5447c6c1d5a2084fece12"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/applyReviver.js",
+      "sha256": "7271668f41f264e4b9aeb184629cfd11c510b401c5a797fa7194d17a9652976e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/createNode.d.ts",
+      "sha256": "33a6d7b07c85ac0cef9a021b78b52e2d901d2ebfd5458db68f229ca482c1910c"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/createNode.js",
+      "sha256": "a39d14026d4cc6ff8d76d90db30c41facc26a146ebed30783bcf28e40b5caa65"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/directives.d.ts",
+      "sha256": "9e5b8137b7ee679d31b35221503282561e764116d8b007c5419b6f9d60765683"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/doc/directives.js",
+      "sha256": "8f02c3c03571e377e33680b68027d4336234d7a6da3d8c6a8b7f1183c1c428ff"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/errors.d.ts",
+      "sha256": "bea7cae6a8b2d41fd1a9d70475b54d741dd7ca2103904934858108eec0336a69"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/errors.js",
+      "sha256": "c389d9c448193ce1bcb9641f5eda62cbe56467b2104357d2fc8dd86df88cb07b"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/index.d.ts",
+      "sha256": "9f85a1810d42f75e1abb4fc94be585aae1fdac8ae752c76b912d95aef61bf5de"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/index.js",
+      "sha256": "2d58984e0ae80de4acbd8f009fab332f5ce77d9e1a5f138a3058a0ada6567fb9"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/log.d.ts",
+      "sha256": "7c33f11a56ba4e79efc4ddae85f8a4a888e216d2bf66c863f344d403437ffc74"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/log.js",
+      "sha256": "f6ccc3593357801851aa1023b202f842733043ac3b25773048d836f89de8108d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Alias.d.ts",
+      "sha256": "a971cba9f67e1c87014a2a544c24bc58bad1983970dfa66051b42ae441da1f46"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Alias.js",
+      "sha256": "139f5fbb3e7727a9cea89e16b2518f9ffe2e3a37cfb46717e60d23da7d6e739e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Collection.d.ts",
+      "sha256": "06b37153d512000a91cad6fcbae75ca795ecec00469effaa8916101a00d5b9e2"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Collection.js",
+      "sha256": "e2d3ffdc9a997774602e72b296fba641558bc7355c9f12a3ee0502fb1e541306"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Node.d.ts",
+      "sha256": "961fa18e1658f3f8e38c23e1a9bc3f4d7be75b056a94700291d5f82f57524ff0"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Node.js",
+      "sha256": "b57b42071f7ebab633626858656ec5187617f2290c272e87edc57467ef591215"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Pair.d.ts",
+      "sha256": "7821d3b702e0c672329c4d036c7037ecf2e5e758eceb5e740dde1355606dc9f2"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Pair.js",
+      "sha256": "d5dad67916ba0e864a892da63265a062c45c15a191349ef50a540f2ddbae93e5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Scalar.d.ts",
+      "sha256": "afb5e9a110ff72b60783e0fe65ce1a28adbe6ab5f30d2dc31e2fb099e0f86de4"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/Scalar.js",
+      "sha256": "616ac0f6a0a5a6565307a4bb4443691b0dd019c03d6bb8777353750bd3459487"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/YAMLMap.d.ts",
+      "sha256": "57cbeb55ec95326d068a2ce33403e1b795f2113487f07c1f53b1eaf9c21ff2ce"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/YAMLMap.js",
+      "sha256": "d140cfc5aa8d28737bd3c993d977d5a10ab81efe221e36708ac45b3cf18f5dce"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/YAMLSeq.d.ts",
+      "sha256": "8a641e3402f2988bf993007bd814faba348b813fc4058fce5b06de3e81ed511a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/YAMLSeq.js",
+      "sha256": "9f89417f3cba5f22a4436f67a9ff9dce627344b5874d2ed7957ff9acffb030e4"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/addPairToJSMap.d.ts",
+      "sha256": "8f648847b52020c1c0cdfcc40d7bcab72ea470201a631004fde4d85ccbc0c4c7"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/addPairToJSMap.js",
+      "sha256": "e4977864d75c1fdbf7fc78c9f4329406e153deccfff090fd812dae2b27e6c2c2"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/identity.d.ts",
+      "sha256": "a00362ee43d422bcd8239110b8b5da39f1122651a1809be83a518b1298fa6af8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/identity.js",
+      "sha256": "1a7cb042ae725ff68d05dc503efbbecbe65281f18b23dfc23f12d1749a440cfe"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/toJS.d.ts",
+      "sha256": "cbef1abd1f8987dee5c9ed8c768a880fbfbff7f7053e063403090f48335c8e4e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/nodes/toJS.js",
+      "sha256": "34de93bb4e16abbf317210a7bd1b062ed20acb028cd8395b69b591f433e277b6"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/options.d.ts",
+      "sha256": "1720be851bdb7cdbff68061522a71d9ddaa69db1fe90c6819a26953da05942f2"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst-scalar.d.ts",
+      "sha256": "079c02dc397960da2786db71d7c9e716475377bcedd81dede034f8a9f94c71b8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst-scalar.js",
+      "sha256": "2f72b634348b04b395408ac427fb4f8ee67432244c327561d4b755a28a783b34"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst-stringify.d.ts",
+      "sha256": "a7595cbb1b354b54dff14a6bb87d471e6d53b63de101a1b4d9d82d3d3f6eddec"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst-stringify.js",
+      "sha256": "4d14a7a286cff9c1a578ab15839388ea76f77ae79293db25b235394bcc377b51"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst-visit.d.ts",
+      "sha256": "1f49a85a97e01a26245fd74232b3b301ebe408fb4e969e72e537aa6ffbd3fe14"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst-visit.js",
+      "sha256": "525535fc05841407420be6505804c74d873eb3aaa9319679896f7a24a474ca01"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst.d.ts",
+      "sha256": "9c38563e4eabfffa597c4d6b9aa16e11e7f9a636f0dd80dd0a8bce1f6f0b2108"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/cst.js",
+      "sha256": "acc25760d010068844f36f4aefc7fe6f5f6048fd7f8fcc29d4290e154819d1a4"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/lexer.d.ts",
+      "sha256": "c7200ae85e414d5ed1d3c9507ae38c097050161f57eb1a70bef021d796af87a7"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/lexer.js",
+      "sha256": "cb30a2c4628e270ee810530217f3f7bb0f2730ab89f8fbaf1f8a73ccd1883cf5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/line-counter.d.ts",
+      "sha256": "3dfcd0a3bfa70b53135db3cf2e4ddcb7eccc3e4418ce833ae24eecd06928328f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/line-counter.js",
+      "sha256": "ddfd11ca2cdd42d36bc6c3090a31c21e6bbcc90bf3498bf6aacfbb30c5d79436"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/parser.d.ts",
+      "sha256": "4edb4ff36b17b2cf19014b2c901a6bdcdd0d8f732bcf3a11aa6fd0a111198e27"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/parse/parser.js",
+      "sha256": "0adc5ffa51ffa4c0ceed1f80efa8b188d10f58c7b9389a6d46bc861e6bff34e1"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/public-api.d.ts",
+      "sha256": "810f0d14ce416a343dcdd0d3074c38c094505e664c90636b113d048471c292e2"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/public-api.js",
+      "sha256": "9b318ac7b3a3751127c74f59dd1dd209230a70ca116000348b82faae189f72f0"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/Schema.d.ts",
+      "sha256": "a820499a28a5fcdbf4baec05cc069362041d735520ab5a94c38cc44db7df614c"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/Schema.js",
+      "sha256": "d3b1bc956a766e2489c36114366f3b3f89762a257ae05ff6271ee3fc8c2a9bf5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/map.d.ts",
+      "sha256": "e1b042779d17b69719d34f31822ddba8aa6f5eb15f221b02105785f4447e7f5b"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/map.js",
+      "sha256": "769207eaa56e34c113da10cdc22da845f92b4080ff2b921a72847a38d3ac03d8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/null.d.ts",
+      "sha256": "68c7d5fe67e3dd9e0ae4809a37541e79c86c639758f6d93c478c900a23b3c715"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/null.js",
+      "sha256": "f5d5f694ea3a42ef136e0fbcc674dfd7aa0a3da2b8d62183fb750166a12e52bb"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/seq.d.ts",
+      "sha256": "6858337936b90bd31f1674c43bedda2edbab2a488d04adc02512aef47c792fd0"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/seq.js",
+      "sha256": "51fc0e8bfc63d1d9c7c66b0370a069bb33e0dad865080ff76802803597b9909a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/string.d.ts",
+      "sha256": "15cb3deecc635efb26133990f521f7f1cc95665d5db8d87e5056beaea564b0ce"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/common/string.js",
+      "sha256": "51d0b3aafab2ffa4ad9d86656a3b92c4b4824d0a8806423882ea5f92a1bf8d11"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/bool.d.ts",
+      "sha256": "10e79425c8cb25ab4039f10bd844fb147bace0bbc1ea50b14cd6684e0e54d8b8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/bool.js",
+      "sha256": "9fa696b1efc38cf8c73a398f30d9f9841658aa5afd0b7a6b0822947c3991ba7a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/float.d.ts",
+      "sha256": "68f5e28618d07e0cd09f3c016fc2b5c597d41730cf7a5bc165bb137ee5d239c5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/float.js",
+      "sha256": "139e3964f0e626ad3741500faf51d855ff98eafa2d9e7523cac06260e4515382"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/int.d.ts",
+      "sha256": "5b1d8c847722d2137a61465051289c85b42cb7fbcd16c4a2818ae21f4cca32dd"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/int.js",
+      "sha256": "f0e474254f6877d5dd23bb57017980931ab333a7eaa3d33872247a80d11f754d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/schema.d.ts",
+      "sha256": "4763b3c6a3bfc9864e5712ca1d4a5ac2817e9d05aef44a0a1556bb449bb2bd06"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/core/schema.js",
+      "sha256": "481d7c64817b40090d519fb65bd83730dadd4c6baec1440b9bf85d29e52c046e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/json/schema.d.ts",
+      "sha256": "4cb584df88ebd02a7f14013b5d83a7cedd9b1551ad871a58c94dff44520fb1ea"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/json/schema.js",
+      "sha256": "9efdd848455f6e0621feb13f3eb762453cb02b09d5e04b6501163cfb26af27ed"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/json-schema.d.ts",
+      "sha256": "c82708af4dcb3fb9dfacbadc6faf9cad4f2d07ffce12407f8cf9778af37bbefe"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/tags.d.ts",
+      "sha256": "213e4f26ee5853e8ba314ecad3a73cd06ab244a0809749bb777cbc1619aa07d8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/tags.js",
+      "sha256": "dba2f42d4dbe8cc8b13f662fd97d253da2da5567e71c47115305efede5a888f2"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/types.d.ts",
+      "sha256": "281744305ba2dcb2d80e2021fae211b1b07e5d85cfc8e36f4520325fcf698dbb"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/binary.d.ts",
+      "sha256": "d67098dd1ebde01f58645901458c5f7b4fe6a32558e92c91db4883e74d1b5a4d"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/binary.js",
+      "sha256": "15d7b0b8516c8190b191ec9a0adaab16808d09751ef534d7829512944072011f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/bool.d.ts",
+      "sha256": "4ec1099a421a4519d614a09f4d88aebd4e2eae1f1840d7b6d06c648f1624e426"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/bool.js",
+      "sha256": "80a0046224dac3437f22e3b27b0180e1aad82277ab2fee4769094c6d12d67b6f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/float.d.ts",
+      "sha256": "68f5e28618d07e0cd09f3c016fc2b5c597d41730cf7a5bc165bb137ee5d239c5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/float.js",
+      "sha256": "a90c44db83152e4d902d46f667737dac90aa86b401abdefe89371ac3bd03abfe"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/int.d.ts",
+      "sha256": "c2a157c5321741265c9e070abdb168bd62c960a8e42fe19b268a13f019e0866b"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/int.js",
+      "sha256": "5ff72b08fecc3a924d4a76658a304859db5edb4fadf8893ee837aa06bba60a52"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/merge.d.ts",
+      "sha256": "d0f51295f868055927afc9c23e5077f17b0db247978becf7644612290b18cc45"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/merge.js",
+      "sha256": "9c85b5e026e4369a96f3f7b5bc6c05da102dfa2968950b17986201cfe0be542c"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/omap.d.ts",
+      "sha256": "9c37dc73c97cd17686edc94cc534486509e479a1b8809ef783067b7dde5c6713"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/omap.js",
+      "sha256": "3174270cd59c0f0e3ffd73b3b44c4de679efd5c681325b7aac8e0935d547bee8"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/pairs.d.ts",
+      "sha256": "e2e85e40eb6108d06a7c2116bb4fbaad323709f979c8135588619b63089efec9"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/pairs.js",
+      "sha256": "46ba76da72ad65a6202358c486c6a3084ab7c48a8eb5be60d241d9e198c5a9b5"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/schema.d.ts",
+      "sha256": "4763b3c6a3bfc9864e5712ca1d4a5ac2817e9d05aef44a0a1556bb449bb2bd06"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/schema.js",
+      "sha256": "a7320808484dc6d04817b33b2d09b65ead7ffc1c672ab54e068a80972b17702e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/set.d.ts",
+      "sha256": "5fe2ef29b33889d3279d5bc92f8e554ffd32145a02f48d272d30fc1eea8b4c89"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/set.js",
+      "sha256": "e4553b0cbde79090884908f44bb3b4afd04935fc23656a1b87ec1af87f24427a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/timestamp.d.ts",
+      "sha256": "90e99573b3ab716e9203d32e8d9dd1fdb78c125128ffb8deed821c096885338e"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/schema/yaml-1.1/timestamp.js",
+      "sha256": "b157c946dc1b8854aadc4e7994b268ec8afe6d916721cb3580e0752c7d15a5f7"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/foldFlowLines.d.ts",
+      "sha256": "e27605c8932e75b14e742558a4c3101d9f4fdd32e7e9a056b2ca83f37f973945"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/foldFlowLines.js",
+      "sha256": "7819679e80222b80c564ea4a9cf3145fa4d5e28a6cfbac248283ac55b0249761"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringify.d.ts",
+      "sha256": "0132f67b7f128d4a47324f48d0918ec73cf4220a5e9ea8bd92b115397911254f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringify.js",
+      "sha256": "38efb5bc5553e98fee58c825a88131c59184368d8689e3e6f43c652a06e9c167"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyCollection.d.ts",
+      "sha256": "7f03bfa106e6045d0ed9b1b3812df4c6edf70e231be92acb54c910530aefb7c4"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyCollection.js",
+      "sha256": "b55fd3b6e3f1346bbcd1fcdc48a59c089b7a4b0e6fac2b46846f7828f9488600"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyComment.d.ts",
+      "sha256": "318c659afa92036e0c838821c40509e34506831f05acc9c2b182ccd39faa265f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyComment.js",
+      "sha256": "490bff57104b7cfdb1893f14528610bb4d0a63c29b314e122233cf308cf96662"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyDocument.d.ts",
+      "sha256": "10eafb672440a5e93d378943b497a7dbd16ac5e63d843edec753d1fa3c3e8e20"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyDocument.js",
+      "sha256": "dd5ba1813a16b62955c466bce8d1c16254e90b36d688f863c508dc8fe38f2afe"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyNumber.d.ts",
+      "sha256": "f0443725119ecde74b0d75c82555b1f95ee1c3cd371558e5528a83d1de8109de"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyNumber.js",
+      "sha256": "26a1980d34a21a80704d356d475a0187a24ebcbeb37a2e3b149d4d791bb65598"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyPair.d.ts",
+      "sha256": "c0629a169c48068fc384a22bde7e0c4ec35c34e7e6b19b83fba4c378b8fe05cc"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyPair.js",
+      "sha256": "bc03ae533d85bf9122e87c0a256c841ae7fbf063499bc3034d49fd9f7b200659"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyString.d.ts",
+      "sha256": "7794810c4b3f03d2faa81189504b953a73eb80e5662a90e9030ea9a9a359a66f"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/stringify/stringifyString.js",
+      "sha256": "4113b71a9c4c087a197f71452794a6acb9929111f569c973ff4efe7caee8f777"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/test-events.d.ts",
+      "sha256": "5e75986c9b907573b9ea4880e226f96dd189acc668cb24db0ac08651e6cf3068"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/test-events.js",
+      "sha256": "5ff5e7f170702d75d4bfd5ef24a35fc95dc2871680c0ae4d714137d4c2cde571"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/util.d.ts",
+      "sha256": "b074516a691a30279f0fe6dff33cd76359c1daacf4ae024659e44a68756de602"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/util.js",
+      "sha256": "193b1d92fb7641d78f17a8f560cbe44dd7cdede2eb8935bacd4ca30df2f1a17a"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/visit.d.ts",
+      "sha256": "e39090ffe9c45c59082c3746e2aa2546dc53e3c5eeb4ad83f8210be7e2e58022"
+    },
+    {
+      "path": "mcp/node_modules/yaml/dist/visit.js",
+      "sha256": "a757e3b924af184b25e2386d1678b1fe341805a516ebf9bccee219b47aebd5e7"
+    },
+    {
+      "path": "mcp/node_modules/yaml/package.json",
+      "sha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c"
+    },
+    {
+      "path": "mcp/node_modules/yaml/util.js",
+      "sha256": "2f1db26f6cc426ef698210b592f40cec49be1b6c4b34e7f2d61904786242bd85"
     },
     {
       "path": "mcp/node_modules/zod/LICENSE",
@@ -15152,11 +19149,11 @@
     },
     {
       "path": "mcp/package-lock.json",
-      "sha256": "3250b6653037a404211cf4ab04eb0cc03fee2b1f50c8d16753c6daedbee16912"
+      "sha256": "8c0bd86f8e07de51dbf3a40f2767c1568f44cde57772777a4f817c1d4087f623"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "29134b80c371aa614fca78442f7fdf555c9da7d7113d38212de7aba627b7bbb7"
+      "sha256": "65ced8f85a505013e4ac2200991a645d9003f8337df6ffa7ebbaa6508a3735f4"
     },
     {
       "path": "mcp/src/adapters/android.mjs",
@@ -15172,11 +19169,15 @@
     },
     {
       "path": "mcp/src/installation.mjs",
-      "sha256": "b00edfa8c677bb21e588e3d443de653d9582678ef08b217d0b097d5be3d33f9a"
+      "sha256": "465a79951c18ac347c987c6337d4074058d32b4ec107e769773117a07ff67919"
     },
     {
       "path": "mcp/src/integrations.mjs",
       "sha256": "41b7d910ed7330671098ede32d91d0edfbd5d88ff66d7107660fc5eeaaf97613"
+    },
+    {
+      "path": "mcp/src/legacy-migration.mjs",
+      "sha256": "8b7de992a28cbebd3be03f532ab8ed79a1923467ea0c855a3af85855d43e4782"
     },
     {
       "path": "mcp/src/records.mjs",
@@ -15188,15 +19189,47 @@
     },
     {
       "path": "mcp/src/server.mjs",
-      "sha256": "3f14f9c9d0a85085fe7b0afb211a9632e643f809fa2388f5bcfe27e4eb2a034b"
+      "sha256": "752021809cb85f10fd138f6f44e9707388695a3e46b7f731c5e8cb9c5839bc4f"
     },
     {
       "path": "mcp/src/settings.mjs",
-      "sha256": "5bf5432898b8641cab369f298599ddc14097fb2101e23af060227197450f9c44"
+      "sha256": "d201bcc0c37d5638e4c1cc400100d80cb8227b7f33cb0d0f4bfed76143de276d"
     },
     {
       "path": "mcp/src/verification.mjs",
       "sha256": "22e8920c6f4a914c7acc7566f64677dff9a99830599ce59c75d450b950024b37"
+    },
+    {
+      "path": "mcp/src/viewer/lifecycle.mjs",
+      "sha256": "d50f8d53ba9eefdfe2a39a4f61160e1e9c560dbbee4b16309426baf3e7a6fec3"
+    },
+    {
+      "path": "mcp/src/viewer/main.mjs",
+      "sha256": "1e443369f5ebc1f364d08c811aedc3a7033ca3253a083d35a98a00b84ef1e4c0"
+    },
+    {
+      "path": "mcp/src/viewer/public/app.mjs",
+      "sha256": "bbfbb267655348e1cd4fd9c85b40c423a6687cc1e47f6875f97c0e3414eef6e9"
+    },
+    {
+      "path": "mcp/src/viewer/public/index.html",
+      "sha256": "34f1ff9232bf4c5a8a642d5d8b1373700079ec85d97cac1f3332a6367cf6ff72"
+    },
+    {
+      "path": "mcp/src/viewer/public/styles.css",
+      "sha256": "19b6cb118fa11f6e278496911d8c13ba2402a258a68ba663bc7381bde87395cd"
+    },
+    {
+      "path": "mcp/src/viewer/reader.mjs",
+      "sha256": "9411075417ee5fb01d6832cae6052fcf94c21e0165f9662f5e9e28cbab85425e"
+    },
+    {
+      "path": "mcp/src/viewer/render.mjs",
+      "sha256": "bc32b06ce6e086119d0927115d1861c314d0274250aac2b605f0c38e4c1f782a"
+    },
+    {
+      "path": "mcp/src/viewer/server.mjs",
+      "sha256": "67f1b021b9c8f3a09324cf176c7d1f26ce0a0c3d57bd69f57e4b39583bb74866"
     },
     {
       "path": "mcp/third-party/archify.lock.json",
@@ -15204,15 +19237,19 @@
     },
     {
       "path": "references/acceptance-feedback-loop.md",
-      "sha256": "73bfc314895e2b2ec1eb6b3f04e01d29e7c62204c2b5e37feeec23d94aa25cce"
+      "sha256": "6882eec49c1f6d88013b970662cdfc3014295bfcd9cae25ffc142a1a1f87d3cf"
     },
     {
       "path": "references/code-comment-contract.md",
       "sha256": "b4d972eb5afc679671d70dfd0eef5dc9e97d4527d0068b96f9fe6a2fe43a36c0"
     },
     {
+      "path": "references/code-explanation-html.md",
+      "sha256": "160487769b0741a1ece51840f3b0952365a1cef9329006cca897634e7ad0f083"
+    },
+    {
       "path": "references/company-workplan-adapter.md",
-      "sha256": "a7133c32f36b31ee7c8ca4e4349d5a51800036ca61dfe92edc525727cc13e91f"
+      "sha256": "6915b57e290c18c32c9b7c47790bcf97ec229ae8a730155c4bac5bc1393704bc"
     },
     {
       "path": "references/context-pack.md",
@@ -15228,7 +19265,7 @@
     },
     {
       "path": "references/execution-contract.md",
-      "sha256": "d89f0033c8540136d52bac7844079cb4e2b6b28f0ca9af79cecbbf125b321e82"
+      "sha256": "3e3938ea070bcf9d1505e271728a5b6c79acddc330f0abd2528e3671ca46c8cb"
     },
     {
       "path": "references/git-operation-contract.md",
@@ -15236,7 +19273,7 @@
     },
     {
       "path": "references/implementation-handoff.md",
-      "sha256": "33a4e856c871de335c27641a34dd011c01b05f9d8e4ccf5f36f8aeb5b8350031"
+      "sha256": "015159076f1c1f7151c36882a284ccb4621ed0b707a62a3f008c8596816aeeff"
     },
     {
       "path": "references/knowledge-lifecycle.md",
@@ -15248,7 +19285,7 @@
     },
     {
       "path": "references/model-routing.md",
-      "sha256": "318078f8e516c3b91bb15f297fe1a5381f231963717fc2321259e9f6a3b342db"
+      "sha256": "5fcbd018f0e48930e343c3e6403a72622306445922f9f6239cc50c9b6d07d464"
     },
     {
       "path": "references/personal-runtime-domain-markers.yml",
@@ -15292,11 +19329,11 @@
     },
     {
       "path": "references/task-workflow.md",
-      "sha256": "c4e1e481c4d10e43719968b01a8c63f357dba8fb85b9d2fba7c67f054e75881d"
+      "sha256": "2f1772d33eab1024d29069e3c651e98be34fbfb16dab95f11ee192f8656f6e4b"
     },
     {
       "path": "references/ticket-lifecycle.md",
-      "sha256": "bc6eb202eaff22f16583632c56cc36d213872e8287e548009a7f507df3591d91"
+      "sha256": "3298f5c83a5b0c41db801ae7e688ea3d7bc3a0a96d0e1c5d9cee55849f75c1f6"
     },
     {
       "path": "references/ui-source-coverage.md",
@@ -15316,15 +19353,15 @@
     },
     {
       "path": "references/verification-evidence.md",
-      "sha256": "9da1bc1d45e7dc9c028d2f204cc165591ed3f8cacf0f8b7e9b96cf95f8aa5ec0"
+      "sha256": "805f9969e05acd4fbb3b8943e62923978b4e8216dce75ec9daee3681a78320b6"
     },
     {
       "path": "references/verification-planning.md",
-      "sha256": "d97afcd516aeaf356a83dff87ebb9d93adc69c91f6d2c3c54ce99f53b2bef1d3"
+      "sha256": "e79ebedb5a7980c51c20130807796d6723384d98ea5632b752b122e25cbdfb62"
     },
     {
       "path": "references/workplan-layout.md",
-      "sha256": "bb724834ccc4c3974d1080d43a60e6b03bbde1f31a029b453c81cc70bd6c0fb2"
+      "sha256": "78ef53b48c20e6567067b533e0829c2999350d2629f9fd732fcf963e4d45ab62"
     },
     {
       "path": "references/workplan-metadata.md",
@@ -15336,7 +19373,7 @@
     },
     {
       "path": "skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "8a7d4810fd7bbccfc91fe345c36dc2310744e7b060b53718529e620780f88cc1"
+      "sha256": "6bdf82e64f278f526df7dc75eb1a2055ee6c89391914052b91b8db762a3485e7"
     },
     {
       "path": "skills/apply-workplan-feedback/agents/openai.yaml",
@@ -15344,7 +19381,7 @@
     },
     {
       "path": "skills/author-design-system-component/SKILL.md",
-      "sha256": "af05161845812f13bbbba8f6d0f1f29e2abeb736fe1edae04b2377c372378e31"
+      "sha256": "4466d57b99df4d1c898e2a3028e4003bb698c32c95b98a6fd3e3002049c44c64"
     },
     {
       "path": "skills/author-design-system-component/agents/openai.yaml",
@@ -15356,7 +19393,7 @@
     },
     {
       "path": "skills/bugfix-apply/SKILL.md",
-      "sha256": "97a10ee97b4be9d75dd32b945790a8d556992650bab103cac7d828c1467d6337"
+      "sha256": "20843c86315d42b2dfe5b97f6123349bc7260d7291c1490bcff9614bdc9de825"
     },
     {
       "path": "skills/bugfix-apply/agents/openai.yaml",
@@ -15368,7 +19405,7 @@
     },
     {
       "path": "skills/bugfix-plan/SKILL.md",
-      "sha256": "b2b280b023de3c5a733e72da9f93cc701a37f3aecdbac65e0cee65d8a78faef6"
+      "sha256": "5ce16cf2bf3b1f0edff22fbf64f9f853e295c6d7254a7e1000efcfcf505b1b01"
     },
     {
       "path": "skills/bugfix-plan/agents/openai.yaml",
@@ -15376,7 +19413,7 @@
     },
     {
       "path": "skills/bugfix-plan/references/approval-packet.md",
-      "sha256": "ab5d1f267daa48ad56e5f3a89fec29c6b63533ff5dea8c46581770c697ec03db"
+      "sha256": "51cb05b4b6269521437c769c638be7a0547fed56626f66ece9317708d1c4e2b7"
     },
     {
       "path": "skills/code-change/SKILL.md",
@@ -15388,7 +19425,7 @@
     },
     {
       "path": "skills/complete-work/SKILL.md",
-      "sha256": "43d2305cf921dcccc4415517a6078be748692049153fd75fcf2ca0cc5e1c6a5e"
+      "sha256": "7c079e0f2f3e72271b7b022bd4621c268ee0c0a9bdeb6e7d5d9bc7b2f256fb94"
     },
     {
       "path": "skills/complete-work/agents/openai.yaml",
@@ -15396,7 +19433,7 @@
     },
     {
       "path": "skills/cpm/SKILL.md",
-      "sha256": "63e47b81664662ac09f5c493e7a016cec3a76dcb82008bd7d8ef04f2dcd4cc5d"
+      "sha256": "38ac8ec4fa307ef4176dcf7f9524604ca0c0d2f7c8ba64c522dbb409a9f691d3"
     },
     {
       "path": "skills/cpm/agents/openai.yaml",
@@ -15439,8 +19476,12 @@
       "sha256": "34a22f003da53b554ee7b5888d37adc2920f0ad5951188c86906d0293a46edb0"
     },
     {
+      "path": "skills/explain-code/SKILL.md",
+      "sha256": "b8226d3e2fb87590612884090047c8dee07e53de1fbc4bc3c4a602b855b620ca"
+    },
+    {
       "path": "skills/feature-apply/SKILL.md",
-      "sha256": "206f0fc5cf7a04d257535adc9f44943b4a2e867f6cffe9783f28134b500d7bec"
+      "sha256": "630fa651af3429ce01abbd8915f6b2fd35b1f1e83c730f6a46eee9521f50e67d"
     },
     {
       "path": "skills/feature-apply/agents/openai.yaml",
@@ -15448,11 +19489,11 @@
     },
     {
       "path": "skills/feature-apply/references/reapproval-rules.md",
-      "sha256": "fc26a5dbe2684f61afb2fa350dcfc6951b624d4715555102983e3f8cdecb2ab3"
+      "sha256": "6deca1bf8a8fcccc091d32443df25ddfecec5303ef47bbe74506115b66d62a29"
     },
     {
       "path": "skills/feature-plan/SKILL.md",
-      "sha256": "0d39002c9e9ab06acf1cefdce8b78002c3ae285b1d0888785cd08e0400ac08f1"
+      "sha256": "a9693f626d80c4eab7eca271c11bc4c2e015594839e44f1d59702068caa3cdb0"
     },
     {
       "path": "skills/feature-plan/agents/openai.yaml",
@@ -15460,15 +19501,15 @@
     },
     {
       "path": "skills/feature-plan/references/feature-plan-template.md",
-      "sha256": "4b3caf7200c18618661763027ce0b412303cbaf3cfa30bd9ac1b5117050d2b76"
+      "sha256": "1b995351d408b4190bf25ab1a2ae6caf6a2a6714d7fdf70ef8d6bdd614d078f1"
     },
     {
       "path": "skills/feature-plan/references/readiness-checklist.md",
-      "sha256": "68099ad3890773dc5ec9adc7f93162c297d98efc4987936ebe693a0f787cccc1"
+      "sha256": "bff3a3bc5186c643d144475a7c9feb06a7ba28eab8d4e8e4468eef1af4769e3b"
     },
     {
       "path": "skills/implement-ui-with-design-system/SKILL.md",
-      "sha256": "cebf0487fdb35c299a9bb1528befef2262ae445e1a5133d7b0cd07dc3f3237ce"
+      "sha256": "fc2e58f21a55a7c9a94757d95c2e36a97658a291946948562f53cd3178d3af53"
     },
     {
       "path": "skills/implement-ui-with-design-system/agents/openai.yaml",
@@ -15480,7 +19521,7 @@
     },
     {
       "path": "skills/plan-design-system-component/SKILL.md",
-      "sha256": "c8d7123c13a21dc1298df4faac87c2b96c0332f0d8b99ea76b7f4529b8a5e062"
+      "sha256": "c8f5897f7d202e663e188528b2913540a49b9f8f2abec8ae9df2c5f804cbdab7"
     },
     {
       "path": "skills/plan-design-system-component/agents/openai.yaml",
@@ -15496,7 +19537,7 @@
     },
     {
       "path": "skills/project-baseline/SKILL.md",
-      "sha256": "2d16adac41d2eb251b5a1b437ac8a8b4f3db121ee8b83d675384814e246a9858"
+      "sha256": "4cf3eca73660a6a87c79b49b625d574a85d78c1c1d5afbc2cae82643bf5b5206"
     },
     {
       "path": "skills/project-baseline/agents/openai.yaml",
@@ -15532,7 +19573,7 @@
     },
     {
       "path": "skills/setup/SKILL.md",
-      "sha256": "cfdb4c495b45fbf42743bdfe7fa7b0b97aab02c24853817b0e733be4ebaac855"
+      "sha256": "d2563a65ebd14834793ffba629c76e5f356c70dc307929c9f3aa22f13f46df30"
     }
   ]
 }

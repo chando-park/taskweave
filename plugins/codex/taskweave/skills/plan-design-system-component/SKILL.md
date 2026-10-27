@@ -7,6 +7,10 @@ description: 공식 Figma 컴포넌트와 기존 디자인 시스템을 대조�
 
 대상·승인은 [실행 계약](../../references/execution-contract.md), 메모·이름·명령은 [Workplan 양식](../../references/workplan-layout.md)을 따른다.
 
+복잡한 API·상태·consumer 관계를 계획할 때는 [코드 흐름 시각화](../../references/code-explanation-html.md)으로 현재/제안 코드·흐름·이유·검증 계획을 같은 Workplan에 연결한다. 간단한 컴포넌트 수정에는 강제하지 않는다.
+
+계획 작성 후 승인안을 제시하기 직전에 $taskweave:explain-code로 예정 변경 전체의 코드·이유·분기·호출 흐름·검증 계획을 반드시 설명한다.
+
 1. target Design System repository·workplan_root·회사 정책을 확인한다. Project Agent가 있으면 먼저 읽고 요청·가까운 코드·테스트에서 변경 범위를 좁힌다.
 2. 공식 Figma COMPONENT_SET 또는 단일 COMPONENT와 기존 public component/token/API·consumer·Preview·생성 pipeline을 확인한다. symbol 조사에는 [Serena 절차](../../references/serena-code-intelligence.md)를 사용한다.
 3. 회사 정책이 요구할 때 [티켓 절차](../../references/ticket-lifecycle.md)로 정확한 번호를 확보한다. 확인된 기록 위치에 이번 작업 메모를 한 번 만들고 필요한 조사를 이어간다. 과거 작업·Jira 이력을 검색·재사용하지 않으며 기록 형식 검사로 계획 설명을 막지 않는다.

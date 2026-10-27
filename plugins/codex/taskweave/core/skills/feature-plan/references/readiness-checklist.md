@@ -1,15 +1,5 @@
 # Feature Memo Readiness
 
-승인을 묻기 전에 다음만 확인한다.
+기존 준비 기준의 진입점이다. 설계 완료 판단은 선택 사항이 아니며, 기능·버그 계획의 본문이 필수로 연결하는 [공통 인계의 승인 전 설계 완료 판단](../../../references/implementation-handoff.md#승인-전-설계-완료-판단)을 따른다.
 
-- 요청 원천과 프로젝트 지침을 실제로 읽었다.
-- 기대 동작과 비변경 동작이 구분됐다.
-- 주요 파일·심볼의 현재/제안 코드와 caller/assembly가 실제 코드에 맞다.
-- Public API·외부 계약·저장 형식·repository 경계의 변경 여부가 명확하다.
-- 직접 검증의 명령 또는 식별자, 실패 위험과 통과 기준이 있다.
-- UI이면 정확한 원천 state, Design System public contract, tier와 실제 candidate render 계획이 있다.
-- 제외 범위와 남은 사람 결정이 보인다.
-- 코드·테스트·접근 가능한 원천에서 확인할 사실을 사용자 결정으로 넘기지 않았다. 사용자만 제공할 자료나 결정이 남으면 정확히 질문하고 같은 `draft` Workplan에서 답변을 기다린다.
-- `workplan-memo prepare`와 approval validation이 통과했다.
-
-하나라도 구현자가 다시 설계해야 할 정도로 비어 있으면 승인안을 제시하지 않는다. 지식 후보·Product Memory 목적지는 readiness 조건이 아니다.
+원천·현재/제안 코드·영향 호출·유지/제외 동작·직접 검증은 같은 인계 문서의 최소 내용으로 확인한다. 별도 `workplan-memo prepare`·approval validation·지식 목적지를 승인 준비의 조건으로 요구하지 않는다. 문서 제목·필드 부족과 실제 설계 미완료를 구분한다.

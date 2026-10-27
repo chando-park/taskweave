@@ -7,10 +7,10 @@ require "pathname"
 class ModelRouteError < StandardError; end
 
 CODEX_ROUTES = {
-  "terra" => { "agent_type" => "general-terra", "model" => "gpt-6.1-sol", "preferences" => %w[sol terra astra luna] },
-  "luna" => { "agent_type" => "routine-luna", "model" => "gpt-6-luna", "preferences" => %w[luna terra sol astra] },
-  "spark" => { "agent_type" => "ui-spark", "model" => "gpt-6-luna", "preferences" => %w[luna terra sol astra] },
-  "sol" => { "agent_type" => "high-risk-sol", "model" => "gpt-6-astra", "preferences" => %w[astra sol terra luna] }
+  "terra" => { "agent_type" => "general-terra", "model" => "gpt-6.1-sol", "preferences" => %w[sol terra luna] },
+  "luna" => { "agent_type" => "routine-luna", "model" => "gpt-6-luna", "preferences" => %w[luna terra sol] },
+  "spark" => { "agent_type" => "ui-spark", "model" => "gpt-6-luna", "preferences" => %w[luna terra sol] },
+  "sol" => { "agent_type" => "high-risk-sol", "model" => "gpt-6.1-sol", "preferences" => %w[sol] }
 }.freeze
 
 CLAUDE_ROUTES = {
@@ -33,6 +33,13 @@ def select_codex_model(available_models, route)
   six = available_models.select { |name| name.match?(/\Agpt-6(?:\.\d+)*(?:-|\z)/) }
   candidates = six.empty? ? available_models.select { |name| name.match?(/\Agpt-5(?:\.\d+)*(?:-|\z)/) } : six
   raise ModelRouteError, "실행 가능한 GPT-6/GPT-5 후보가 없습니다" if candidates.empty?
+
+  # 세대 판정은 전체 목록을 사용해, Astra 제외를 이유로 GPT-5에 내려가지 않는다.
+  candidates.reject! { |name| name.match?(/\Agpt-\d+(?:\.\d+)*-astra(?:-|\z)/) }
+  if route.fetch("agent_type") == "high-risk-sol"
+    candidates.select! { |name| name.match?(/\Agpt-\d+(?:\.\d+)*-sol(?:-|\z)/) }
+  end
+  raise ModelRouteError, "Astra 제외 후 이 역할에서 사용할 수 있는 모델이 없습니다" if candidates.empty?
 
   candidates.max_by do |name|
     version = name[/\Agpt-(\d+(?:\.\d+)*)/, 1].split(".").map(&:to_i)
