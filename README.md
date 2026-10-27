@@ -2,17 +2,24 @@
 
 **English** | [한국어](README.ko.md)
 
+![CDPower black-and-copper battery logo](plugins/codex/taskweave/mcp/src/viewer/public/wordmark.svg)
+
 **A Codex and Claude Code plugin for reviewing changes before the AI edits files, then following the work through checks, feedback, and acceptance.**
 
 The same workflow supports code changes, research, summaries, and scripts, with sources and checks chosen for the task. Small code changes stay in the conversation: review the proposal, approve it, and inspect the result. Complex changes use a Workplan, a document describing the proposed work.
 
-This README describes the **CDPower 0.3.8** package, the new display name for Taskweave. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
+This README describes the **CDPower 0.3.9** package, the new display name for Taskweave. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
 
 [Install and set up](#install-and-set-up) · [Task flow](#how-a-task-moves-through-the-system) · [Examples](#try-it-requests-and-expected-responses) · [Viewer](#read-workplans-in-the-local-viewer) · [Record locations](#where-files-live-and-how-they-connect) · [Update](#update-remove-and-troubleshoot)
 
 The install ID `taskweave`, skill prefixes `$taskweave:` and `/taskweave:`, marketplace names, and GitHub URL stay unchanged so existing installations can update. You do not need to move your code or records. The UI and installation descriptions use **CDPower**.
 
-## What changed in 0.3.8
+## What changed in 0.3.9
+
+- The selected flat, horizontal CD battery mark now uses black `#191919` for the C body and copper `#B87333` for the D end and positive terminal. It replaces the lightning symbol in the homepage, favicon, brand page, and downloadable SVG.
+- Both host packages include the same logo. Existing layout, UI accent colors, settings, records, and integrations stay unchanged.
+
+## Previous changes in 0.3.8
 
 - The home page, brand page, favicon, and downloadable logo use the CDPower battery-and-lightning symbol. It is branding, not a battery reading or completion percentage.
 - A dedicated uninstall skill removes the selected plugin and its owned instruction links together. The shared viewer stays running while another installation needs it; only the last removal stops the verified owned viewer.
@@ -279,7 +286,7 @@ Codex:
 codex plugin marketplace upgrade taskweave-marketplace
 ```
 
-This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.3.8**; do not assume an already running conversation has changed.
+This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.3.9**; do not assume an already running conversation has changed.
 
 Claude Code:
 
@@ -288,7 +295,7 @@ claude plugin marketplace update taskweave-marketplace
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-Confirm version **0.3.8**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
+Confirm version **0.3.9**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
 
 ### Remove the plugin, owned links, and viewer
 
@@ -340,7 +347,9 @@ The MCP process runs on your computer, but material returned to the AI is also s
 
 Do not put credentials in chats, Workplans, or Product Memory. This package excludes personal work records, company-only skills, product repositories, and authentication files. Documented safeguards and package checks are not a complete security audit.
 
-**0.3.8 checks:** 32 installation tests, 13 legacy-link tests, 12 viewer-lifecycle tests, 14 MCP tests, 2 packaging tests, and 5 viewer-server tests passed: 78 distinct tests, with no failures or skips in the final runs. Removal tests used isolated temporary homes and child processes; they did not uninstall the maintainer's live setup. Latest installation-module coverage was 92.42% line and 78.22% branch coverage, not whole-project coverage. The homepage, battery logo, search, and work details were also checked in a browser. Installation and behavior on another computer or Windows/Linux have not been independently verified.
+**0.3.9 checks:** 5 viewer-server, 14 MCP, and 2 packaging tests passed: 21 distinct tests with no failures or skips in the final results. The logo and brand page were checked against the selected concept in desktop and 320px browser views. Packaging/build-module coverage was 95.49% line and 80.83% branch coverage; SVG/HTML/CSS coverage was not measured. Other computers and Windows/Linux were not independently tested.
+
+**Historical 0.3.8 checks:** 32 installation tests, 13 legacy-link tests, 12 viewer-lifecycle tests, 14 MCP tests, 2 packaging tests, and 5 viewer-server tests passed: 78 distinct tests, with no failures or skips in the final runs. Removal tests used isolated temporary homes and child processes; they did not uninstall the maintainer's live setup. Latest installation-module coverage was 92.42% line and 78.22% branch coverage, not whole-project coverage. The homepage, battery logo, search, and work details were also checked in a browser. Installation and behavior on another computer or Windows/Linux have not been independently verified.
 
 **Historical 0.3.6 checks:** 2 packaging tests, 14 MCP tests, 9 viewer-lifecycle tests, and 4 viewer-server tests passed: 29 in total. These are tests of the plugin, not results for your app. They do not guarantee that every AI response follows the instructions. You retain final judgment, and the host's permissions still apply.
 
@@ -348,6 +357,6 @@ Report problems through [GitHub Issues](https://github.com/chando-park/taskweave
 
 No open-source license has been selected for CDPower itself. Public visibility does not grant an additional project license. Bundled dependencies retain their own licenses and notices: [Codex notices](plugins/codex/taskweave/THIRD_PARTY_NOTICES.md) and [Claude notices](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
 
-Maintainers generate this distribution from a separate development source. Users do not need that source checkout to install it. Version **0.3.8** corresponds to source commit `4871d7a`: the updated local homepage, CDPower branding, and safe removal flow for both hosts. The repository address and installation IDs remain unchanged so existing marketplace subscriptions can update in place. Personal records, credentials, and the source repository's Git history are not shipped. Historical version 0.3.6 used source baseline `e6f3514`, plus release-version metadata.
+Maintainers generate this distribution from a separate development source. Users do not need that checkout to install it. Version **0.3.9** corresponds to source commit `8b8f3cd`, with the selected black-and-copper CD battery logo. It retains the shared rules and safe removal flow from 0.3.8 (source `4871d7a`). The repository address and installation IDs remain unchanged so existing marketplace subscriptions can update in place. Personal records, credentials, and source Git history are not shipped. Historical version 0.3.6 used source baseline `e6f3514`, plus release-version metadata.
 
 Official installation and update guidance: [OpenAI plugin packaging](https://developers.openai.com/plugins/build/plugins), [Claude Code plugin management](https://code.claude.com/docs/en/discover-plugins).

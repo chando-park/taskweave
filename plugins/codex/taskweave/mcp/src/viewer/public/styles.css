@@ -89,6 +89,9 @@ body{margin:0;background:var(--canvas);color:var(--ink);font:14px/1.65 var(--fon
 #tw-concept #overview-notice summary{cursor:pointer}#tw-concept #overview-notice ul{padding-left:18px;margin:10px 0 0}
 #tw-concept{--tw-coral:#f07665;--tw-amber:#edb257}
 #tw-concept .search-submit{flex-shrink:0;white-space:nowrap}
-#tw-concept .tw-palette{grid-template-columns:repeat(6,minmax(0,1fr))}
+#tw-concept{--tw-logo-ink:#191919;--tw-logo-copper:#b87333}
+#tw-concept .swatch-logo-black{background:var(--tw-logo-ink)}#tw-concept .swatch-logo-copper{background:var(--tw-logo-copper)}
+#tw-concept .tw-palette{grid-template-columns:repeat(4,minmax(0,1fr))}
+#tw-concept .tw-brand-tile img{width:min(120px,80%);height:auto}
 #tw-concept .swatch-coral{background:var(--tw-coral)}#tw-concept .swatch-amber{background:var(--tw-amber)}
-@media(max-width:590px){#tw-concept .tw-palette{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+@media(max-width:590px){#tw-concept .tw-palette{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}

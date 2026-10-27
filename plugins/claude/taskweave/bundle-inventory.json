@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "host": "claude",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "personalSkills": [
     "cpm",
     "code-change",
@@ -26,7 +26,7 @@
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
-      "sha256": "a96e04ff694c3bd51c26cbacf9263a58acb5183a344dfc1514357d101c68d435"
+      "sha256": "d38f03e6aba5b34f56eb7a0f18c58f5ce2300504a6e39d1bcff04cca041df507"
     },
     {
       "path": ".mcp.json",
@@ -19154,11 +19154,11 @@
     },
     {
       "path": "mcp/package-lock.json",
-      "sha256": "e69a0772ca97dfca394f3f1246e38ebf6e46b84743638939915168c983ba4dfe"
+      "sha256": "819d1ae87899e5bffca0bf46f3cc02d9110f18d0c845fb327d88653e0580ef79"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "dbd39fd04f22c2aa001e3888d0f7102a5418a1cf21aa41ff97b57dacb1bd727a"
+      "sha256": "9954760c4c47998f691d63ef04b7c8e58fb6633672990fa04be73040ccd51c9e"
     },
     {
       "path": "mcp/src/adapters/android.mjs",
@@ -19198,7 +19198,7 @@
     },
     {
       "path": "mcp/src/server.mjs",
-      "sha256": "78e3b6306790b72c1214346ce825a7730ca5cc9075c3edb0812ca3f7666ecfe5"
+      "sha256": "3b09821173974dbc5067ad57dde0334b963c866573d79c33e051d6fe8f6c688c"
     },
     {
       "path": "mcp/src/settings.mjs",
@@ -19226,11 +19226,11 @@
     },
     {
       "path": "mcp/src/viewer/public/index.html",
-      "sha256": "7bb7ddfd3a24b02a99e5031f2d577a7e335662efb1a12a6ae5e92b17ee0896ca"
+      "sha256": "18425c819c854813e1d38c47d9361dea8c2ddf3fdd627014a22b76b55a84011e"
     },
     {
       "path": "mcp/src/viewer/public/logo.svg",
-      "sha256": "be859b2991f91e7f3dfef4fbdc3ca70f1c034a79a6d4aa859d8db017aeea2499"
+      "sha256": "2c32dc47401b6254e072d5e41515374e3bd040f5afed5edadb5b21409411b3f5"
     },
     {
       "path": "mcp/src/viewer/public/status.mjs",
@@ -19238,11 +19238,11 @@
     },
     {
       "path": "mcp/src/viewer/public/styles.css",
-      "sha256": "dc6dc3568b0a7d59f67e7edd830e61aed3fe2aa20d2bce3fa1309cc085b158a0"
+      "sha256": "aee1dcf014e1bff7e6311025e7c7ef90c536b0020b12609cfbb134a780e1a499"
     },
     {
       "path": "mcp/src/viewer/public/wordmark.svg",
-      "sha256": "89c06ca66758b5e86d7de351b0b120a805025388dbeb8de2ce585d8b42fee668"
+      "sha256": "f33ea84fc8f37a317067840e956cab021b5914676318144a54f0475e854d6be8"
     },
     {
       "path": "mcp/src/viewer/reader.mjs",

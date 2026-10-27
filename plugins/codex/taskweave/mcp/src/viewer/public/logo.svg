@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="72" viewBox="0 0 100 72" fill="none" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="80" viewBox="0 0 192 80" fill="none" role="img" aria-labelledby="title desc">
   <title id="title">CDPower</title>
-  <desc id="desc">다음 작업을 움직이는 힘을 나타내는 배터리와 번개 심볼. 실제 배터리 잔량을 뜻하지 않습니다.</desc>
-  <rect x="7" y="13" width="77" height="46" rx="12" fill="#E7F2EB" stroke="#293D39" stroke-width="5"/>
-  <path d="M89 28v16" stroke="#293D39" stroke-width="6" stroke-linecap="round"/>
-  <rect x="14" y="20" width="63" height="32" rx="7" fill="#158774"/>
-  <path d="M49 18 32 39h15l-5 16 22-25H49z" fill="#FFFFFC"/>
+  <desc id="desc">04번 시안의 검정 C 몸통과 구리색 D 끝부분을 연결한 가로 건전지. 실제 배터리 잔량을 뜻하지 않습니다.</desc>
+  <path id="c-body" d="M116 16H36C24.954 16 16 24.954 16 36V44C16 55.046 24.954 64 36 64H116" stroke="#191919" stroke-width="16"/>
+  <path id="d-cap" d="M124 16H136C147.046 16 156 24.954 156 36V44C156 55.046 147.046 64 136 64H124" stroke="#B87333" stroke-width="16"/>
+  <rect id="positive-terminal" x="170" y="27" width="14" height="26" rx="4" fill="#B87333"/>
+  <path d="M177 34V46M171 40H183" stroke="#FFFFFF" stroke-width="3"/>
 </svg>
