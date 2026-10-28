@@ -12,6 +12,10 @@
 
 호스트가 붙인 실제 namespace와 도구 schema를 확인한다. 도구가 노출되지 않으면 이미 아는 자료와 허용된 호스트 도구로 가능한 일을 계속하고 조회·저장의 한계만 알린다. 설치 캐시나 서버 실행 폴더를 작업 프로젝트로 오인하지 않는다.
 
+프로젝트 기록을 처음 찾을 때는 실제 소스 폴더를 `currentPath`로 전달한다. 공유 설정과 이미 연결된 뷰어 폴더의 회사 `workspace.yaml`·`workspace.local.yaml`을 함께 대조하는 `SettingsStore.projectCatalog`가 조회·저장·뷰어의 공통 연결이다. 기존 회사 ID와 기록 위치가 있으면 재사용하고, Codex 표시 이름·저장소 폴더명만으로 개인 ID나 Downloads 임시 Workplan을 새로 만들지 않는다. 일치하는 연결이 없을 때만 setup으로 등록하고, 여러 연결이 충돌하면 사용할 작업공간을 묻는다. 이전 개인 ID는 회사 ID의 별칭으로 연결할 수 있으며 원문·기존 회사 문서는 보존한다. 연결 발견은 실행 신뢰 승인이 아니다.
+
+사용자가 기존 Workplan을 기본 관리 위치로 통합한 환경(`workplanStorage: managed-default-v1`)은 회사·개인 구분 없이 `~/.local/share/ai-workflow/workspaces/personal/projects/<프로젝트 ID>/Workplans/`를 사용한다. 회사 manifest에서 찾은 ID·지식·지침은 재사용하되 Workplan을 옛 위치로 다시 돌리지 않는다. 이전 원본은 백업하고 옛 경로는 호환 연결만 남기므로 Codex·Claude·뷰어가 같은 실제 파일을 읽고 쓴다. 통합은 명시 요청 때만 `workplan-storage.mjs`의 `consolidateWorkplans`로 수행하며 설치·업데이트 자체로 외부 기록을 이동하지 않는다.
+
 `workplan_prepare/approve/start/feedback/result`, `verification_select/approve/run` 같은 이전 MCP orchestration은 새 일상 경로에서 사용하지 않는다. 도구가 없다는 이유로 같은 기존 CLI gate를 다시 강제하지 않는다. `model-route`·Serena 등 작업별 유틸리티가 실제 필요한 경우에는 확인한 실행 위치를 사용하되 예전 홈 bin이나 원본 checkout의 존재를 가정하지 않는다.
 
 ## 승인·형식·저장 실패 구분

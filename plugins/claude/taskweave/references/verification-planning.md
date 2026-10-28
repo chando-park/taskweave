@@ -19,6 +19,8 @@
 
 첫 명령 전에 가장 가까운 기존 테스트에서 실제 test identifier·fixture·assertion·동시성 격리와 framework 관용구를 확인한다. production/test 대상의 manifest 직접 의존성·import·link 경계, 직접 test가 compile 증거도 제공하는지, 현재 실행 설정 존재 여부를 대조한다. 프로젝트 재생성은 manifest·resource·실행 대상·dependency graph 변경 또는 필수 설정 부재일 때만 계획한다. 결과는 긴 재조사가 아니라 선택한 명령, 필요한 setup과 예외 사유에 반영한다.
 
+선택한 검증은 [종류와 개별 확인 내용](verification-evidence.md#검증-종류와-개별-확인-내용)에 따라 대상·입력/조건·독립 기준·방법·통과 조건을 구체화하고 실행 후 같은 항목에 실제 결과를 연결한다. 단위 테스트 외 원본 대조·통합·동작·접근성·성능 등도 종류별 합계로 축약하지 않는다. 커버리지 수집 가능 여부·기존 설정·결과 위치는 첫 실행 전에 확인해 가능한 경우 같은 실행에서 측정한다. 필요한 검증만 선택하며 전체 종류 실행·별도 문서·추가 승인 검사를 강제하지 않는다.
+
 ## 플랫폼 지침 선택
 
 - Apple 프로젝트만 [Apple 검증](verification-apple.md)을 읽는다.

@@ -1,6 +1,6 @@
 {
   "name": "taskweave-plugin",
-  "version": "0.3.9",
+  "version": "0.3.13",
   "private": true,
   "type": "module",
   "description": "CDPower — 승인한 작업 흐름, 코드 설명과 안전한 기록 관리 (설치 ID: taskweave)",
@@ -8,7 +8,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test --experimental-test-coverage tests/*.test.mjs",
     "build": "node scripts/build.mjs",
     "start": "node src/server.mjs",
     "viewer": "node src/viewer/main.mjs"

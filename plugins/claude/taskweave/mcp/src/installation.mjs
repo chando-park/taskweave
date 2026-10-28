@@ -513,7 +513,7 @@ export class InstallationManager {
 
 export async function interactiveSetup({ store, ask, output = console.log, client = 'both', currentPath = process.cwd(), providers, hostObservations = [] }) {
   const records = await store.initializeRecords({ clients: selected(client), confirmed: true, confirmationSource: `사용자가 요청한 ${PRODUCT_NAME} 초기 설정` });
-  const state = await store.load();
+  const state = await store.projectCatalog();
   output(`현재 작업 폴더: ${currentPath}\n공통 기록 위치: ${records.projectsRoot}\nCodex·Claude가 같은 기록을 사용합니다. 기존 등록 경로는 보존합니다.`);
   const root = await ask('프로젝트들이 들어 있는 상위 폴더 절대경로 (빈칸: 나중에): ');
   const connectionPlan = () => new IntegrationService({ store }).plan({ clients: selected(client), providers: integrationSelection(providers ?? []), hostObservations });
@@ -529,7 +529,9 @@ export async function interactiveSetup({ store, ask, output = console.log, clien
   const projects = [];
   const pending = [];
   for (const candidate of [...discovery.candidates].sort((a, b) => a.repositoryPath.localeCompare(b.repositoryPath))) {
-    const existing = Object.entries(state.projects).find(([, project]) => project.repositoryPath === candidate.repositoryPath);
+    const context = await store.projectContext({ currentPath: candidate.repositoryPath });
+    if (context.status === 'ambiguous') throw new Error('같은 프로젝트가 여러 회사에 연결되어 있습니다. 사용할 작업공간을 확인해 주세요');
+    const existing = context.status === 'registered' ? [context.projectId, context] : null;
     if (existing) { projects.push({ projectId: existing[0], ...existing[1], reused: true }); continue; }
     const base = path.basename(candidate.repositoryPath).replace(/[^a-zA-Z0-9._-]/g, '-').replace(/^[^a-zA-Z0-9]+/, '').slice(0, 70) || 'project';
     let projectId = base;

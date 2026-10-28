@@ -7,6 +7,8 @@ const STATIC = new Map([
   ['/', ['index.html', 'text/html; charset=utf-8']],
   ['/app.mjs', ['app.mjs', 'text/javascript; charset=utf-8']],
   ['/status.mjs', ['status.mjs', 'text/javascript; charset=utf-8']],
+  ['/documents.mjs', ['documents.mjs', 'text/javascript; charset=utf-8']],
+  ['/dates.mjs', ['dates.mjs', 'text/javascript; charset=utf-8']],
   ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ['/logo.svg', ['logo.svg', 'image/svg+xml']],
   ['/wordmark.svg', ['wordmark.svg', 'image/svg+xml']],
@@ -48,7 +50,16 @@ export function createViewerServer({ catalog, instance }) {
       if (route === 'api/documents' || route === 'document') { const doc=await rendered(await catalog.readDocument(id)); return route === 'document' ? send(200,renderDocumentPage(doc,doc.html),'text/html; charset=utf-8') : send(200,doc); }
       const asset=await catalog.readAsset(id);
       const flowCsp = `sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src http://${request.headers.host}/assets/ data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'`;
-      if (asset.ext === '.html') return send(200,renderFlowHtml(asset.bytes.toString('utf8'),(href,image) => catalog.resolveLink(id,href,image)),MIME[asset.ext],flowCsp);
+      if (asset.ext === '.html') {
+        const html = await renderFlowHtml(asset.bytes.toString('utf8'), (href,image) => catalog.resolveLink(id,href,image), async src => {
+          const imageId = src.match(/^\/assets\/([a-f0-9]{24})(?:#.*)?$/)?.[1];
+          if (!imageId) return null;
+          const image = await catalog.readAsset(imageId);
+          const type = MIME[image.ext];
+          return type?.startsWith('image/') ? `data:${type};base64,${image.bytes.toString('base64')}` : null;
+        });
+        return send(200,html,MIME[asset.ext],flowCsp);
+      }
       return send(200,asset.bytes,MIME[asset.ext],"sandbox; default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'self'");
     } catch (error) { return send(error.status || 500,{error:error.status ? error.message : '자료를 읽지 못했습니다. 새로 읽기를 시도하세요.'}); }
   });

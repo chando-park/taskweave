@@ -6,6 +6,7 @@ import { randomUUID, createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { validateObservation, safeReference } from './integrations.mjs';
+import { workspaceProjects } from './workspace-registry.mjs';
 
 export const DEFAULT_EXCLUDES = ['node_modules', 'Pods', 'build', '.build', '.git', '.gradle', 'vendor', 'dist'];
 const executeFile = promisify(execFile);
@@ -158,6 +159,57 @@ export class SettingsStore {
     }
   }
 
+  // 조회·저장·초기 설정·뷰어가 사용하는 단일 연결 목록. 조회만으로 설정을 바꾸지 않는다.
+  async projectCatalog() {
+    const settings = await this.load();
+    const known = await workspaceProjects(settings, this.dataRoot);
+    const projects = { ...settings.projects }, aliases = { ...settings.projectAliases }, conflicts = [];
+    for (const candidate of known.projects) {
+      const siblings = known.projects.filter(item => item.repositoryPath === candidate.repositoryPath || item.projectId === candidate.projectId);
+      if (siblings.some(item => item.workspaceId !== candidate.workspaceId || item.repositoryPath !== candidate.repositoryPath || item.projectId !== candidate.projectId)) {
+        conflicts.push(candidate); continue;
+      }
+      const previous = projects[candidate.projectId];
+      if (previous && await canonicalPath(previous.repositoryPath, { allowMissing: true }) !== candidate.repositoryPath) { conflicts.push(candidate); continue; }
+      for (const [id, project] of Object.entries(projects)) {
+        if (id !== candidate.projectId && await canonicalPath(project.repositoryPath, { allowMissing: true }) === candidate.repositoryPath) {
+          aliases[id] = candidate.projectId; delete projects[id];
+        }
+      }
+      const sameConnection = previous?.workspaceId === candidate.workspaceId && previous?.workplanRoot === candidate.workplanRoot;
+      projects[candidate.projectId] = { ...(sameConnection ? previous : {}), ...candidate,
+        ...(sameConnection ? { executionTrusted: previous.executionTrusted, trustSource: previous.trustSource } : {}) };
+    }
+    for (const alias of Object.keys(aliases)) if (projects[aliases[alias]]) delete projects[alias];
+    return { ...settings, projects, aliases, conflicts, warnings: known.warnings,
+      workspaces: { ...known.workspaces, ...settings.workspaces } };
+  }
+
+  // 사용자가 요청한 연결 변경만 저장한다. 기존 개인 등록과 설정 원본은 복구 가능하게 남긴다.
+  async linkExistingProject({ projectId, confirmed, confirmationSource, recordLinks = {}, taskLinks = {} }) {
+    confirmation({ confirmed, confirmationSource });
+    return withLock(`${this.configPath}.lock`, async () => {
+      const catalog = await this.projectCatalog();
+      const canonical = catalog.aliases[projectId] ?? projectId;
+      if (catalog.conflicts.some(item => item.projectId === canonical) || !catalog.projects[canonical]) throw new Error('회사 프로젝트 연결을 하나로 확인해 주세요');
+      const project = catalog.projects[canonical];
+      for (const [source, target] of Object.entries(recordLinks)) {
+        if (!source.startsWith('workplans:') || !target.startsWith('workplans:')) throw new Error('Workplan 문서 연결만 지원합니다');
+        for (const value of [source, target]) if (value.slice(10).split(/[\\/]/).some(part => part === '..') || path.isAbsolute(value.slice(10))) throw new Error('기록 연결 경로가 잘못되었습니다');
+        await requireWithin(project.workplanRoot, path.join(project.workplanRoot, target.slice(10)));
+      }
+      for (const [source, target] of Object.entries(taskLinks)) { assertId(source); assertId(target); await requireWithin(project.workplanRoot, path.join(project.workplanRoot, target)); }
+      const settings = await this.load();
+      const backup = path.join(this.dataRoot, 'backups', `project-link-${randomUUID()}`, 'settings.json');
+      await atomicJSON(backup, settings);
+      settings.workspaces[project.workspaceId] ??= catalog.workspaces[project.workspaceId];
+      settings.projectAliases = { ...settings.projectAliases, ...catalog.aliases };
+      settings.projects[canonical] = { ...project, recordLinks: { ...project.recordLinks, ...recordLinks }, taskLinks: { ...project.taskLinks, ...taskLinks } };
+      await atomicJSON(this.configPath, settings);
+      return { projectId: canonical, workspaceId: project.workspaceId, workplanRoot: project.workplanRoot, backup };
+    });
+  }
+
   // 두 호스트가 같은 설정과 기록을 사용한다. 기존 외부 경로·신뢰·서비스는 덮어쓰지 않는다.
   async initializeRecords({ clients = [], confirmed, confirmationSource }) {
     confirmation({ confirmed, confirmationSource });
@@ -268,6 +320,9 @@ export class SettingsStore {
     const candidate = discovery.candidates.find((item) => item.candidateId === input.candidateId);
     if (!candidate) throw new Error('확인할 탐색 후보가 없습니다');
     const repositoryPath = await requireWithin(discovery.root, candidate.repositoryPath);
+    const context = await this.projectContext({ currentPath: repositoryPath });
+    if (context.status === 'ambiguous') throw new Error('같은 저장소의 작업공간 연결이 여러 개입니다. 사용할 회사를 확인해 주세요');
+    if (context.status === 'registered' && (context.projectId !== input.projectId || context.workspaceId !== input.workspaceId)) return { ...context, reused: true };
     const identity = await gitIdentity(repositoryPath);
     return withLock(`${this.configPath}.lock`, async () => {
       const settings = await this.load();
@@ -311,7 +366,9 @@ export class SettingsStore {
 
   async requireProject(projectId, { trusted = false } = {}) {
     assertId(projectId, 'project ID');
-    const settings = await this.load();
+    const settings = await this.projectCatalog();
+    projectId = settings.aliases[projectId] ?? projectId;
+    if (settings.conflicts.some(item => item.projectId === projectId)) throw new Error('회사 프로젝트 연결이 여러 개입니다. 사용할 작업공간을 확인해 주세요');
     if (!Object.hasOwn(settings.projects, projectId)) throw new Error('등록되지 않은 프로젝트입니다');
     const project = settings.projects[projectId];
     const workspace = settings.workspaces[project.workspaceId];
@@ -322,7 +379,9 @@ export class SettingsStore {
     const managed = await canonicalPath(path.join(this.dataRoot, 'workspaces', project.workspaceId, 'projects', projectId), { allowMissing: true });
     for (const key of ['workplanRoot', 'productMemoryRoot', 'instructionsRoot']) {
       const recordRoot = await canonicalPath(project[key], { allowMissing: true });
-      if (!isWithin(workspacePath, recordRoot) && !isWithin(managed, recordRoot)) throw new Error('선택한 프로젝트의 기록 경로 밖입니다');
+      const defaultWorkplans = settings.workplanStorage === 'managed-default-v1' && key === 'workplanRoot'
+        ? await canonicalPath(path.join(this.dataRoot, 'workspaces/personal/projects', projectId, 'Workplans'), { allowMissing: true }) : null;
+      if (!isWithin(workspacePath, recordRoot) && !isWithin(managed, recordRoot) && recordRoot !== defaultWorkplans) throw new Error('선택한 프로젝트의 기록 경로 밖입니다');
       if (isWithin(repositoryPath, recordRoot)) throw new Error('제품 저장소 내부 기록은 허용하지 않습니다');
     }
     const git = await exists(path.join(repositoryPath, '.git'));
@@ -341,9 +400,13 @@ export class SettingsStore {
       if (!currentPath) throw new Error('호스트의 현재 폴더 또는 project ID가 필요합니다');
       const current = await canonicalPath(currentPath);
       const matches = [];
-      for (const [id, project] of Object.entries((await this.load()).projects)) {
-        if (isWithin(await canonicalPath(project.repositoryPath), current)) matches.push(id);
+      const catalog = await this.projectCatalog();
+      for (const [id, project] of Object.entries(catalog.projects)) {
+        try { if (isWithin(await canonicalPath(project.repositoryPath), current)) matches.push(id); }
+        catch (error) { if (error.code !== 'ENOENT') throw error; }
       }
+      const conflicting = catalog.conflicts.filter(item => isWithin(item.repositoryPath, current));
+      if (conflicting.length) return { status: 'ambiguous', candidates: [...new Set([...matches, ...conflicting.map(item => `${item.workspaceId}:${item.projectId}`)])], requiresConfirmation: true };
       if (matches.length !== 1) return { status: matches.length ? 'ambiguous' : 'unregistered', candidates: matches, requiresConfirmation: true };
       [projectId] = matches;
     }

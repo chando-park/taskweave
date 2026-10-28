@@ -1,4 +1,4 @@
-import { mkdir, readFile, stat, unlink, open, realpath, lstat } from 'node:fs/promises';
+import { mkdir, readFile, readdir, stat, unlink, open, realpath, lstat } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { randomUUID } from 'node:crypto';
@@ -26,13 +26,19 @@ async function runtimeFiles(store) {
 
 // 기존 등록과 별도로 연결한 기록을 합친다. 제품 코드·사용자 설정은 이동하거나 수정하지 않는다.
 export async function resolveViewerRoots(store) {
-  const settings = await store.load();
+  const settings = await store.projectCatalog();
   const files = await runtimeFiles(store);
   const linked = await readJSON(files.roots);
   if (linked && (!Array.isArray(linked.roots) || linked.roots.some(root => typeof root !== 'string' || !path.isAbsolute(root)))) throw new Error('뷰어 기록 폴더 설정을 확인해 주세요.');
   const managed = await requireWithin(store.dataRoot, path.join(store.dataRoot, 'workspaces'), { allowMissing: true });
   await mkdir(managed, { recursive: true, mode: 0o700 });
-  const candidates = [managed, ...(linked?.roots ?? []), ...Object.values(settings.projects).map(project => project.workplanRoot), ...Object.values(settings.workspaces).map(workspace => path.join(workspace.root, 'Workplans'))];
+  let candidates;
+  if (settings.workplanStorage === 'managed-default-v1') {
+    const projects = path.join(managed, 'personal/projects');
+    await mkdir(projects, { recursive: true, mode: 0o700 });
+    candidates = (await readdir(projects, { withFileTypes: true })).filter(entry => entry.isDirectory()).map(entry => path.join(projects, entry.name, 'Workplans'));
+    if (!candidates.length) candidates = [projects];
+  } else candidates = [managed, ...(linked?.roots ?? []), ...Object.values(settings.projects).map(project => project.workplanRoot), ...Object.values(settings.workspaces).map(workspace => path.join(workspace.root, 'Workplans'))];
   const roots = new Set();
   for (const candidate of candidates.filter(Boolean)) {
     try {
@@ -126,11 +132,14 @@ export async function runManagedViewer({ store, port = 4317, openBrowser = openV
     const clear = async () => { if ((await readJSON(files.state))?.instance === state.instance) await unlink(files.state); };
     try {
       const roots = await resolveViewerRoots(store);
-      try { viewer = await startViewer({ roots, port, instance: state.instance }); }
+      const connections = await store.projectCatalog();
+      const projectBindings = Object.entries(connections.projects).map(([projectId, item]) => ({ projectId, root: item.workplanRoot }));
+      const options = { roots, projectBindings, projectAliases: connections.aliases, instance: state.instance };
+      try { viewer = await startViewer({ ...options, port }); }
       catch (error) {
         // 다른 프로그램의 포트를 빼앗지 않는다. 새 주소는 공용 실행 기록에 저장한다.
         if (error.code !== 'EADDRINUSE') throw error;
-        viewer = await startViewer({ roots, port: 0, instance: state.instance });
+        viewer = await startViewer({ ...options, port: 0 });
       }
       state.url = viewer.url;
       state.roots = roots;

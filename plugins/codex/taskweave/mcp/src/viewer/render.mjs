@@ -29,11 +29,25 @@ export function renderSafeMarkdown(text, resolveLink = () => null) {
   });
 }
 
-export function renderFlowHtml(text, resolveLink) {
+export async function renderFlowHtml(text, resolveLink, readImage) {
+  const images = new Map();
+  if (readImage) {
+    // 격리된 HTML에서 서버로 이미지를 다시 요청하면 보안 정책이 차단한다.
+    // 등록된 로컬 이미지만 먼저 읽어 HTML 안에 담고, 외부 이미지·임의 경로는 계속 제외한다.
+    sanitizeHtml(text, { allowedTags: ['img'], transformTags: { img: (tag, attrs) => {
+      const src = resolveLink(attrs.src, true);
+      if (src) images.set(src, null);
+      return { tagName: 'img', attribs: {} };
+    } } });
+    await Promise.all([...images.keys()].map(async src => {
+      try { images.set(src, await readImage(src)); } catch { images.set(src, null); }
+    }));
+  }
   // 원문 HTML은 저장하지 않는다. 동작은 opaque-origin iframe과 응답 CSP 안에서만 허용한다.
   const clean = sanitizeHtml(text, {
     allowedTags:false, allowedAttributes:false, allowVulnerableTags:true,
     allowedSchemes:['http','https'],
+    allowedSchemesByTag: { img: readImage ? ['data'] : ['http', 'https'] },
     exclusiveFilter: frame => ['base','meta','iframe','object','embed','form','link'].includes(frame.tag) || (frame.tag === 'script' && Boolean(frame.attribs.src)),
     transformTags: {
       a: (tag, attrs) => {
@@ -42,7 +56,7 @@ export function renderFlowHtml(text, resolveLink) {
         if (href && !/^https?:/.test(href)) attribs.href = href; else delete attribs.href;
         return { tagName:'a', attribs };
       },
-      img: (tag, attrs) => { const src = resolveLink(attrs.src,true); const attribs={...attrs}; if (src) attribs.src=src; else delete attribs.src; delete attribs.srcset; return {tagName:'img',attribs}; },
+      img: (tag, attrs) => { const resolved = resolveLink(attrs.src,true); const src = readImage ? images.get(resolved) : resolved; const attribs={...attrs}; if (src) attribs.src=src; else delete attribs.src; delete attribs.srcset; return {tagName:'img',attribs}; },
     },
   });
   // 격리 iframe의 null origin으로 API를 호출하지 않고 검증된 부모 창에 문서 ID만 전달한다.

@@ -1,12 +1,13 @@
 import { statusGroup, statusLabel } from './status.mjs';
+import { tabs, documentTab, documentsForTab } from './documents.mjs';
+import { formatDocumentDate } from './dates.mjs';
 
 const $ = selector => document.querySelector(selector);
 const form=$('#filters');
 let listVersion=0, detailVersion=0, overviewVersion=0, page=1, currentWorkplan=null, currentTab='계획', selectedId=null;
 let currentView='home', returnView='home', listData=null, searchTimer;
-const tabs=['계획','구현','코드 흐름','테스트','변경 이력','추가 문서'];
 const escape = text => String(text ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const date = value => new Intl.DateTimeFormat('ko-KR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
+const date = item => formatDocumentDate(item.displayDate ?? item.updatedAt);
 async function getJson(url) { const response=await fetch(url,{cache:'no-store'}); const data=await response.json(); if (!response.ok) throw new Error(data.error || '자료를 읽지 못했습니다.'); return data; }
 function message(element,text) { element.textContent=text; element.hidden=!text; }
 function failure(element,error,retry) { message(element,error.message); const button=document.createElement('button'); button.textContent='다시 시도'; button.addEventListener('click',retry,{once:true}); element.append(' ',button); }
@@ -36,7 +37,7 @@ function renderList() {
   const items=currentView==='home' ? listData.items.slice(0,5) : listData.items;
   $('#count').textContent=currentView==='home' ? `${items.length} / ${listData.total}건` : `${listData.total}건`;
   $('#more').hidden=currentView==='home' || !listData.hasMore;
-  $('#list').innerHTML=items.map(item=>`<button type="button" class="workplan-card tw-row${selectedId===item.id?' selected':''}" data-workplan="${item.id}" aria-pressed="${selectedId===item.id}"><span class="tw-row-top"><span class="tw-row-id">${escape(item.project)}</span>${statusBadge(item.status)}</span><strong class="tw-row-title">${escape(item.title)}</strong><span class="tw-row-bottom">${item.jira?`<span>${escape(item.jira)}</span> · `:''}<time datetime="${item.updatedAt}">${date(item.updatedAt)}</time><span>· ${item.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</span></span></button>`).join('') || '<p class="empty">조건에 맞는 작업이 없습니다.<br>키워드나 필터를 바꿔 보세요.</p>';
+  $('#list').innerHTML=items.map(item=>`<button type="button" class="workplan-card tw-row${selectedId===item.id?' selected':''}" data-workplan="${item.id}" aria-pressed="${selectedId===item.id}"><span class="tw-row-top"><span class="tw-row-id">${escape(item.project)}</span>${statusBadge(item.status)}</span><strong class="tw-row-title">${escape(item.title)}</strong><span class="tw-row-bottom">${item.jira?`<span>${escape(item.jira)}</span> · `:''}<time datetime="${item.updatedAt}">${date(item)}</time><span>· ${item.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</span></span></button>`).join('') || '<p class="empty">조건에 맞는 작업이 없습니다.<br>키워드나 필터를 바꿔 보세요.</p>';
 }
 function showPage(view) {
   ++detailVersion;
@@ -65,7 +66,7 @@ export async function loadOverview() {
     $('#recent-title').textContent=latest?.title || '아직 읽은 작업이 없습니다.';
     $('#resume').disabled=!latest;
     if (latest) $('#resume').dataset.workplan=latest.id; else delete $('#resume').dataset.workplan;
-    $('#recent-updates').innerHTML=data.recent.map(item=>`<div class="tw-event"><button type="button" data-workplan="${item.id}">${escape(item.title)}</button><small>${date(item.updatedAt)}<br>${item.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'} · ${escape(statusLabel(item.status))}</small></div>`).join('') || '<p class="empty">갱신 기록 없음</p>';
+    $('#recent-updates').innerHTML=data.recent.map(item=>`<div class="tw-event"><button type="button" data-workplan="${item.id}">${escape(item.title)}</button><small>${date(item)}<br>${item.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'} · ${escape(statusLabel(item.status))}</small></div>`).join('') || '<p class="empty">갱신 기록 없음</p>';
     readingWarnings(data.warnings);
   } catch(error) { if(version===overviewVersion) failure($('#overview-notice'),error,loadOverview); }
 }
@@ -83,18 +84,10 @@ export async function loadList(append=false) {
   finally { if(version===listVersion) $('#more').disabled=false; }
 }
 function setDetailState(text) { $('#detail-state').hidden=false; message($('#detail-state'),text); $('#detail-content').hidden=true; }
-function kindFor(doc) {
-  if (doc.kind==='flow' || doc.kind==='image') return '코드 흐름';
-  if (/test|verif|검증|테스트/i.test(doc.name)) return '테스트';
-  if (/changelog|history|변경/i.test(doc.name)) return '변경 이력';
-  if (/completion|result|implement|완료|구현/i.test(doc.name)) return '구현';
-  if (doc.main || /plan|계획/i.test(doc.name)) return '계획';
-  return '추가 문서';
-}
 function renderTabs() { $('#tabs').innerHTML=tabs.map(tab=>`<button data-tab="${tab}" aria-pressed="${tab===currentTab}" class="${tab===currentTab?'active':''}">${tab}</button>`).join(''); }
 async function selectTab(tab) {
   currentTab=tab; renderTabs();
-  const docs=currentWorkplan.documents.filter(doc=>kindFor(doc)===tab);
+  const docs=documentsForTab(currentWorkplan.documents,tab);
   $('#documents').innerHTML=docs.map(doc=>`<button data-${doc.kind==='markdown'?'document':'asset'}="${doc.id}">${escape(doc.name.split('/').slice(-2).join('/'))}</button>`).join('');
   if (docs.length) return docs[0].kind==='markdown' ? selectDocument(docs[0].id) : showFlow(docs[0].id);
   const version=++detailVersion; $('#flow').hidden=true; $('#flow').removeAttribute('src'); $('#source').hidden=true; $('#article').hidden=false;
@@ -125,6 +118,11 @@ async function selectTab(tab) {
     if (errors.length) failure($('#document-notice'),new Error(errors.join(' / ')),()=>selectTab('테스트')); else message($('#document-notice'),'검증 계획을 실행 결과로 표시하지 않습니다.');
     return;
   }
+  if (tab==='화면 비교') {
+    $('#article').innerHTML='<p class="empty">화면 비교 자료 없음 · 연결된 비교 HTML·이미지가 아직 없습니다.</p>';
+    message($('#document-notice'),'자료 유무는 UI 검증 통과 여부를 뜻하지 않습니다.');
+    return;
+  }
   const words={ '구현':/구현|결과|implementation|result/i,'변경 이력':/변경 이력|changelog|history/i };
   const template=document.createElement('div'); template.innerHTML=currentWorkplan.document.html;
   const heading=[...template.querySelectorAll('h1,h2,h3,h4')].find(h=>words[tab]?.test(h.textContent));
@@ -138,7 +136,7 @@ export async function selectWorkplan(id) {
   try {
     const entry=await getJson(`/api/workplans/${id}`); if (version!==detailVersion) return;
     currentWorkplan=entry; $('#detail-state').hidden=true; $('#detail-content').hidden=false;
-    $('#workplan-heading').innerHTML=`<button class="back-to-list" type="button">← 목록으로</button><p class="eyebrow">${escape(entry.project)}</p><h2>${escape(entry.title)}</h2><p class="detail-meta">${statusBadge(entry.status)} ${escape(entry.jira || '')} · ${date(entry.updatedAt)} · ${entry.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</p>`;
+    $('#workplan-heading').innerHTML=`<button class="back-to-list" type="button">← 목록으로</button><p class="eyebrow">${escape(entry.project)}</p><h2>${escape(entry.title)}</h2><p class="detail-meta">${statusBadge(entry.status)} ${escape(entry.jira || '')} · ${date(entry)} · ${entry.dateSource==='metadata'?'원문 날짜':'문서 수정 시각'}</p>`;
     $('#workplan-heading .back-to-list').addEventListener('click',()=>{showPage(returnView);$('.library').scrollIntoView({block:'start'});});
     await selectTab('계획');
     $('.detail').scrollIntoView({block:'start'});
@@ -150,8 +148,11 @@ export async function selectDocument(id) {
   catch (error) { if (version===detailVersion) { $('#article').replaceChildren(); failure($('#document-notice'),error,()=>selectDocument(id)); } }
 }
 export function showFlow(id) {
+  const doc=currentWorkplan?.documents.find(doc=>doc.id===id);
+  if (doc) { currentTab=documentTab(doc,currentWorkplan.documents.find(doc=>doc.main)?.name); renderTabs(); }
+  $('#flow').title=doc ? `${currentTab} · ${doc.name.split('/').at(-1)}` : '첨부 자료';
   ++detailVersion; $('#article').hidden=true; $('#source').hidden=true; $('#flow').hidden=false; $('#flow').src=`/assets/${id}`;
-  message($('#document-notice'),'격리된 첨부 · 외부 접속과 상위 화면 이동은 차단됩니다. CDN에 의존한 그림은 표시가 제한될 수 있습니다.');
+  message($('#document-notice'),currentTab==='화면 비교' ? '원본과 수정 화면을 비교한 자료입니다. 통과·불일치·미확인 여부는 자료에 적힌 결과를 확인하세요.' : '첨부 자료를 뷰어 안에서 표시합니다. 외부 연결이 필요한 내용은 표시가 제한될 수 있습니다.');
 }
 export async function refreshCatalog() {
   $('#refresh').disabled=true; message($('#notice'),'원본에서 다시 읽고 있습니다…');

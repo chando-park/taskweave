@@ -25,7 +25,7 @@ export function parseMetadata(source) {
   } catch (error) { warnings.push(`메타데이터를 읽지 못했습니다: ${error.message}`); return { metadata: {}, body: source, warnings }; }
 }
 
-export async function createCatalog({ roots, maxFiles = 5000, maxBytes = 2 * 1024 * 1024 } = {}) {
+export async function createCatalog({ roots, projectBindings = [], projectAliases = {}, maxFiles = 5000, maxBytes = 2 * 1024 * 1024 } = {}) {
   if (!Array.isArray(roots) || !roots.length) throw viewerError(400, '--root 폴더를 하나 이상 지정하세요.');
   const allowedRoots = [];
   for (const root of roots) {
@@ -100,13 +100,16 @@ export async function createCatalog({ roots, maxFiles = 5000, maxBytes = 2 * 102
       try {
         const { bytes, mtime } = await readReference(ref); const text = bytes.toString('utf8');
         const parsed = parseMetadata(text); const m = parsed.metadata;
+        const bindings = projectBindings.filter(item => inside(item.root, ref.path));
+        const connectedProject = bindings.length === 1 ? bindings[0].projectId : null;
         const matchedName = path.basename(ref.path, '.md') === path.basename(path.dirname(ref.path));
         const recognized = m.workplan_schema || m.plan_schema || m.project_id || m.id || (m.title && (m.status || m.type));
         if (!matchedName && !recognized) { nextWarnings.push(`분류하지 못한 문서: ${ref.name}`); continue; }
         const scalar = value => ['string','number'].includes(typeof value) ? String(value) : null;
         const updated = scalar(m.updated ?? m.updated_at ?? m.created ?? m.created_at);
         const validDate = updated && Number.isFinite(Date.parse(updated));
-        const entry = { id: ref.id, title: scalar(m.title) || parsed.body.match(/^#\s+(.+)$/m)?.[1] || path.basename(ref.path,'.md'), project: scalar(m.project_id ?? m.project) || path.basename(ref.root), status: scalar(m.status), jira: scalar(m.jira ?? m.jira_key ?? m.ticket), updatedAt: validDate ? new Date(updated).toISOString() : mtime, dateSource: validDate ? 'metadata' : 'document-mtime', documents: [], warnings: parsed.warnings, searchText: normalize(text) };
+        const entry = { id: ref.id, title: scalar(m.title) || parsed.body.match(/^#\s+(.+)$/m)?.[1] || path.basename(ref.path,'.md'), project: scalar(m.project_id ?? m.project) || path.basename(ref.root), status: scalar(m.status), jira: scalar(m.jira ?? m.jira_key ?? m.ticket), updatedAt: validDate ? new Date(updated).toISOString() : mtime, displayDate: validDate ? updated : mtime, dateSource: validDate ? 'metadata' : 'document-mtime', documents: [], warnings: parsed.warnings, searchText: normalize(text) };
+        entry.project = connectedProject ?? projectAliases[entry.project] ?? entry.project;
         nextEntries.push(entry);
       } catch (error) { nextWarnings.push(`${ref.name}: ${error.message}`); }
     }

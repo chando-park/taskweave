@@ -8,13 +8,23 @@
 
 The same workflow supports code changes, research, summaries, and scripts, with sources and checks chosen for the task. Small code changes stay in the conversation: review the proposal, approve it, and inspect the result. Complex changes use a Workplan, a document describing the proposed work.
 
-This README describes the **CDPower 0.3.9** package, the new display name for Taskweave. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
+This README describes **CDPower 0.3.13**, the display name for Taskweave. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
 
 [Install and set up](#install-and-set-up) · [Task flow](#how-a-task-moves-through-the-system) · [Examples](#try-it-requests-and-expected-responses) · [Viewer](#read-workplans-in-the-local-viewer) · [Record locations](#where-files-live-and-how-they-connect) · [Update](#update-remove-and-troubleshoot)
 
 The install ID `taskweave`, skill prefixes `$taskweave:` and `/taskweave:`, marketplace names, and GitHub URL stay unchanged so existing installations can update. You do not need to move your code or records. The UI and installation descriptions use **CDPower**.
 
-## What changed in 0.3.9
+## What changed in 0.3.13
+
+- The **Screen comparison** tab separates UI evidence from code-flow diagrams and test results.
+- Reports explain individual inputs, expectations, observed results, skipped checks, and measured coverage. Times use the user's local zone and seconds; date-only history is preserved.
+- Existing company project IDs are matched by source-folder path. Lookup, saving, setup, and the viewer use the same connection instead of creating duplicate personal projects.
+- New Workplans use `~/.local/share/ai-workflow/workspaces/personal/projects/<project-id>/Workplans/`, shared by Codex and Claude. The internal name `personal` does not exclude company work.
+- Existing external Workplans can be consolidated there on explicit request, preserving contents, modification times, backups, and old links. Product Memory and source repositories are not moved. Updates alone do not move another computer's records or supply its credentials.
+
+After updating, select `setup` and ask: **“Consolidate my existing Workplans into the default managed location. Preserve the records and old links.”** The shared implementation is `mcp/src/workplan-storage.mjs`; conflicting files or concurrent source changes are not overwritten.
+
+## Previous changes in 0.3.9
 
 - The selected flat, horizontal CD battery mark now uses black `#191919` for the C body and copper `#B87333` for the D end and positive terminal. It replaces the lightning symbol in the homepage, favicon, brand page, and downloadable SVG.
 - Both host packages include the same logo. Existing layout, UI accent colors, settings, records, and integrations stay unchanged.
@@ -211,7 +221,7 @@ Your computer
 `-- ~/.local/share/ai-workflow/            Managed state, backups, and viewer state
 ```
 
-Installing the plugin supplies its files; setup creates project record folders after you confirm the project. You select the folder containing your projects, not a new record location. Existing external records stay at their original location. The shared configuration is `~/.config/ai-workflow/settings.json`. Compatibility paths retain the `ai-workflow` name.
+Installing the plugin supplies its files; setup creates project record folders after you confirm the project. You select the folder containing your projects, not a new record location. External records stay where they are unless you request consolidation. After consolidation, old paths link to the same files, not separate active copies. The shared configuration is `~/.config/ai-workflow/settings.json`. Compatibility paths retain the `ai-workflow` name.
 
 For a complex task that needs a Workplan, a record can look like this:
 
@@ -286,7 +296,7 @@ Codex:
 codex plugin marketplace upgrade taskweave-marketplace
 ```
 
-This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.3.9**; do not assume an already running conversation has changed.
+This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.3.13**; do not assume an already running conversation has changed.
 
 Claude Code:
 
@@ -295,7 +305,7 @@ claude plugin marketplace update taskweave-marketplace
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-Confirm version **0.3.9**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
+Confirm version **0.3.13**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records; ask `setup` to consolidate external Workplans when wanted. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
 
 ### Remove the plugin, owned links, and viewer
 

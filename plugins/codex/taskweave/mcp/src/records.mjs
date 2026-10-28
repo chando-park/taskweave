@@ -64,11 +64,11 @@ export class RecordService {
       const project = await this.store.projectContext({ projectId, ...(projectId ? {} : { currentPath }) });
       if (project.status !== 'registered') return { ...project, candidates: project.candidates.slice(0, 20) };
       if (workspaceId && workspaceId !== project.workspaceId) throw new Error('선택 프로젝트와 작업공간이 다릅니다');
-      return { projectId: project.projectId, workspaceId: project.workspaceId, roots: { instructions: project.instructionsRoot, memory: project.productMemoryRoot, workplans: project.workplanRoot } };
+      return { projectId: project.projectId, workspaceId: project.workspaceId, recordLinks: project.recordLinks ?? {}, taskLinks: project.taskLinks ?? {}, roots: { instructions: project.instructionsRoot, memory: project.productMemoryRoot, workplans: project.workplanRoot } };
     }
     if (!workspaceId) throw new Error('확인된 project ID·workspace ID 또는 호스트 현재 폴더가 필요합니다');
     assertId(workspaceId, 'workspace ID');
-    const settings = await this.store.load();
+    const settings = await this.store.projectCatalog();
     if (!Object.hasOwn(settings.workspaces, workspaceId)) throw new Error('등록되지 않은 작업공간입니다');
     return { workspaceId, roots: { documents: settings.workspaces[workspaceId].root } };
   }
@@ -76,9 +76,14 @@ export class RecordService {
   async resolve(input, recordId, missing = false) {
     const scope = await this.scope(input);
     if (!scope.roots) throw new Error('기록의 프로젝트를 명시해 주세요');
+    recordId = scope.recordLinks?.[recordId] ?? recordId;
     const separator = recordId.indexOf(':');
     const kind = recordId.slice(0, separator);
-    const relative = recordId.slice(separator + 1).replace(/\/$/, '');
+    let relative = recordId.slice(separator + 1).replace(/\/$/, '');
+    if (kind === 'workplans') {
+      const [taskId, ...remaining] = relative.split('/');
+      if (scope.taskLinks?.[taskId]) relative = [scope.taskLinks[taskId], ...remaining].join('/');
+    }
     if (separator < 0 || !Object.hasOwn(scope.roots, kind)) throw new Error('기록 ID의 허용 자료 종류를 확인해 주세요');
     return { ...scope, kind, relative, root: scope.roots[kind], filename: await safePath(scope.roots[kind], relative, { missing }) };
   }
@@ -111,6 +116,7 @@ export class RecordService {
     const root = scope.roots.workplans ?? path.join(scope.roots.documents, 'Workplans');
     const identity = { ...(scope.projectId ? { projectId: scope.projectId } : {}), workspaceId: scope.workspaceId };
     if (input.taskId) {
+      input = { ...input, taskId: scope.taskLinks?.[input.taskId] ?? input.taskId };
       assertId(input.taskId, 'task ID');
       for (const relative of [input.taskId, `${input.taskId}.md`]) {
         const filename = await safePath(root, relative, { missing: true });

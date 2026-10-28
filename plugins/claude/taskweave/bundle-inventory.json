@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "host": "claude",
-  "version": "0.3.9",
+  "version": "0.3.13",
   "personalSkills": [
     "cpm",
     "code-change",
@@ -26,7 +26,7 @@
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
-      "sha256": "d38f03e6aba5b34f56eb7a0f18c58f5ce2300504a6e39d1bcff04cca041df507"
+      "sha256": "93ad787dca3d6795bf45d280adeda8b90e496b9f6600c95660ae1ef7d4d5814c"
     },
     {
       "path": ".mcp.json",
@@ -134,7 +134,7 @@
     },
     {
       "path": "core/references/implementation-handoff.md",
-      "sha256": "015159076f1c1f7151c36882a284ccb4621ed0b707a62a3f008c8596816aeeff"
+      "sha256": "72155ece01d9c68732de8aa0d879df9d2028c33c84f6e3f79709a2682906e479"
     },
     {
       "path": "core/references/knowledge-lifecycle.md",
@@ -154,7 +154,7 @@
     },
     {
       "path": "core/references/plugin-runtime.md",
-      "sha256": "c4f9abbdeb6f1e480d3ee5a5ea377a202b4d9a92ec98478135044b10ecd7d3fe"
+      "sha256": "a57d173d3df62ad976659192d78a5701c0f99f5c1fc29182613e131190824e25"
     },
     {
       "path": "core/references/project-architecture-context.md",
@@ -210,15 +210,15 @@
     },
     {
       "path": "core/references/verification-apple.md",
-      "sha256": "00955d156405d1163e1e96332227e13a1a3dc38c59848605447479812247a000"
+      "sha256": "65cae39cba6bf880392e218bc4e0fde81ce0559c5c005e05688ff08a19e27865"
     },
     {
       "path": "core/references/verification-evidence.md",
-      "sha256": "805f9969e05acd4fbb3b8943e62923978b4e8216dce75ec9daee3681a78320b6"
+      "sha256": "0ef6248a4852b5bbc08aa6fbb2f1d0e6e73980478c19ee322bec8c13c5e9a916"
     },
     {
       "path": "core/references/verification-planning.md",
-      "sha256": "e79ebedb5a7980c51c20130807796d6723384d98ea5632b752b122e25cbdfb62"
+      "sha256": "8f79782425747a48a4a82737f2295b34f5aec6e10b17eb032fa388b2681080c6"
     },
     {
       "path": "core/references/workplan-layout.md",
@@ -226,7 +226,7 @@
     },
     {
       "path": "core/references/workplan-metadata.md",
-      "sha256": "2ac9c2fa6c64e2ccbcf329e95c1dff16107129a4040bf9ee4dea9438dd8adff7"
+      "sha256": "a5a2f37d5c55108d4d0568dd5bc3633d95e9f7f112dac12906b64fd58ea755bf"
     },
     {
       "path": "core/references/writing-work.md",
@@ -19154,11 +19154,11 @@
     },
     {
       "path": "mcp/package-lock.json",
-      "sha256": "819d1ae87899e5bffca0bf46f3cc02d9110f18d0c845fb327d88653e0580ef79"
+      "sha256": "1e51a08e349118096820c92c4ac063e15aeb00bc47a27bd365fb2e4b2664b406"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "9954760c4c47998f691d63ef04b7c8e58fb6633672990fa04be73040ccd51c9e"
+      "sha256": "681ab20456a4ab50241312fc2b4ca48b61482daab0b697f1d023d0544e443e3d"
     },
     {
       "path": "mcp/src/adapters/android.mjs",
@@ -19174,7 +19174,7 @@
     },
     {
       "path": "mcp/src/installation.mjs",
-      "sha256": "19755e8b9f98ff502bcb81f1fa072a20278e7a5799358941520bb0f84bc949f1"
+      "sha256": "6836d15a802b3858f11825957402f0cd410a5fee4dd6aa09858c90a599e9ec64"
     },
     {
       "path": "mcp/src/integrations.mjs",
@@ -19190,7 +19190,7 @@
     },
     {
       "path": "mcp/src/records.mjs",
-      "sha256": "090b5352c01dd077bff1f8539ba5f2cc5d78cdc62940fa4b3b9388805de91498"
+      "sha256": "d96393183dca61c141b3ced34f622cc8500f558ee3a69b914a9fc086512aa587"
     },
     {
       "path": "mcp/src/runtime-bridge.mjs",
@@ -19198,11 +19198,11 @@
     },
     {
       "path": "mcp/src/server.mjs",
-      "sha256": "3b09821173974dbc5067ad57dde0334b963c866573d79c33e051d6fe8f6c688c"
+      "sha256": "4aa2a04fa659ee5d4797f642f1acb38cb61cf81f646decb5261eea0775f45e5a"
     },
     {
       "path": "mcp/src/settings.mjs",
-      "sha256": "d201bcc0c37d5638e4c1cc400100d80cb8227b7f33cb0d0f4bfed76143de276d"
+      "sha256": "79b9a12bb256182d68036c9d61944eca42db426fe0d119431438f3278a637595"
     },
     {
       "path": "mcp/src/verification.mjs",
@@ -19210,7 +19210,7 @@
     },
     {
       "path": "mcp/src/viewer/lifecycle.mjs",
-      "sha256": "0dff27c83e4ba25109a8165eca8788241288f2f64408981faf8c5c11f8faec8b"
+      "sha256": "1f2be799c82ede77d78f82accf09ed969d2da8290635ebdaebe90e4c887b56c7"
     },
     {
       "path": "mcp/src/viewer/main.mjs",
@@ -19218,7 +19218,15 @@
     },
     {
       "path": "mcp/src/viewer/public/app.mjs",
-      "sha256": "9a83f30aa12f5b2349715fc9521dd86a4c2c0573d5f10c3b39630e07b982ad91"
+      "sha256": "d54d48eb240ceaf49f1cc89db68e1b27f1d6a5f62a8872a7a217551f6edc2c97"
+    },
+    {
+      "path": "mcp/src/viewer/public/dates.mjs",
+      "sha256": "067519f51b0f1c0a5a3ef16a3fa42af7612d92b96ac21a19392394a0ca448c6a"
+    },
+    {
+      "path": "mcp/src/viewer/public/documents.mjs",
+      "sha256": "e3ac47d0775685ff9263e02293a55f56c9d758476d607c6a4fe6ce61c1aa84e0"
     },
     {
       "path": "mcp/src/viewer/public/icons.svg",
@@ -19246,15 +19254,23 @@
     },
     {
       "path": "mcp/src/viewer/reader.mjs",
-      "sha256": "2aba4a014bc54fdfbb5ac5923ef9029ef6f3133e1017549881a43dd0ba7e9c55"
+      "sha256": "995597a0c1d80cf6b1214544014b64e965c31a0b9b4f917b2fcaaf6109469c20"
     },
     {
       "path": "mcp/src/viewer/render.mjs",
-      "sha256": "9a6ff7b055068a2b2ecbd977ff947c0f9425285cb02ce9d70856665e3b38c5c3"
+      "sha256": "1bf3c7c56ba45e7643ed393192b7592c0ffc4e47f809971147afb17243ac2cd8"
     },
     {
       "path": "mcp/src/viewer/server.mjs",
-      "sha256": "4c68202e74f84d3377f614c8f2f3070d04a81c3370ebfcfe94c0edacf6f2feb9"
+      "sha256": "1c728c11de90a73c71de7a7c507b47db95e0bc572ea31635891ec40d54b53236"
+    },
+    {
+      "path": "mcp/src/workplan-storage.mjs",
+      "sha256": "45f039813b626354e75fe076eaad35cde039cb5410b43434cbe3de6d1eedd815"
+    },
+    {
+      "path": "mcp/src/workspace-registry.mjs",
+      "sha256": "0e8e06c3921508ba52df911bf41cb90e2663a3d4226959888409c76f934429d0"
     },
     {
       "path": "mcp/third-party/archify.lock.json",
@@ -19298,7 +19314,7 @@
     },
     {
       "path": "references/implementation-handoff.md",
-      "sha256": "015159076f1c1f7151c36882a284ccb4621ed0b707a62a3f008c8596816aeeff"
+      "sha256": "72155ece01d9c68732de8aa0d879df9d2028c33c84f6e3f79709a2682906e479"
     },
     {
       "path": "references/knowledge-lifecycle.md",
@@ -19318,7 +19334,7 @@
     },
     {
       "path": "references/plugin-runtime.md",
-      "sha256": "c4f9abbdeb6f1e480d3ee5a5ea377a202b4d9a92ec98478135044b10ecd7d3fe"
+      "sha256": "a57d173d3df62ad976659192d78a5701c0f99f5c1fc29182613e131190824e25"
     },
     {
       "path": "references/project-architecture-context.md",
@@ -19374,15 +19390,15 @@
     },
     {
       "path": "references/verification-apple.md",
-      "sha256": "00955d156405d1163e1e96332227e13a1a3dc38c59848605447479812247a000"
+      "sha256": "65cae39cba6bf880392e218bc4e0fde81ce0559c5c005e05688ff08a19e27865"
     },
     {
       "path": "references/verification-evidence.md",
-      "sha256": "805f9969e05acd4fbb3b8943e62923978b4e8216dce75ec9daee3681a78320b6"
+      "sha256": "0ef6248a4852b5bbc08aa6fbb2f1d0e6e73980478c19ee322bec8c13c5e9a916"
     },
     {
       "path": "references/verification-planning.md",
-      "sha256": "e79ebedb5a7980c51c20130807796d6723384d98ea5632b752b122e25cbdfb62"
+      "sha256": "8f79782425747a48a4a82737f2295b34f5aec6e10b17eb032fa388b2681080c6"
     },
     {
       "path": "references/workplan-layout.md",
@@ -19390,7 +19406,7 @@
     },
     {
       "path": "references/workplan-metadata.md",
-      "sha256": "2ac9c2fa6c64e2ccbcf329e95c1dff16107129a4040bf9ee4dea9438dd8adff7"
+      "sha256": "a5a2f37d5c55108d4d0568dd5bc3633d95e9f7f112dac12906b64fd58ea755bf"
     },
     {
       "path": "references/writing-work.md",
@@ -19598,7 +19614,7 @@
     },
     {
       "path": "skills/setup/SKILL.md",
-      "sha256": "3111eb81ba2219da510175761eac642d47a0def7e7e848b5e1dcf0db577bbcc4"
+      "sha256": "bba6e3b020fcef450e0883a382dc5040d1ef2b5294608d7b73624bd95cc6895f"
     },
     {
       "path": "skills/uninstall/SKILL.md",

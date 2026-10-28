@@ -16,6 +16,8 @@
 
 fallback은 선택한 scheme·destination의 `xcodebuild test`와 `-only-testing:<실제 식별자>`만 실행한다. 서버가 관리 데이터 아래 새 `.xcresult` 경로를 발급하며 `xcresulttool get test-results summary`로 실제 건수를 읽는다. 도구 버전이 이 summary API를 지원하지 않으면 로그의 BUILD SUCCEEDED로 대체 통과하지 않고 결과 해석 차단을 보고한다. build·clean·프로젝트 재생성·DerivedData 삭제를 자동 추가하지 않는다. 직접 테스트가 같은 configuration을 컴파일하면 별도 build를 생략한다.
 
+커버리지가 필요한 실행은 시작 전에 현재 scheme/test plan의 수집 설정과 측정 대상을 확인한다. Xcode MCP의 테스트 건수만으로 커버리지가 수집됐다고 판단하지 않는다. 수집된 `.xcresult`가 제공되면 호스트 AI가 같은 실행의 결과에서 `xcrun xccov view --report --json <실제 결과 경로>` 등 로컬 도구가 지원하는 방법으로 수치를 읽어 [종류별 결과 보고](verification-evidence.md#검증-종류와-개별-확인-내용)에 연결한다. 결과에 없는 분기 커버리지는 미측정으로 밝히고 줄 커버리지로 대신하지 않는다. 설정 꺼짐·결과 없음·추출 실패를 구분하며 숫자 보고를 위해 앱 테스트를 반복하지 않는다. 이 지침은 기존 실행기의 자동 수집 구현을 뜻하지 않는다.
+
 ## 기기·화면 조건
 
 - Simulator/실기기가 필요한 경계만 선택한다. BLE·권한 등의 Simulator 한계는 실기기 미검증으로 분리한다.
