@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan UI With Design System"
+  short_description: "UI Context로 공통 기능 승인 계획 작성"
+  default_prompt: "Use $cdpower:plan-ui-with-design-system as the UI-context entry point to prepare one shared feature Workplan."

@@ -1,6 +1,6 @@
 ---
 name: uninstall
-description: 사용자가 CDPower 또는 이전 Taskweave 제거를 명시하면 선택한 Codex·Claude 설치와 자기 소유 연결 지침을 정리하고 마지막 설치의 뷰어만 종료한다. 코드·작업 기록·다른 연동은 보존한다.
+description: 사용자가 CDPower 또는 이전 이름 Taskweave 제거를 명시하면 선택한 Codex·Claude 설치와 자기 소유 연결 지침을 정리하고 마지막 설치의 뷰어만 종료한다. 코드·작업 기록·다른 연동은 보존한다.
 ---
 
 # CDPower 안전한 제거

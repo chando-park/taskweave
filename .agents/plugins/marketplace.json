@@ -5,6 +5,18 @@
   },
   "plugins": [
     {
+      "name": "cdpower",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex/cdpower"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "taskweave",
       "source": {
         "source": "local",

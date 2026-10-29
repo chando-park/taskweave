@@ -5,10 +5,16 @@
   },
   "plugins": [
     {
+      "name": "cdpower",
+      "source": "./plugins/claude/cdpower",
+      "version": "0.4.5",
+      "displayName": "CDPower"
+    },
+    {
       "name": "taskweave",
       "source": "./plugins/claude/taskweave",
-      "version": "0.3.13",
-      "displayName": "CDPower"
+      "version": "0.4.5",
+      "displayName": "CDPower (legacy install ID)"
     }
   ]
 }

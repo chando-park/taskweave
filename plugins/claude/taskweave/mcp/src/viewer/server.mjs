@@ -35,8 +35,9 @@ export function createViewerServer({ catalog, instance }) {
       if (!isLocalBrowserRequest(request)) return send(403,{ error:'로컬 브라우저의 조회만 허용합니다.' });
       const url = new URL(request.url, `http://${request.headers.host}`);
       if (url.pathname === '/api/viewer-health') {
-        if (!instance || request.headers['x-taskweave-instance'] !== instance) return send(404, { error: '자료를 찾지 못했습니다.' });
-        return send(200, { service: 'taskweave-viewer-v1', instance });
+        const currentHeader = request.headers['x-cdpower-instance'];
+        if (!instance || (currentHeader ?? request.headers['x-taskweave-instance']) !== instance) return send(404, { error: '자료를 찾지 못했습니다.' });
+        return send(200, { service: currentHeader === undefined ? 'taskweave-viewer-v1' : 'cdpower-viewer-v1', instance });
       }
       if (STATIC.has(url.pathname)) { const [file,type] = STATIC.get(url.pathname); return send(200,await readFile(new URL(file,PUBLIC)),type); }
       if (url.pathname === '/api/overview') return send(200,catalog.overview());
@@ -57,7 +58,7 @@ export function createViewerServer({ catalog, instance }) {
           const image = await catalog.readAsset(imageId);
           const type = MIME[image.ext];
           return type?.startsWith('image/') ? `data:${type};base64,${image.bytes.toString('base64')}` : null;
-        });
+        }, asset.title);
         return send(200,html,MIME[asset.ext],flowCsp);
       }
       return send(200,asset.bytes,MIME[asset.ext],"sandbox; default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'self'");

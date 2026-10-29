@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workplan 피드백 반영"
+  short_description: "완료 전 검토 피드백을 같은 Workplan에서 수정·재검증합니다"
+  default_prompt: "Use $cdpower:apply-workplan-feedback to classify final-review feedback and correct only the approved Workplan scope."

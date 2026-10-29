@@ -1,0 +1,3 @@
+version: 1
+# 제품·회사 고유 marker는 이 파일에만 등록한다. 공통 Runtime에 직접 금지어를 하드코딩하지 않는다.
+markers: []

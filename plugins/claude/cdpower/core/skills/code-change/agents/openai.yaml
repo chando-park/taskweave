@@ -1,0 +1,3 @@
+interface:
+  display_name: "Code Change"
+  short_description: "Workplan 없이 변경 전후 코드로 승인받는 저위험 단일 저장소 수정"

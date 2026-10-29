@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#293d39"><title>CDPower · Workplan</title>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body id="tw-concept">
+  <a class="skip-link" href="#main-content">본문으로 이동</a>
+  <div class="tw-app">
+    <aside class="tw-sidebar" aria-label="주 메뉴">
+      <a class="tw-brand" href="/" aria-label="CDPower 홈"><img src="/logo.svg" alt="" width="35" height="34"><span class="tw-word">CDPower</span></a>
+      <div class="tw-space"><span class="tw-space-avatar">W</span><span><strong>My workspace</strong><small>나의 작업 공간</small></span></div>
+      <div class="sidebar-menu">
+        <nav class="tw-nav" aria-label="화면 이동">
+          <button type="button" data-view="home" aria-pressed="true"><svg aria-hidden="true"><use href="/icons.svg#home"></use></svg>홈</button>
+          <button type="button" data-view="library" aria-pressed="false"><svg aria-hidden="true"><use href="/icons.svg#layers"></use></svg>워크플랜<span id="nav-count" class="tw-count">—</span></button>
+          <button type="button" data-view="brand" aria-pressed="false"><svg aria-hidden="true"><use href="/icons.svg#brand"></use></svg>브랜드</button>
+        </nav>
+        <div class="tw-project-group"><span class="tw-nav-label">PROJECTS</span><div id="project-links"></div></div>
+      </div>
+      <div class="tw-sidebar-bottom"><p>하나의 계획에서,<br>다음 가능성까지.</p><small>POWER FOR YOUR NEXT STEP.</small><div class="tw-local"><span class="tw-local-dot"></span>로컬 · 조회 전용</div></div>
+    </aside>
+    <main id="main-content" class="tw-main workspace">
+      <header class="tw-top"><div class="tw-breadcrumb"><span>내 작업 공간</span><span>/</span><b id="current-page">홈</b></div><div class="top-actions"><span class="readonly">로컬 · 조회 전용</span><button id="refresh" type="button"><svg aria-hidden="true"><use href="/icons.svg#refresh"></use></svg><span>새로 읽기</span></button></div></header>
+      <div id="work-page" class="tw-page">
+        <section class="tw-hero intro"><div><p class="tw-kicker">POWER FOR YOUR NEXT STEP</p><h1 id="page-title">필요한 맥락을 모으고,<br><span>다음 일을 가볍게.</span></h1><p class="tw-subtitle" id="page-subtitle">계획과 코드, 그 사이의 결정까지.<br>쌓아 둔 맥락이 다음 작업의 힘이 됩니다.</p></div><div class="tw-hero-art" aria-hidden="true"><img src="/logo.svg" alt=""><span>PLAN → BUILD → VERIFY</span></div></section>
+        <section id="overview" class="tw-metrics" aria-label="전체 작업 현황">
+          <button class="tw-metric" type="button" data-group="active"><span class="tw-metric-title"><span class="tw-indicator"></span>진행 중</span><svg class="tw-metric-arrow" aria-hidden="true"><use href="/icons.svg#arrow-up-right"></use></svg><span class="tw-metric-value"><span id="active-count">—</span><small>건</small></span><span class="tw-metric-note">이어서 진행할 작업</span></button>
+          <button class="tw-metric" type="button" data-group="review"><span class="tw-metric-title"><span class="tw-indicator"></span>확인 필요</span><svg class="tw-metric-arrow" aria-hidden="true"><use href="/icons.svg#arrow-up-right"></use></svg><span class="tw-metric-value"><span id="review-count">—</span><small>건</small></span><span class="tw-metric-note">승인·검증·최종 확인 대기</span></button>
+          <button class="tw-metric" type="button" data-group="done"><span class="tw-metric-title"><span class="tw-indicator"></span>완료</span><svg class="tw-metric-arrow" aria-hidden="true"><use href="/icons.svg#arrow-up-right"></use></svg><span class="tw-metric-value"><span id="done-count">—</span><small>건</small></span><span class="tw-metric-note">원문에 완료로 기록한 작업</span></button>
+        </section>
+        <div id="overview-notice" class="notice" role="status" aria-live="polite"></div>
+        <div class="panes">
+          <section class="library" aria-label="작업 목록">
+            <div class="tw-heading"><h2 id="list-heading">최근 작업</h2><div class="list-heading-actions"><span id="count"></span><button id="open-library" type="button">전체 보기 →</button></div></div>
+            <form id="filters" aria-label="작업 검색과 필터">
+              <input type="hidden" name="group" value="">
+              <div class="tw-filter-bar" aria-label="작업 상태 필터"><button class="tw-filter" type="button" data-group="" aria-pressed="true">전체</button><button class="tw-filter" type="button" data-group="active" aria-pressed="false">진행 중</button><button class="tw-filter" type="button" data-group="review" aria-pressed="false">확인 필요</button><button class="tw-filter" type="button" data-group="done" aria-pressed="false">완료</button><button class="tw-filter" type="button" data-group="other" aria-pressed="false">그 외</button></div>
+              <label class="tw-search"><svg aria-hidden="true"><use href="/icons.svg#search"></use></svg><input name="q" type="search" aria-label="워크플랜 검색" placeholder="제목, Jira 번호, 코드 이름 검색" autocomplete="off"><button class="search-submit" type="submit">검색</button></label>
+              <details class="filter-options"><summary>상세 필터 <span id="filter-summary"></span></summary><div class="advanced-filters"><label>프로젝트<select name="project"><option value="">모든 프로젝트</option></select></label><label>원문 상태<select name="status"><option value="">모든 상태</option></select></label><label>시작일<input name="from" type="date"></label><label>종료일<input name="to" type="date"></label><button type="submit">필터 적용</button><button id="reset-filters" type="button">초기화</button><p>기간 필터는 원문 날짜 또는 문서 수정 시각의 UTC 날짜를 사용합니다.</p></div></details>
+            </form>
+            <div id="notice" class="notice" role="status" aria-live="polite"></div>
+            <div id="list" aria-live="polite"></div><button id="more" class="more" type="button" hidden>다음 20건 읽기</button>
+          </section>
+          <aside class="tw-context home-context" aria-label="최근 작업의 맥락"><div id="recent-feature" class="tw-mini-card"><p class="tw-mini-kicker">PICK UP THE THREAD</p><h3>최근 갱신한 작업을<br>이어서 살펴보세요.</h3><p id="recent-title">작업을 읽고 있습니다…</p><button id="resume" type="button" disabled>작업 살펴보기 <svg aria-hidden="true"><use href="/icons.svg#arrow-right"></use></svg></button></div><section><div class="tw-heading"><h2>최근 갱신 기록</h2></div><div id="recent-updates" class="tw-activity"></div></section></aside>
+          <section class="detail" aria-label="선택한 작업" hidden><div id="detail-state" class="placeholder" role="status"></div><div id="detail-content" hidden><header id="workplan-heading"></header><nav id="tabs" class="tabs" aria-label="작업 자료 영역"></nav><div id="documents" class="document-links" aria-label="연결된 자료"></div><div id="document-notice" class="notice" role="status"></div><article id="article" class="markdown"></article><iframe id="flow" title="격리된 코드 흐름도" sandbox="allow-scripts" hidden></iframe><details id="source" class="source"><summary>원문 텍스트 보기</summary><pre></pre></details></div></section>
+        </div>
+        <footer class="tw-footer"><span>맥락은 남기고, 다음 일은 가볍게.</span><span id="catalog-summary">원문 상태와 검증 결과를 추정하지 않습니다.</span></footer>
+      </div>
+      <section id="brand-page" class="tw-page" aria-label="CDPower 브랜드" hidden>
+        <div class="tw-brand-header"><p class="tw-kicker">POWER FOR YOUR NEXT STEP</p><h1>다음 작업을 움직이는,<br>하나의 힘.</h1><p class="tw-subtitle">검정 C와 구리색 D가 이어져 하나의 건전지가 됩니다. 기존 작업의 맥락은 그대로 이어갑니다.</p></div>
+        <div class="tw-logo-stage"><img src="/wordmark.svg" width="332" height="80" alt="CDPower 기본 로고"></div>
+        <div class="tw-brand-pair"><div class="tw-brand-tile"><img src="/logo.svg" alt="검정 C와 구리색 D로 이룬 CDPower 건전지 심볼"><span class="tw-tile-label">CDPower · 다음 작업을 움직이는 힘</span></div><div class="tw-brand-tile"><img src="/logo.svg" alt="어두운 배경의 단색 CDPower 건전지 심볼"><span class="tw-tile-label">단색형 · 작은 크기에도 선명하게</span></div></div>
+        <div class="tw-palette" aria-label="브랜드 색상"><div class="tw-swatch"><div class="tw-swatch-color swatch-logo-black"></div><strong>검정</strong><small>#191919</small></div><div class="tw-swatch"><div class="tw-swatch-color swatch-logo-copper"></div><strong>구리색</strong><small>#B87333</small></div><div class="tw-swatch"><div class="tw-swatch-color swatch-ivory"></div><strong>화면 바탕</strong><small>#F8F8F2</small></div><div class="tw-swatch"><div class="tw-swatch-color swatch-teal"></div><strong>화면 강조색</strong><small>#158774</small></div></div>
+        <p class="tw-brand-note"><strong>검정과 구리색, 하나의 건전지.</strong><br>로고는 검정·구리색을 사용합니다. 화면의 배치와 청록색 강조는 기존대로 유지합니다.</p>
+        <footer class="tw-footer"><span class="tw-inline-logo"><img src="/logo.svg" alt="작은 크기의 로고">CDPower · 20px</span><a href="/wordmark.svg" download="cdpower-logo.svg">배터리 로고 SVG 저장</a></footer>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

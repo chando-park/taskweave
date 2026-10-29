@@ -11,7 +11,8 @@ import { PRODUCT_NAME } from '../product.mjs';
 
 const execute = promisify(execFile);
 const pause = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
-const SERVICE = 'taskweave-viewer-v1';
+const SERVICE = 'cdpower-viewer-v1';
+const LEGACY_SERVICE = 'taskweave-viewer-v1';
 
 async function readJSON(file) {
   try { return JSON.parse(await readFile(file, 'utf8')); }
@@ -51,7 +52,7 @@ export async function resolveViewerRoots(store) {
 }
 
 function validState(state) {
-  return state?.service === SERVICE && Number.isInteger(state.pid) && state.pid > 0 && typeof state.instance === 'string' && /^[a-f0-9-]{36}$/.test(state.instance) && (state.url === null || /^http:\/\/127\.0\.0\.1:[1-9][0-9]{0,4}$/.test(state.url));
+  return [SERVICE, LEGACY_SERVICE].includes(state?.service) && Number.isInteger(state.pid) && state.pid > 0 && typeof state.instance === 'string' && /^[a-f0-9-]{36}$/.test(state.instance) && (state.url === null || /^http:\/\/127\.0\.0\.1:[1-9][0-9]{0,4}$/.test(state.url));
 }
 
 function processAlive(pid) {
@@ -62,9 +63,9 @@ function processAlive(pid) {
 async function probe(state) {
   if (!validState(state) || !state.url || !processAlive(state.pid)) return false;
   try {
-    const response = await fetch(`${state.url}/api/viewer-health`, { headers: { 'x-taskweave-instance': state.instance }, signal: AbortSignal.timeout(500), redirect: 'error' });
+    const response = await fetch(`${state.url}/api/viewer-health`, { headers: { 'x-cdpower-instance': state.instance, 'x-taskweave-instance': state.instance }, signal: AbortSignal.timeout(500), redirect: 'error' });
     const result = await response.json();
-    return response.ok && result.service === SERVICE && result.instance === state.instance;
+    return response.ok && [SERVICE, LEGACY_SERVICE].includes(result.service) && result.instance === state.instance;
   } catch { return false; }
 }
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "기능 구현 계획"
+  short_description: "기능 구현 전에 요구사항과 코드 영향을 조사하고 승인 계획을 작성합니다"
+  default_prompt: "Use $cdpower:feature-plan to assess this feature and prepare an approval plan without changing code."

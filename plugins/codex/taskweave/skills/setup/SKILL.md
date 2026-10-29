@@ -20,4 +20,4 @@ description: CDPower 공통 기록 위치를 준비하고 사용자가 지정한
 
 기존 기록은 원래 위치에 연결하고 이동·변환하지 않는다. 잘못된 개인 등록을 회사 쪽에 연결해 달라는 요청은 SettingsStore.linkExistingProject로 처리한다. 설정 백업·이전 ID 연결을 남기고, 이미 있는 회사 문서를 덮어쓰거나 중복 생성하지 않는다. 원문은 보존하고 필요한 기록만 연결한다. 미완료 항목만 재개한다. 회사 정책·관리자 제한을 우회하거나 Jira 시험 티켓·Figma 시험 파일을 만들지 않는다. 우리 MCP가 다른 서버를 대신 호출한다고 가정하지 않는다. 설정·플러그인 파일 저장은 새 세션의 도구 노출·인증 성공과 별개다.
 
-사용자가 CDPower 또는 이전 Taskweave 제거를 요청하면 $taskweave:uninstall을 사용한다. 설치 ID와 스킬 접두어 taskweave는 기존 업데이트 호환을 위해 유지한다.
+사용자가 CDPower 또는 이전 Taskweave 제거를 요청하면 $taskweave:uninstall을 사용한다. 새 설치 ID와 스킬 접두어는 cdpower이며 이전 설치는 호환 조회·명시 승인한 전환 대상으로만 인식한다.

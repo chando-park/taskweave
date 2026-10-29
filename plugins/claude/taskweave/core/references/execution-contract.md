@@ -6,7 +6,7 @@
 
 현재 요청의 Skill에서 작업 조건에 맞는 reference만 선택하고, 선택한 문서는 끝까지 읽는다. reference에 연결된 모든 문서를 재귀적으로 열지 않는다. 이미 읽은 같은 revision의 지침·원천은 재사용하되 코드 편집 직전의 Design System rule leaf·declaration처럼 시점이 지정된 확인은 생략하지 않는다. 새 사실·범위·입력이 바뀐 경우에만 영향받는 문서를 다시 확인한다.
 
-Taskweave 도구가 필요하면 [플러그인 실행 연결](plugin-runtime.md)을 읽는다. AI가 호스트 도구로 수정·직접 검증하며 MCP는 `context_read`·`task_current`·`record_save`만 맡는다. 기존 MCP 또는 CLI의 승인·시작·검증 orchestration과 문서 형식 검사를 새 작업의 선행 조건으로 만들지 않는다. 연결·저장 실패는 가능한 작업 전체를 막거나 재설치를 강제하는 이유가 아니다.
+CDPower 도구가 필요하면 [플러그인 실행 연결](plugin-runtime.md)을 읽는다. AI가 호스트 도구로 수정·직접 검증하며 MCP는 `context_read`·`task_current`·`record_save`만 맡는다. 기존 MCP 또는 CLI의 승인·시작·검증 orchestration과 문서 형식 검사를 새 작업의 선행 조건으로 만들지 않는다. 연결·저장 실패는 가능한 작업 전체를 막거나 재설치를 강제하는 이유가 아니다.
 
 코드 검증 계획·실행 때는 [공통 선택 원칙](verification-planning.md)과 해당 플랫폼 지침 하나([Apple](verification-apple.md), [Android](verification-android.md))만 읽는다. 공통 증거 판정은 [검증 근거](verification-evidence.md)를 사용한다. 플랫폼을 모르면 등록된 프로젝트 설정을 확인하고, 다른 플랫폼의 빌드·테스트를 추측해 실행하지 않는다. Swift 편집 직전에는 [Swift 코드 규칙](swift-code-conventions.md)을 읽고 간격·동시성·Preview를 적용한다. UI 편집 직전에는 [디자인 시스템 계약](design-system-implementation-contract.md)의 필수 rule leaf·component/token·external layout 선언을 읽는다. UI tier와 source/candidate 판정은 이 연결을 축약해도 생략하지 않는다.
 
@@ -114,7 +114,7 @@ Workplan 없는 일반 작업은 결과 전달·사용자 수용으로 끝낼 �
 
 ## 레거시 호환
 
-기존 Workplan의 schema·approval revision·Details·gate 실행 이력과 회사 기록을 보존한다. 새 메모로 migration하거나 같은 승인을 다시 요구하지 않는다. 과거 문서 gate는 새 Taskweave 진행의 필수 조건으로 승계하지 않는다. 사용자가 명시적으로 요청한 기존 호환 실행은 해당 기록에만 한정하고, 필요한 회사 권한·실제 제품 검증은 그대로 유지한다. 레거시 resolver를 새 작업의 전역 검색에 사용하지 않는다.
+기존 Workplan의 schema·approval revision·Details·gate 실행 이력과 회사 기록을 보존한다. 새 메모로 migration하거나 같은 승인을 다시 요구하지 않는다. 과거 문서 gate는 새 CDPower 진행의 필수 조건으로 승계하지 않는다. 사용자가 명시적으로 요청한 기존 호환 실행은 해당 기록에만 한정하고, 필요한 회사 권한·실제 제품 검증은 그대로 유지한다. 레거시 resolver를 새 작업의 전역 검색에 사용하지 않는다.
 
 ## 운영 실험
 

@@ -1,0 +1,147 @@
+schema_version: 1
+rules:
+  - id: approval-memo-default
+    status: behavior_test_declared
+    definition: references/workplan-layout.md
+    connections:
+      - path: AGENTS.md
+        marker: 파일을 바꾸는 모든 새 작업
+      - path: references/execution-contract.md
+        marker: 새 변경 작업의 단일 경로
+      - path: references/company-workplan-adapter.md
+        marker: approval-memo-v1
+      - path: skills/feature-plan/SKILL.md
+        marker: workplan-memo create
+      - path: skills/bugfix-plan/SKILL.md
+        marker: workplan-memo create
+      - path: scripts/install.sh
+        marker: bin/workplan-memo
+      - path: scripts/doctor.sh
+        marker: scripts/workplan-memo.rb
+      - path: runtime-inventory.yml
+        marker: 'workplan-memo: scripts/workplan-memo.rb'
+    gate_behavior_tests:
+      - path: tests/workplan_memo_test.rb
+        test: test_create_prepare_approve_apply_result_and_completion_validation
+      - path: tests/workplan_memo_test.rb
+        test: test_duplicate_create_never_reuses_bundle
+      - path: tests/workplan_memo_test.rb
+        test: test_apply_blocks_target_drift_but_ignores_unrelated_dirty_files
+      - path: tests/workplan_memo_test.rb
+        test: test_apply_rejects_semantic_scope_change_but_not_reporting_metadata
+
+  - id: batch-plan-finalization
+    status: behavior_test_declared
+    definition: references/execution-contract.md
+    connections:
+      - path: skills/feature-plan/SKILL.md
+        marker: workplan-memo prepare
+      - path: skills/bugfix-plan/SKILL.md
+        marker: workplan-memo prepare
+      - path: references/workplan-layout.md
+        marker: validate <Workplan> --phase approval
+    gate_behavior_tests:
+      - path: tests/workplan_memo_test.rb
+        test: test_apply_rejects_semantic_scope_change_but_not_reporting_metadata
+
+  - id: current-work-feedback
+    status: connected
+    definition: references/acceptance-feedback-loop.md
+    connections:
+      - path: skills/apply-workplan-feedback/SKILL.md
+        marker: 현재 대화가 명시적으로 가리키는
+      - path: references/execution-contract.md
+        marker: 전역 Workplan 검색
+      - path: references/acceptance-feedback-loop.md
+        marker: 새 REQ/CODE/TEST graph
+
+  - id: single-owner-execution-handoff
+    status: connected
+    definition: references/implementation-handoff.md
+    connections:
+      - path: skills/feature-apply/SKILL.md
+        marker: implementation agent
+      - path: skills/bugfix-apply/SKILL.md
+        marker: 선택한 agent
+      - path: references/model-routing.md
+        marker: 부모 모델 fallback
+
+  - id: model-routing
+    status: connected
+    definition: references/model-routing.md
+    connections:
+      - path: skills/feature-plan/SKILL.md
+        marker: model-route --stage planning
+      - path: skills/feature-apply/SKILL.md
+        marker: model-route --stage implementation
+    mapping_tests:
+      - path: tests/model_route_test.rb
+        test: test_
+
+  - id: ui-design-system-pre-edit-reading
+    status: behavior_test_declared
+    definition: references/design-system-implementation-contract.md
+    connections:
+      - path: AGENTS.md
+        marker: UI를 수정하기 직전
+      - path: references/acceptance-feedback-loop.md
+        marker: UI edit 직전
+      - path: skills/bugfix-apply/SKILL.md
+        marker: UI edit 직전
+      - path: skills/implement-ui-with-design-system/SKILL.md
+        marker: UI edit 직전
+      - path: skills/author-design-system-component/SKILL.md
+        marker: 실제 Design System declaration
+      - path: references/workplan-layout.md
+        marker: ui-none-evidence-v1
+    gate_behavior_tests:
+      - path: tests/workplan_memo_test.rb
+        test: test_explicit_ui_memo_reuses_existing_completion_gate_with_verification_time_evidence
+
+  - id: implementation-result-after-change
+    status: behavior_test_declared
+    definition: references/implementation-handoff.md
+    connections:
+      - path: skills/feature-apply/SKILL.md
+        marker: workplan-memo result
+      - path: skills/bugfix-apply/SKILL.md
+        marker: workplan-memo result
+      - path: references/workplan-layout.md
+        marker: approval-memo-result-v1
+      - path: references/acceptance-feedback-loop.md
+        marker: Completion.md
+    gate_behavior_tests:
+      - path: tests/workplan_memo_test.rb
+        test: test_result_refreshes_during_feedback_then_finalizes_knowledge_with_explicit_authorization
+      - path: tests/workplan_memo_test.rb
+        test: test_result_cannot_mark_workplan_completed_or_bypass_ui_completion
+      - path: tests/workplan_memo_test.rb
+        test: test_prepare_and_consumer_reject_symlinked_artifacts_parent
+
+  - id: serena-semantic-code-intelligence
+    status: behavior_test_declared
+    definition: references/serena-code-intelligence.md
+    connections:
+      - path: AGENTS.md
+        marker: serena-preflight --mode semantic
+      - path: references/context-pack.md
+        marker: Serena Code Intelligence
+      - path: skills/feature-plan/SKILL.md
+        marker: Serena Code Intelligence
+      - path: skills/bugfix-plan/SKILL.md
+        marker: Serena Code Intelligence
+      - path: skills/feature-apply/SKILL.md
+        marker: Serena Code Intelligence
+      - path: skills/bugfix-apply/SKILL.md
+        marker: Serena Code Intelligence
+      - path: scripts/install.sh
+        marker: bin/serena-preflight
+      - path: runtime-inventory.yml
+        marker: 'serena-preflight: scripts/serena-preflight.rb'
+    gate_behavior_tests:
+      - path: tests/serena_preflight_test.rb
+        test: test_semantic_mode_blocks_when_serena_tools_are_not_exposed
+      - path: tests/serena_preflight_test.rb
+        test: test_semantic_mode_accepts_prefixed_mcp_tool_names
+      - path: tests/serena_preflight_test.rb
+        test: test_textual_mode_does_not_require_serena

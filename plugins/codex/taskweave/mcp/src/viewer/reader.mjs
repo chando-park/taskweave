@@ -106,9 +106,13 @@ export async function createCatalog({ roots, projectBindings = [], projectAliase
         const recognized = m.workplan_schema || m.plan_schema || m.project_id || m.id || (m.title && (m.status || m.type));
         if (!matchedName && !recognized) { nextWarnings.push(`분류하지 못한 문서: ${ref.name}`); continue; }
         const scalar = value => ['string','number'].includes(typeof value) ? String(value) : null;
+        const jiraKeys = [...new Set([
+          ...(Array.isArray(m.jira_keys) ? m.jira_keys.filter(value => typeof value === 'string').map(value => value.trim()).filter(Boolean) : []),
+          ...[m.jira, m.jira_key, m.ticket].map(scalar).filter(Boolean),
+        ])];
         const updated = scalar(m.updated ?? m.updated_at ?? m.created ?? m.created_at);
         const validDate = updated && Number.isFinite(Date.parse(updated));
-        const entry = { id: ref.id, title: scalar(m.title) || parsed.body.match(/^#\s+(.+)$/m)?.[1] || path.basename(ref.path,'.md'), project: scalar(m.project_id ?? m.project) || path.basename(ref.root), status: scalar(m.status), jira: scalar(m.jira ?? m.jira_key ?? m.ticket), updatedAt: validDate ? new Date(updated).toISOString() : mtime, displayDate: validDate ? updated : mtime, dateSource: validDate ? 'metadata' : 'document-mtime', documents: [], warnings: parsed.warnings, searchText: normalize(text) };
+        const entry = { id: ref.id, title: scalar(m.title) || parsed.body.match(/^#\s+(.+)$/m)?.[1] || path.basename(ref.path,'.md'), project: scalar(m.project_id ?? m.project) || path.basename(ref.root), status: scalar(m.status), jira: jiraKeys.join(', ') || null, updatedAt: validDate ? new Date(updated).toISOString() : mtime, displayDate: validDate ? updated : mtime, dateSource: validDate ? 'metadata' : 'document-mtime', documents: [], warnings: parsed.warnings, searchText: normalize(text) };
         entry.project = connectedProject ?? projectAliases[entry.project] ?? entry.project;
         nextEntries.push(entry);
       } catch (error) { nextWarnings.push(`${ref.name}: ${error.message}`); }
@@ -162,7 +166,12 @@ export async function createCatalog({ roots, projectBindings = [], projectAliase
     };
   }
   async function readDocument(id) { const ref = refs.get(id); if (!ref || ref.ext !== '.md') throw viewerError(404, '등록된 문서가 아닙니다.'); const { bytes } = await readReference(ref); const sourceText = bytes.toString('utf8'); return { id, name: ref.name, sourceText, ...parseMetadata(sourceText) }; }
-  async function readAsset(id) { const ref = refs.get(id); if (!ref || ref.ext === '.md') throw viewerError(404, '등록된 첨부가 아닙니다.'); return { ...ref, ...(await readReference(ref)) }; }
+  async function readAsset(id) {
+    const ref = refs.get(id); if (!ref || ref.ext === '.md') throw viewerError(404, '등록된 첨부가 아닙니다.');
+    const owners = ref.ext === '.html' ? entries.filter(entry => entry.documents.some(document => document.id === id)) : [];
+    // 공유 첨부에는 어느 작업의 제목도 임의로 적용하지 않는다.
+    return { ...ref, ...(await readReference(ref)), title: owners.length === 1 ? owners[0].title : null };
+  }
   async function readWorkplan(id) { const entry = entries.find(e => e.id === id); if (!entry) throw viewerError(404, '작업을 찾지 못했습니다.'); const { searchText, ...safe } = entry; return { ...safe, document: await readDocument(id) }; }
   return { refresh, list, overview, readDocument, readWorkplan, readAsset, resolveLink };
 }

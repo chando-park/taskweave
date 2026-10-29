@@ -1,0 +1,4 @@
+interface:
+  display_name: "Complete Work"
+  short_description: "검증된 변경을 작업공간별 완료 절차로 종료"
+  default_prompt: "Use $cdpower:complete-work to verify the final diff and code explanation, then close the work through the active workspace adapter."

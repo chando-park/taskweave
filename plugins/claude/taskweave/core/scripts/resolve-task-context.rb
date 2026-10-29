@@ -67,7 +67,12 @@ def registered_project(root)
   allowed << canonical_location(workspace.fetch("root")) if workspace["trusted"] == true
   %w[workplanRoot productMemoryRoot instructionsRoot].each do |key|
     target = canonical_location(project.fetch(key))
-    unless allowed.any? { |base| target == base || target.to_s.start_with?(base.to_s + File::SEPARATOR) }
+    # 회사 정책을 유지한 프로젝트도 Workplan만 공통 관리 위치를 사용한다.
+    # 다른 프로젝트의 기록이나 지식·지침 폴더까지 허용하지 않는다.
+    default_workplans = if key == "workplanRoot" && data["workplanStorage"] == "managed-default-v1"
+                          canonical_location(data_root).join("workspaces/personal/projects", id, "Workplans")
+                        end
+    unless target == default_workplans || allowed.any? { |base| target == base || target.to_s.start_with?(base.to_s + File::SEPARATOR) }
       raise ContextError, "등록 기록 위치가 신뢰한 작업공간 밖입니다: #{key}"
     end
     if target == root || target.to_s.start_with?(root.to_s + File::SEPARATOR)
@@ -147,6 +152,10 @@ begin
       project_id, _error, project_status = Open3.capture3("ruby", resolver.to_s, "project-id", root.to_s)
       if project_status.success?
         workplan_root = capture!("ruby", resolver.to_s, "workplan-root", root.to_s)
+        if registration
+          raise ContextError, "회사 정책과 등록 프로젝트 ID가 다릅니다." unless project_id.strip == registration.fetch("id")
+          workplan_root = canonical_location(registration.fetch("project").fetch("workplanRoot")).to_s
+        end
         team_wiki, _team_error, team_status = Open3.capture3("ruby", resolver.to_s, "team-wiki")
         product_memory, _memory_error, memory_status = Open3.capture3("ruby", resolver.to_s, "product-memory")
         publishing_raw, _publishing_error, publishing_status = Open3.capture3("ruby", resolver.to_s, "publishing-policy", root.to_s)

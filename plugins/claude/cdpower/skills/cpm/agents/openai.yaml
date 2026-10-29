@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commit Push PR or MR"
+  short_description: "명시된 범위에서 안전하게 커밋·푸시·PR 또는 MR 처리"
+  default_prompt: "Use /cdpower:cpm to review these changes and perform only the explicitly requested commit, push, or PR/MR operation."

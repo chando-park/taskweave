@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="88" viewBox="0 0 384 88" fill="none" role="img" aria-label="검정·구리색 CDPower 건전지 로고">
+  <g transform="translate(0 14) scale(.7)">
+    <path id="c-body" d="M116 16H36C24.954 16 16 24.954 16 36V44C16 55.046 24.954 64 36 64H116" stroke="#191919" stroke-width="16"/>
+    <path id="d-cap" d="M124 16H136C147.046 16 156 24.954 156 36V44C156 55.046 147.046 64 136 64H124" stroke="#B87333" stroke-width="16"/>
+    <rect id="positive-terminal" x="170" y="27" width="14" height="26" rx="4" fill="#B87333"/>
+    <path d="M177 34V46M171 40H183" stroke="#FFFFFF" stroke-width="3"/>
+  </g>
+  <text x="144" y="57" fill="#191919" font-family="Avenir Next,Inter,Arial,sans-serif" font-size="42" font-weight="650" letter-spacing="-1.5">CDPower</text>
+</svg>

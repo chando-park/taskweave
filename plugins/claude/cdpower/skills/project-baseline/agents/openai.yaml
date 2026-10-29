@@ -1,0 +1,4 @@
+interface:
+  display_name: "프로젝트 기준선 분석"
+  short_description: "기능·원천·경계와 검증 가능한 기준선을 조사합니다"
+  default_prompt: "Use /cdpower:project-baseline to map this repository's sources, capabilities, stable boundaries, and verification entry points before selecting task-scoped deep traces."

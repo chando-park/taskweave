@@ -5,7 +5,7 @@ description: 사용자가 완료를 요청한 현재 코드·문서 작업의 �
 
 # 현재 작업 완료
 
-현재 작업과 사용자의 완료 요청을 확인하고 [공통 작업 흐름](../../references/task-workflow.md)에 따라 대화 결과 수용과 Workplan 종료를 구분한다. 보육일지·요약·대본 등 일반 글쓰기는 결과 전달로 끝낼 수 있고 이 스킬의 별도 호출·명시 완료를 매번 요구하지 않는다. 피드백과 완료가 함께 오면 현재 코드/글쓰기/Workplan의 피드백 경로에서 수정·검토를 먼저 처리한다. Workplan은 새 완료 요청 전에는 종료하지 않는다. 제품 cleanup·추가 구현·commit·push·PR/MR·미검증 수용 권한을 추정하지 않는다.
+현재 작업과 사용자의 완료 요청을 확인하고 [공통 작업 흐름](../../references/task-workflow.md)에 따라 대화 결과 수용과 Workplan 종료를 구분한다. 보육일지·요약·대본 등 일반 글쓰기는 결과 전달로 끝낼 수 있고 이 스킬의 별도 호출·명시 완료를 매번 요구하지 않는다. 피드백과 완료가 함께 오면 종료 처리를 보류하고, 코드 Workplan은 /taskweave:apply-workplan-feedback를 실제로 적용해 [원인 조사와 수정안 제시](../../references/acceptance-feedback-loop.md#원인-조사에서-수정안까지-이어가기)부터 이어간다. Workplan 없는 코드·글쓰기는 해당 피드백 경로를 따른다. 완료 보류를 기록하거나 원인 가설만 설명한 뒤 끝내지 않는다. Workplan은 새 완료 요청 전에는 종료하지 않는다. 제품 cleanup·추가 구현·commit·push·PR/MR·미검증 수용 권한을 추정하지 않는다.
 
 ## 경로별 문서 선택
 
@@ -29,9 +29,9 @@ approval-memo-v1은 기존 Completion.md의 실제 diff·검증 identity가 같�
 
 1. 명시 완료 권한 뒤 현재 diff·코드 설명·검증과 작업 중 읽은 관련 Standard·Current·Decision만으로 candidate 또는 no_change를 평가한다.
 2. 후보는 검증된 제품 동작·정책·안정 계약·책임 경계·반복 규칙·권한 있는 결정이다. 코드 덤프·파일 목록·건수·로그는 제외한다. 목적지·주장·상충만 남기며 새 knowledge.md를 만들지 않는다. 상충·목적지 확대는 질문한다.
-3. 회사 작업공간 안의 adapter와 explicit_completion_required를 확인하고 post_verify_hook_script <Workplan> --completion-result <Completion.md> --format json을 실행한다.
+3. [회사 adapter](../../references/company-workplan-adapter.md)의 현재 결과 위치·형식·승인 종류를 확인한다. 앞 단계가 저장한 **같은 Workplan과 Completion.md**를 사용한다. 필요한 실제 근거만 같은 결과에 보완하고 구형 memo 재생성·승인 hash 발명·검증 상태 변경은 하지 않는다. 회사가 반환한 post_verify_hook_script <Workplan> --completion-result <Completion.md> --format json을 실행한다.
 4. await_user_completion이면 멈춘다. promote_completion_knowledge이면 지정 Skill로 게시하고 strict lint를 실행한다. complete_without_knowledge_promotion이면 게시·게시 lint만 생략한다.
-5. 게시 locator·성공/실패를 publication_attempts에 남긴다. 실패는 게시부터 재개하며 제품 코드·검증 입력이 같으면 테스트를 반복하지 않는다.
+5. 게시 locator·성공/실패를 회사가 지원하는 기록 경로로 같은 결과의 publication_attempts에 남긴다. 기존 hash 결과와 새 대화 승인 결과의 저장 방식을 혼용하지 않는다. 게시·댓글·전환·저장 실패는 성공한 단계를 재조회하고 실패한 단계부터 재개하며 제품 코드·검증 입력이 같으면 테스트를 반복하지 않는다.
 6. 정책상 완료 댓글을 작성·재조회하고 실제 Jira Done을 확인한 뒤 Workplan을 completed로 전환한다. 게시·Jira 실패는 awaiting_completion과 결과·시도 이력을 보존한다.
 
 ## 개인·레거시 종료와 보고

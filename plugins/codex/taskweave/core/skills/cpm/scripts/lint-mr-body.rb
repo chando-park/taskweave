@@ -17,10 +17,23 @@ required = [
   "## ✅ 변경 사항",
   "## 📁 변경된 파일",
   "## 📋 코드 리뷰 결과",
-  "## 🧪 테스트",
   "## ⚠️ 남은 위험"
 ]
-required.each { |heading| errors << "필수 섹션 누락: #{heading}" unless body.include?(heading) } unless official
+unless official
+  if body.match?(/^## 📝 커밋별 변경 사항·코드 리뷰$/)
+    required = ["## 🎯 해결하려는 문제", "## 🛠️ 접근 방법", "## 🔎 커밋 간 연계 검토", "## ⚠️ 남은 위험"]
+    commits = body.split(/^### \d+\. /).drop(1)
+    errors << "커밋별 본문에는 2개 이상의 커밋이 필요합니다." if commits.length < 2
+    commits.each_with_index do |commit, index|
+      ["#### ✅ 변경 사항", "#### 📁 변경된 파일", "#### 📋 코드 리뷰 결과", "#### 📊 종합 평가",
+       "##### 🔴 Critical Issues", "##### 🟡 Warnings", "##### 🟢 Suggestions", "##### ✅ Positive Points"].each do |heading|
+        errors << "커밋 #{index + 1} 섹션 누락: #{heading}" unless commit.lines.map(&:strip).include?(heading)
+      end
+    end
+  end
+  required.each { |heading| errors << "필수 섹션 누락: #{heading}" unless body.lines.map(&:strip).include?(heading) }
+end
+errors << "종합 평가는 점수 없이 최종 의견만 작성하세요." if !official && body.match?(/(?:코드 품질|아키텍처(?: 준수)?|보안)[^\n]*\b\d+\/10\b/)
 errors << "MR 본문이 비어 있습니다." if body.strip.empty?
 errors << "literal \\n이 남아 있습니다." if body.include?("\\n")
 errors << "원시 테스트 로그가 포함되어 있습니다." if body.match?(/^\s*(?:-\s*)?(?:Test (?:Suite|Case)|◇ Test run|↳ Testing Library Version)/)

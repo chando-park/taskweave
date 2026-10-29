@@ -17,7 +17,7 @@
 
 검토의 자세함과 기록은 위험·산출물에 비례한다. 문서 없는 code-change와 일반 대화 작업은 대화에 결과를 설명하고, 필요한 기존 문서가 있을 때만 갱신한다. 보고를 위해 Workplan·짧은 작업 문서·별도 결과 파일을 새로 만들지 않는다. 외부 계약의 사실 확인에 필요한 자료가 없으면 그 한계를 남긴다.
 
-Taskweave에서는 실제 수정·검토를 호스트 도구로 수행하고 MCP에는 자료 조회·현재 작업 찾기·기록 저장만 요청한다. 아래 기존 packet·schema·receipt·CLI 검사 형식은 새 작업의 실행·승인·보고 선행 조건이 아니다. 실제 결과·출처·수행한 확인과 미확인을 기록하면 진행하며 형식 보완은 끝에 묶는다. 실제 테스트 실패·UI 원천 불일치·필요 권한 부재는 단순 형식 경고와 다르므로 숨기지 않는다. 회사·기관의 명시적 의무 검토와 사용자 최종 완료 권한은 유지한다.
+CDPower에서는 실제 수정·검토를 호스트 도구로 수행하고 MCP에는 자료 조회·현재 작업 찾기·기록 저장만 요청한다. 아래 기존 packet·schema·receipt·CLI 검사 형식은 새 작업의 실행·승인·보고 선행 조건이 아니다. 실제 결과·출처·수행한 확인과 미확인을 기록하면 진행하며 형식 보완은 끝에 묶는다. 실제 테스트 실패·UI 원천 불일치·필요 권한 부재는 단순 형식 경고와 다르므로 숨기지 않는다. 회사·기관의 명시적 의무 검토와 사용자 최종 완료 권한은 유지한다.
 
 ## 코드 변경의 완료 증거
 
@@ -86,7 +86,7 @@ Workplan이 있으면 기존 검증 영역에 테스트 결과와 커버리지�
 
 ## 실행 전 점검
 
-[Verification Planning](verification-planning.md)이 실행 준비의 단일 원본이다. 필요한 대상·명령·공유 자원만 확인하고 같은 준비를 반복하지 않는다. Taskweave는 profile·packet이나 `verification-plan validate`의 성공을 요구하지 않는다. 이미 해당 도구로 관리하던 증거를 조회할 때도 실제 입력·환경이 달라진 영향만 확인한다.
+[Verification Planning](verification-planning.md)이 실행 준비의 단일 원본이다. 필요한 대상·명령·공유 자원만 확인하고 같은 준비를 반복하지 않는다. CDPower는 profile·packet이나 `verification-plan validate`의 성공을 요구하지 않는다. 이미 해당 도구로 관리하던 증거를 조회할 때도 실제 입력·환경이 달라진 영향만 확인한다.
 
 ## 실행 순서와 복구 한도
 
@@ -126,7 +126,7 @@ Workplan이 있으면 기존 검증 영역에 테스트 결과와 커버리지�
 
 ### 구현자 → 부모 결과 재사용
 
-구현자는 실제 명령·대상·결과·마지막 관련 변경 시점을 전달하고 부모는 같은 입력의 결과를 관성적으로 재실행하지 않는다. 아래 `verification-plan`은 기존 구조화 증거를 선택적으로 재사용하는 방법이며 새 Taskweave 작업의 필수 절차가 아니다. 이미 증거가 있으면 prepare/capture부터 반복하지 않는다.
+구현자는 실제 명령·대상·결과·마지막 관련 변경 시점을 전달하고 부모는 같은 입력의 결과를 관성적으로 재실행하지 않는다. 아래 `verification-plan`은 기존 구조화 증거를 선택적으로 재사용하는 방법이며 새 CDPower 작업의 필수 절차가 아니다. 이미 증거가 있으면 prepare/capture부터 반복하지 않는다.
 
 ```text
 verification-plan prepare --repository <Git-root> --prepared <중앙 Artifacts/prepared.json> --kind test --command '<실제 검증 명령>' --input source:<경로> --input tests:<경로> --input config:<경로>
@@ -174,4 +174,4 @@ Workplan 승인 후 구현·검증 결과를 전달할 때부터 적용한다. �
 - 완료 리뷰는 `Details/change.md`의 파일·심볼·코드와 실제 tracked diff가 일치하는지 확인한다. 문서에 없는 주요 변경이나 diff에 없는 예시 코드는 완료 전에 바로잡는다.
 - 구현자는 실제 변경 코드·흐름·검증 근거를 반환하고 부모는 직접 검증 뒤 최종 보고 전에 설명을 완성한다. `Details/change.md`에 `implementation-explanation-v1` YAML block을 두고 구현 시작 commit인 `base_revision`과 아직 커밋 전이면 `result_revision: WORKTREE`, 커밋 후 재검증이면 결과 commit SHA를 기록한다. 기능은 CODE별 `files`, `primary_file`, `symbol`, `intent`, `callers`, `tests`, `final_code`, `flow`를, 버그는 `before_code`, `after_code`, `preserved_behavior`를 기록한다. YAML의 코드 참조는 같은 문서의 `### CODE-NN 최종 코드` 또는 `변경 전`·`변경 후` code fence를 가리킨다.
 - `excluded_files`는 생성 코드처럼 설명에서 제외할 실제 변경 파일과 구체적 사유만 기록한다. 설명 대상과 제외 대상의 합은 실제 변경 소스 파일 집합과 일치해야 한다.
-- 최종 보고는 실제 diff와 설명이 맞는지 직접 확인한다. 기존 `implementation-explanation-gate`는 필요할 때만 참고하며 새 Taskweave 작업의 보고 허가 조건이 아니다. 코드 조각·파일 누락은 설명만 보완하고, 형식 때문에 직접 테스트를 막거나 유효한 제품 테스트를 반복하지 않는다. 실제 제품 코드를 고쳤을 때만 영향 검증을 갱신한다.
+- 최종 보고는 실제 diff와 설명이 맞는지 직접 확인한다. 기존 `implementation-explanation-gate`는 필요할 때만 참고하며 새 CDPower 작업의 보고 허가 조건이 아니다. 코드 조각·파일 누락은 설명만 보완하고, 형식 때문에 직접 테스트를 막거나 유효한 제품 테스트를 반복하지 않는다. 실제 제품 코드를 고쳤을 때만 영향 검증을 갱신한다.

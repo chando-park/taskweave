@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex 원칙 승격"
+  short_description: "개인 위키의 생각을 검토해 적절한 Codex 실행 설정으로 반영합니다"
+  default_prompt: "Use $cdpower:promote-codex-rule to promote this personal wiki note into the appropriate Codex setting."

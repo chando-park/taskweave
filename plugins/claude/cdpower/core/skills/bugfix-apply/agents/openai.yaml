@@ -1,0 +1,4 @@
+interface:
+  display_name: "승인된 버그 수정"
+  short_description: "승인된 버그 수정과 검증 결과 및 명시적 완료 처리를 기록합니다"
+  default_prompt: "Use /cdpower:bugfix-apply to implement the approved bug-fix plan, verify the result, and record an explicit completion decision when requested."

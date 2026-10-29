@@ -59,7 +59,16 @@ export class RuntimeBridge {
     const root = await this.getRuntimeRoot();
     const executable = await requireWithin(root, path.join(root, 'scripts', script));
     const env = { PATH: process.env.PATH ?? '/usr/bin:/bin', HOME: process.env.HOME, LANG: 'en_US.UTF-8', AI_WORKFLOW_REGISTRY: this.store.configPath, AI_WORKFLOW_DATA_ROOT: this.store.dataRoot };
+    let registrySnapshot;
     if (project) {
+      // 회사 목록에서 찾은 연결도 Ruby에 같은 값으로 전달한다. 사용자 설정은 바꾸지 않는다.
+      const catalog = await this.store.projectCatalog();
+      if (!catalog.projects[project.projectId] || !catalog.workspaces[project.workspaceId]) throw new Error('현재 프로젝트 연결을 다시 확인하세요');
+      registrySnapshot = await requireWithin(this.store.dataRoot, path.join(this.store.dataRoot, 'runtime', `context-${randomUUID()}.json`), { allowMissing: true });
+      await atomicJSON(registrySnapshot, { schemaVersion: 1, workplanStorage: catalog.workplanStorage,
+        projects: { [project.projectId]: catalog.projects[project.projectId] },
+        workspaces: { [project.workspaceId]: catalog.workspaces[project.workspaceId] } });
+      env.AI_WORKFLOW_REGISTRY = registrySnapshot;
       env.AI_WORKFLOW_PROJECT_ID = project.projectId;
       // 회사 스크립트는 문서 등록과 별개인 workspace 실행 신뢰가 있을 때만 연결한다.
       env.COMPANY_WORKSPACE = project.workspaceTrusted ? project.workspacePath : path.join(this.store.dataRoot, 'disabled-company-workspace');
@@ -72,6 +81,8 @@ export class RuntimeBridge {
       // 환경 변수나 임의 stderr 전문은 AI에 되돌리지 않는다.
       const detail = typeof error.stderr === 'string' ? error.stderr.trim().slice(0, 1800) : '';
       throw new Error(error.killed ? 'Runtime 실행 시간이 초과되었습니다' : `Runtime 실행 실패${detail ? `: ${detail}` : ''}`);
+    } finally {
+      if (registrySnapshot) await rm(registrySnapshot, { force: true });
     }
     // 승인 검증 CLI만 한글 보고서를 반환한다. 그 외 프로그램의 깨진 JSON을 성공으로 바꾸지 않는다.
     if (script === 'workplan-memo.rb' && argv[0] === 'validate' && argv.includes('approval')) {

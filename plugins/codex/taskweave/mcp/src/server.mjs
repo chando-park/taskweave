@@ -129,7 +129,7 @@ export async function startServer(options = {}) {
   const server = createServer({ ...options, store });
   await server.connect(options.transport ?? new StdioServerTransport());
   // 뷰어는 부가 기능이다. 자동 실행 실패가 MCP 연결·자료 조회를 막아서는 안 된다.
-  if (options.autoViewer !== false && process.env.TASKWEAVE_VIEWER_AUTO_OPEN !== '0') {
+  if (options.autoViewer !== false && (process.env.CDPOWER_VIEWER_AUTO_OPEN ?? process.env.TASKWEAVE_VIEWER_AUTO_OPEN) !== '0') {
     Promise.resolve().then(() => (options.launchViewer ?? ensureViewer)({ store }))
       .catch(error => (options.onViewerWarning ?? (message => process.stderr.write(`${message}\n`)))(`${PRODUCT_NAME} 뷰어 안내: ${error.message}`));
   }

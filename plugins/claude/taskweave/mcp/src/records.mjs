@@ -64,7 +64,14 @@ export class RecordService {
       const project = await this.store.projectContext({ projectId, ...(projectId ? {} : { currentPath }) });
       if (project.status !== 'registered') return { ...project, candidates: project.candidates.slice(0, 20) };
       if (workspaceId && workspaceId !== project.workspaceId) throw new Error('선택 프로젝트와 작업공간이 다릅니다');
-      return { projectId: project.projectId, workspaceId: project.workspaceId, recordLinks: project.recordLinks ?? {}, taskLinks: project.taskLinks ?? {}, roots: { instructions: project.instructionsRoot, memory: project.productMemoryRoot, workplans: project.workplanRoot } };
+      const policyPath = path.join(project.workspacePath, 'workspace.yaml');
+      const policy = await present(policyPath);
+      // 조회할 원문 위치일 뿐 record_save에 새 쓰기 root를 허용하지 않는다.
+      const contextSources = {
+        projectInstructions: project.instructionsRoot,
+        workspacePolicy: { path: policy?.isFile() ? policyPath : null, status: policy?.isFile() ? 'available' : 'not_found' }
+      };
+      return { projectId: project.projectId, workspaceId: project.workspaceId, recordLinks: project.recordLinks ?? {}, taskLinks: project.taskLinks ?? {}, contextSources, roots: { instructions: project.instructionsRoot, memory: project.productMemoryRoot, workplans: project.workplanRoot } };
     }
     if (!workspaceId) throw new Error('확인된 project ID·workspace ID 또는 호스트 현재 폴더가 필요합니다');
     assertId(workspaceId, 'workspace ID');
@@ -167,7 +174,7 @@ export class RecordService {
           await mkdir(path.dirname(target.filename), { recursive: true, mode: 0o700 });
           await safePath(target.root, target.relative, { missing: true });
           await atomicJSON(requestPath, { fingerprint, status: 'pending' });
-          const temporary = path.join(path.dirname(target.filename), `.taskweave-${randomUUID()}.tmp`);
+          const temporary = path.join(path.dirname(target.filename), `.cdpower-${randomUUID()}.tmp`);
           const handle = await open(temporary, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY | constants.O_NOFOLLOW, 0o600);
           try {
             await handle.writeFile(input.content);

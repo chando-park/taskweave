@@ -380,7 +380,7 @@ export class SettingsStore {
     for (const key of ['workplanRoot', 'productMemoryRoot', 'instructionsRoot']) {
       const recordRoot = await canonicalPath(project[key], { allowMissing: true });
       const defaultWorkplans = settings.workplanStorage === 'managed-default-v1' && key === 'workplanRoot'
-        ? await canonicalPath(path.join(this.dataRoot, 'workspaces/personal/projects', projectId, 'Workplans'), { allowMissing: true }) : null;
+        ? path.join(await canonicalPath(this.dataRoot, { allowMissing: true }), 'workspaces/personal/projects', projectId, 'Workplans') : null;
       if (!isWithin(workspacePath, recordRoot) && !isWithin(managed, recordRoot) && recordRoot !== defaultWorkplans) throw new Error('선택한 프로젝트의 기록 경로 밖입니다');
       if (isWithin(repositoryPath, recordRoot)) throw new Error('제품 저장소 내부 기록은 허용하지 않습니다');
     }

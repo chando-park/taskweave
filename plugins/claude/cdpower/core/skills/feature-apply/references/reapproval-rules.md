@@ -1,0 +1,13 @@
+# Reapproval Rules
+
+같은 승인으로 계속할 구현 오류 수정과, 멈추고 계획을 보완할 새 설계·원복은 [공통 인계의 구현 중 문제 처리](../../../references/implementation-handoff.md#구현-중-문제가-발견됐을-때)를 따른다. 이 문서는 기존 링크를 보존하는 진입점이며 본문 스킬은 공통 기준을 필수로 읽는다.
+
+다음은 구현을 멈추고 같은 Workplan을 재승인 대상으로 만든다.
+
+- Public API, 서버·BLE·펌웨어·데이터 계약 또는 저장 형식 변경
+- target repository·제품·주요 사용자 동작 변경
+- 메모에 없던 책임 경계·상태 흐름·dependency 추가
+- UI의 승인되지 않은 component/token/Variant/state 또는 source 기준 변경
+- 최소 검증으로 승인 위험을 다룰 수 없는 변경
+
+현재 목적과 독립된 결함·기능은 새 Workplan이다. Jira가 연결됐으면 현재 Workplan+event+revision의 정확한 marker만 제한적으로 동기화한다. 지식 후보나 결과 파일의 행정 보완은 구현 scope 재승인 사유가 아니다.

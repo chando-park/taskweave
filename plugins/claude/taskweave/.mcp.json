@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "taskweave": {
+    "cdpower": {
       "command": "node",
       "args": [
         "${CLAUDE_PLUGIN_ROOT}/mcp/src/server.mjs"

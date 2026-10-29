@@ -27,6 +27,8 @@ description: 현재 승인 feature Workplan의 코드와 직접 테스트를 구
 
 ## 구현·검증·설명
 
+검증에서 승인 범위 안 오류가 나오면 같은 구현에서 수정·재검증한다. 새 설계가 필요하면 제품 편집만 멈추고 [문제 처리 기준](../../references/implementation-handoff.md#구현-중-문제가-발견됐을-때)에 따라 실패 근거·원본·대안 코드·검증안을 같은 Workplan에 준비한다. 외부 장애이면 부족한 입력과 재개할 지점을 설명한다. “계획 코드 적용”이나 실패 결과 보고로 문제 해결을 대신하지 않는다.
+
 - 구현 결과 보고 직전에 $taskweave:explain-code를 적용한다. 실제 변경 전체의 코드·이유·호출 흐름과 테스트 목록·결과·커버리지를 설명하고 복잡한 결과는 실행·데이터·조건 흐름을 먼저 그림으로 보여 주고 단계별 코드·이유·테스트를 연결한다. 사용자 최종 완료 요청까지 미루지 않는다.
 - symbol·caller·implementation 변경 직전 [Serena 절차](../../references/serena-code-intelligence.md)로 실제 코드 경계를 확인한다. 정확한 text/resource/literal 변경만 textual 예외다.
 - 승인한 state/action/branch·API·dependency·caller·assembly와 저장소 아키텍처·생성·현지화 규칙을 적용한다. 승인 밖 Public/외부 계약·저장 형식·저장소·주요 동작 변경은 멈추고 재승인한다.
@@ -37,4 +39,4 @@ description: 현재 승인 feature Workplan의 코드와 직접 테스트를 구
 
 호스트 파일 도구 또는 `record_save`로 실제 diff·계획 편차·명령·결과·미실행 범위를 Completion.md에 기록한다. 실제 직접 검증이 통과하면 awaiting_completion, 미실행은 verifying, 외부 차단은 verification_blocked로 구분한다. 실제 구현·원천 불일치는 수정하며 문서 형식 검사를 제품 성공 기준으로 쓰지 않는다. 제목·필드·설명 부족은 경고하고 끝에 한 번 보완하며 같은 승인·테스트를 반복하지 않는다. 저장 실패·충돌은 [플러그인 실행 연결](../../references/plugin-runtime.md)에 따라 해당 저장만 처리한다.
 
-구현 결과를 전달하기 전에 [구현 결과의 빠짐없는 설명](../../references/verification-evidence.md#구현-결과의-빠짐없는-설명)을 읽는다. 실제 추가·변경·삭제한 타입·프로퍼티·함수·분기와 호출 흐름을 빠짐없이 설명하고, 실제 코드·변경 이유·테스트 목록과 결과 집계·커버리지 또는 미측정 이유를 함께 보여 준다. 긴 상세는 같은 Workplan에 연결하되 앞선 계획·합계·결과 링크 하나로 대신하지 않는다. $taskweave:complete-work의 사용자 완료 요청 전에는 지식 평가·게시·Jira/Workplan 종료를 수행하지 않는다. 기존 mapping·revision·Details·gate 이력은 보존하되 과거 문서 gate를 새 Taskweave 편집 선행 조건으로 승계하지 않는다.
+구현 결과를 전달하기 전에 [구현 결과의 빠짐없는 설명](../../references/verification-evidence.md#구현-결과의-빠짐없는-설명)을 읽는다. 실제 추가·변경·삭제한 타입·프로퍼티·함수·분기와 호출 흐름을 빠짐없이 설명하고, 실제 코드·변경 이유·테스트 목록과 결과 집계·커버리지 또는 미측정 이유를 함께 보여 준다. 긴 상세는 같은 Workplan에 연결하되 앞선 계획·합계·결과 링크 하나로 대신하지 않는다. $taskweave:complete-work의 사용자 완료 요청 전에는 지식 평가·게시·Jira/Workplan 종료를 수행하지 않는다. 기존 mapping·revision·Details·gate 이력은 보존하되 과거 문서 gate를 새 CDPower 편집 선행 조건으로 승계하지 않는다.

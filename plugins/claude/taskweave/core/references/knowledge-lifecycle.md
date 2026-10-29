@@ -4,11 +4,11 @@
 
 ## 새 approval memo 계약
 
-- 모든 새 작업은 짧은 approval memo Workplan을 하나씩 갖는다. 여러 작업을 과거 Workplan 하나에 이어 붙이지 않는다.
-- approval revision은 이유, 범위, 제외 범위, 최소 검증과 필요한 UI 분류만 결속한다. 구현 결과, 지식 평가와 행정 완료 보고는 승인 hash에 포함하지 않는다.
+- 정식 기록이 필요한 새 작업만 짧은 approval memo Workplan을 갖는다. 문서 없는 code-change·일반 글쓰기에 사후 Workplan을 만들지 않는다. 현재 작업의 수정은 같은 기록에서 이어간다.
+- 실제 사용자 승인과 범위를 보존한다. 기존 hash 방식은 이유·범위·최소 검증을 결속하며 구현 결과·지식 평가는 그 hash를 바꾸지 않는다. 새 대화 승인에 없는 hash를 만들거나 기존 hash를 삭제해 우회하지 않는다.
 - `draft → awaiting_approval → approved → implementing → awaiting_completion` 동안 `knowledge_sync_status: not_evaluated`와 지식 평가 부재가 정상이다.
 - 구현 결과와 코드 설명·검증은 bundle의 별도 `Completion.md`에 기록할 수 있다. 사용자 완료 요청 전 결과의 지식 상태는 `not_evaluated`이며 게시를 시작하지 않는다.
-- `Completion.md`는 `approval-memo-result-v1` 결과 packet이고 approval memo의 선언 입력이나 approval revision을 바꾸지 않는다.
+- 일반 결과는 읽기 쉬운 `Completion.md`에 기록한다. 회사 완료 도구가 `approval-memo-result-v1`을 읽는 경우에만 회사 adapter가 같은 문서에 최소 입력을 연결한다. 별도 결과 복사본·수동 양식 채우기·새 승인 검사를 요구하지 않는다. 기존 구조화 결과와 승인 이력은 보존한다.
 
 ## 완료 시 평가 입력
 

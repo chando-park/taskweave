@@ -25,6 +25,9 @@
 - `repository_agent`, `product_agent`, `project_agent`는 연결점만 소유한다. 개별 사실·승인은 approval memo, 검증된 장기 제품 지식은 Product Memory가 소유한다.
 - `workplan_sync: true`면 정책의 script를 사용하되 새 메모 생성·승인·구현 시작·최종 결과처럼 의미 있는 checkpoint만 남긴다. sync 실패는 코드 결과와 분리해 보고한다.
 - 계획·적용 단계에서 knowledge 문서나 post-verify 지식 평가를 요구하지 않는다. `$taskweave:complete-work`가 최종 diff·검증으로 지식을 추출·평가하고 사용자 완료 권한 안에서 Product Memory와 Jira 종료를 처리한다.
+- 조회·저장·뷰어·완료는 확인한 같은 프로젝트의 Workplan을 사용한다. 회사의 옛 경로가 공통 관리 폴더로 연결돼 있으면 같은 실제 파일로 처리하며 개인 프로젝트를 중복 등록하거나 기록을 복사하지 않는다.
+- 완료 때는 `completion_adapter`의 결과 위치·형식과 지원한 승인 방식을 확인해 **현재 Completion.md**에 필요한 실제 근거만 연결한다. 새 대화 승인은 실제 승인 원문·범위·현재 변경·검증을 전달하고, 기존 hash 승인은 원래 검사를 유지한다. 문서 형식을 맞추려고 과거 hash나 검증 통과를 만들지 않는다.
+- 지식 게시·Jira 댓글·상태 전환·문서 저장은 성공한 결과를 재조회해 재사용한다. 실패한 단계부터 이어가며 제품 코드와 검증 입력이 그대로면 승인·테스트를 반복하지 않는다. Jira 완료를 확인한 뒤 같은 Workplan의 상태를 갱신하고 뷰어가 그 문서를 읽게 한다.
 
 ## 레거시 호환
 

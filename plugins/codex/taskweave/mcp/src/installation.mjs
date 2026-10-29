@@ -9,7 +9,7 @@ import { IntegrationService, PROVIDERS } from './integrations.mjs';
 import { SettingsStore, canonicalPath } from './settings.mjs';
 import { inspectOwnedLegacyCleanup, cleanupOwnedLegacyLinks } from './legacy-migration.mjs';
 import { stopOwnedViewer } from './viewer/lifecycle.mjs';
-import { PRODUCT_NAME, PLUGIN_ID } from './product.mjs';
+import { PRODUCT_NAME, PLUGIN_ID, LEGACY_PLUGIN_ID } from './product.mjs';
 
 const execute = promisify(execFile);
 const CLIENTS = ['codex', 'claude'];
@@ -100,7 +100,7 @@ async function inspectHostPlugins(host, runner) {
       const id = typeof entry === 'string' ? entry : [entry.pluginId, entry.id, entry.name].find(value => typeof value === 'string' && value.includes('@')) ?? entry.name;
       if (typeof id !== 'string') { unknown = true; continue; }
       const [name, embeddedMarketplace] = id.split('@');
-      if (![PLUGIN, 'ai-workflow'].includes(name)) continue;
+      if (![PLUGIN, LEGACY_PLUGIN_ID, 'ai-workflow'].includes(name)) continue;
       const marketplace = embeddedMarketplace ?? entry.marketplaceName ?? (typeof entry.marketplace === 'string' ? entry.marketplace : entry.marketplace?.name);
       if (!marketplace || !/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(name) || !/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(marketplace) || id.split('@').length > 2 || typeof entry === 'object' && entry.scope && entry.scope !== 'user') { unknown = true; continue; }
       const root = typeof entry === 'object' ? entry.installPath ?? entry.installedPath ?? entry.pluginRoot ?? entry.path : null;
@@ -131,7 +131,7 @@ export async function inspectOwnedUninstall({ home, dataDir, settingsPath, clien
   const pluginRoots = {};
   for (const host of hosts) {
     const observation = observations[host];
-    const candidates = observation.plugins.filter(plugin => plugin.pluginName === PLUGIN || plugin.pluginName === installedName(state.clients[host]) && state.clients[host]);
+    const candidates = observation.plugins.filter(plugin => [PLUGIN, LEGACY_PLUGIN_ID].includes(plugin.pluginName) || plugin.pluginName === installedName(state.clients[host]) && state.clients[host]);
     const requested = selectors[host];
     if (observation.status !== 'known' || requested && !candidates.some(plugin => plugin.selector === requested) || !requested && candidates.length > 1) {
       ambiguities.push({ client: host, reason: observation.status === 'unknown' ? 'host-list-unverifiable' : 'select-exact-plugin', choices: candidates.map(plugin => plugin.selector) });
@@ -206,6 +206,13 @@ export async function cleanupOwnedInstructions({ plan, removed }) {
       await writeFile(block.path, block.after);
       result.cleaned.push({ path: block.path, backup, managedBlock: true, owned: block.owned });
     } catch { result.preserved.push({ path: block.path, reason: 'changed-or-cleanup-failed' }); }
+  }
+  // 관리 블록을 지운 뒤 남은 자기 소유 짧은 입구도 정리한다. 사용자 문구는 일치하지 않아 보존된다.
+  if (clients.length) {
+    const refreshed = await inspectOwnedLegacyCleanup({ home: plan.home, dataDir: plan.dataDir, clients });
+    const tail = await cleanupOwnedLegacyLinks({ inspection: refreshed, clients, dataDir: plan.dataDir });
+    result.cleaned.push(...tail.cleaned);
+    result.preserved.push(...tail.preserved);
   }
   for (const operation of plan.legacy.operations.filter(operation => !clients.includes(operation.host))) result.preserved.push({ path: operation.path, reason: 'host-still-installed-or-unverified' });
   return result;
@@ -338,7 +345,7 @@ export class InstallationManager {
       if (!Array.isArray(entries)) throw new Error(`${host} 설치 플러그인 목록 형식 확인 실패`);
       // 관리 폴더 이름(ai-workflow)은 플러그인 ID가 아니다. 실제 식별 필드만 비교한다.
       const identities = entries.flatMap(entry => typeof entry === 'string' ? [{ id: entry }] : ['pluginId', 'id', 'name'].filter(key => typeof entry[key] === 'string').map(key => ({ id: entry[key], marketplace: entry.marketplaceName })));
-      for (const name of ['ai-workflow', PLUGIN]) {
+      for (const name of ['ai-workflow', LEGACY_PLUGIN_ID, PLUGIN]) {
         const matches = identities.filter(entry => entry.id.split('@')[0] === name);
         const present = matches.length > 0;
         const otherCatalog = matches.some(entry => (entry.id.includes('@') ? entry.id.split('@')[1] : entry.marketplace) && (entry.id.includes('@') ? entry.id.split('@')[1] : entry.marketplace) !== 'my-ai-toolbox');
@@ -354,7 +361,7 @@ export class InstallationManager {
   }
 
   async install({ client = 'both', distributionRoot, version, confirmed = false, dryRun = true, replaceLegacy = false, preserveLegacySkills = false, pluginName = PLUGIN }) {
-    if (!['ai-workflow', PLUGIN].includes(pluginName)) throw new Error('지원하지 않는 플러그인 식별자');
+    if (!['ai-workflow', LEGACY_PLUGIN_ID, PLUGIN].includes(pluginName)) throw new Error('지원하지 않는 플러그인 식별자');
     await this.checkDependencies(client);
     const preview = await this.preview({ client, distributionRoot, pluginName, preserveLegacySkills });
     if (dryRun) return preview;

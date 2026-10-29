@@ -1,12 +1,13 @@
 import { lstat, readlink, readFile, readdir, realpath, mkdir, rename, symlink, writeFile, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
+import { PLUGIN_ID, LEGACY_PLUGIN_ID } from './product.mjs';
 
 const hosts = ['codex', 'claude'];
 const inside = (root, file) => file === root || file.startsWith(`${root}${path.sep}`);
 const digest = value => createHash('sha256').update(value).digest('hex');
 const entryName = host => host === 'codex' ? 'AGENTS.md' : 'CLAUDE.md';
-const pointerPath = (home, host) => path.join(home, '.local/share/ai-workflow/active', host, 'taskweave');
+const pointerPath = (home, host, name = PLUGIN_ID) => path.join(home, '.local/share/ai-workflow/active', host, name);
 
 async function state(file) {
   let stat;
@@ -42,15 +43,32 @@ async function resource(root, relative, directory = false) {
 async function verifyPlugin(input, host) {
   const root = await realpath(path.resolve(input));
   const manifest = JSON.parse(await readFile(await resource(root, host === 'codex' ? 'plugin.json' : '.claude-plugin/plugin.json'), 'utf8'));
-  if (manifest.name !== 'taskweave' || typeof manifest.version !== 'string' || !manifest.version) throw new Error(`Taskweave 설치본 아님: ${host}`);
+  if (![PLUGIN_ID, LEGACY_PLUGIN_ID].includes(manifest.name) || typeof manifest.version !== 'string' || !manifest.version) throw new Error(`CDPower 설치본 아님: ${host}`);
   for (const relative of [entryName(host), 'references/task-workflow.md', 'mcp/src/server.mjs', 'mcp/src/viewer/main.mjs', 'mcp/src/viewer/public/index.html']) await resource(root, relative);
   for (const relative of ['skills', 'core/scripts', 'core/agents']) await resource(root, relative, true);
   return { root, version: manifest.version };
 }
 
-function managedEntry(home, host) {
-  const target = path.join(pointerPath(home, host), entryName(host));
-  return `<!-- taskweave-managed-entry-v1 -->\n# Taskweave\n\n매 작업 시작 전에 [활성 Taskweave 지침](${target})을 반드시 읽고 적용한다. 세부 규칙은 이 파일에 복사하지 않고 설치된 플러그인의 지침을 따른다.\n`;
+function managedEntry(home, host, name = PLUGIN_ID) {
+  const target = path.join(pointerPath(home, host, name), entryName(host));
+  const display = name === LEGACY_PLUGIN_ID ? 'Taskweave' : 'CDPower';
+  return `<!-- ${name}-managed-entry-v1 -->\n# ${display}\n\n매 작업 시작 전에 [활성 ${display} 지침](${target})을 반드시 읽고 적용한다. 세부 규칙은 이 파일에 복사하지 않고 설치된 플러그인의 지침을 따른다.\n`;
+}
+
+// 삭제된 이전 cache도 자신이 설치했던 정확한 버전 경로인 경우만 인식한다.
+async function previouslyOwnedTarget(home, host, target) {
+  try {
+    const installed = JSON.parse(await readFile(path.join(home, '.local/share/ai-workflow/installation.json'), 'utf8'));
+    if (installed.owner !== 'ai-workflow' || installed.schemaVersion !== 1) return false;
+    for (let item = installed.clients?.[host]; item; item = item.previous) {
+      const name = item.pluginName ?? 'ai-workflow';
+      if (![PLUGIN_ID, LEGACY_PLUGIN_ID].includes(name)) continue;
+      const cache = path.join(home, `.${host}/plugins/cache/my-ai-toolbox`, name, item.version);
+      const distribution = path.join(item.distributionRoot, 'plugins', host, name);
+      if ([cache, distribution].includes(target)) return true;
+    }
+  } catch { /* 소유권을 확인할 수 없는 연결은 그대로 보존한다. */ }
+  return false;
 }
 
 async function children(directory) {
@@ -80,10 +98,18 @@ export async function inspectLegacyLinks({ home, sourceRoot, pluginRoots }) {
     else if (pointerState.type === 'symlink') {
       const current = path.resolve(path.dirname(pointer), pointerState.target);
       if (current !== plugins[host].root) {
-        await verifyPlugin(current, host);
+        if (!await previouslyOwnedTarget(home, host, current)) await verifyPlugin(current, host);
         await add(pointer, { type: 'symlink', target: plugins[host].root }, 'active-pointer-update');
       }
     } else throw new Error(`활성 pointer 사용자 파일 보존: ${pointer}`);
+    const oldPointer = pointerPath(home, host, LEGACY_PLUGIN_ID);
+    const oldState = await state(oldPointer);
+    let oldOwned = false;
+    if (oldState.type === 'symlink') {
+      const oldTarget = path.resolve(path.dirname(oldPointer), oldState.target);
+      oldOwned = oldTarget === pointer || await previouslyOwnedTarget(home, host, oldTarget);
+      if (oldOwned && oldTarget !== pointer) await add(oldPointer, { type: 'symlink', target: pointer }, 'legacy-active-pointer-bridge');
+    }
     for (const category of ['skills', 'bin', 'agents']) {
       const directory = path.join(base, category);
       await safeParents(home, path.join(directory, '_probe'));
@@ -110,6 +136,10 @@ export async function inspectLegacyLinks({ home, sourceRoot, pluginRoots }) {
       const original = await state(file);
       const target = original.type === 'symlink' ? path.resolve(base, original.target) : null;
       const owned = runtimes.some(root => target === path.join(root, name));
+      if (name === entryName(host) && original.type === 'file' && oldOwned) {
+        const text = await readFile(file, 'utf8'), prefix = managedEntry(home, host, LEGACY_PLUGIN_ID);
+        if (text.startsWith(prefix)) { await add(file, { type: 'file', content: managedEntry(home, host) + text.slice(prefix.length) }, 'legacy-entry-rename'); continue; }
+      }
       if (!owned) { preserved.push({ path: file, reason: 'unowned-or-already-migrated' }); continue; }
       if (name === 'references') {
         await resource(plugins[host].root, 'references', true);
@@ -117,7 +147,7 @@ export async function inspectLegacyLinks({ home, sourceRoot, pluginRoots }) {
       } else await add(file, { type: 'file', content: managedEntry(home, host) }, 'legacy-entry');
     }
   }
-  return { schema: 'taskweave-migration-inspection-v1', home, sourceRoot, plugins, operations, preserved };
+  return { schema: 'cdpower-migration-inspection-v1', home, sourceRoot, plugins, operations, preserved };
 }
 
 const equal = (left, right) => JSON.stringify(left) === JSON.stringify(right);
@@ -126,7 +156,7 @@ async function saveManifest(file, manifest) { await writeFile(file, `${JSON.stri
 /** dryRun이 기본이다. 실제 전환은 confirmed=true와 변경되지 않은 사전 조사 결과를 요구한다. */
 export async function migrateLegacyLinks(options) {
   const inspection = options.inspection ?? await inspectLegacyLinks(options);
-  if (inspection.schema !== 'taskweave-migration-inspection-v1') throw new Error('사전 조사 형식 오류');
+  if (inspection.schema !== 'cdpower-migration-inspection-v1') throw new Error('사전 조사 형식 오류');
   const fresh = await inspectLegacyLinks(options);
   if (!equal(inspection, fresh)) throw new Error('사전 조사 이후 변경됨; 다시 조사하세요.');
   if (options.dryRun !== false) return { dryRun: true, inspection, changes: inspection.operations.length };
@@ -139,7 +169,7 @@ export async function migrateLegacyLinks(options) {
   const directory = path.join(backupRoot, `migration-${Date.now()}-${randomUUID()}`);
   await mkdir(directory, { mode: 0o700 });
   const manifestPath = path.join(directory, 'manifest.json');
-  const manifest = { schema: 'taskweave-migration-backup-v1', home: inspection.home, sourceRoot: inspection.sourceRoot, entries: [] };
+  const manifest = { schema: 'cdpower-migration-backup-v1', home: inspection.home, sourceRoot: inspection.sourceRoot, entries: [] };
   await writeFile(manifestPath, JSON.stringify(manifest), { mode: 0o600, flag: 'wx' });
   for (const operation of inspection.operations) {
     await safeParents(inspection.home, operation.path);
@@ -168,7 +198,7 @@ export async function restoreMigration(manifestPath, { confirmed = false } = {})
   if (!confirmed) throw new Error('복구 명시 승인 필요');
   manifestPath = path.resolve(manifestPath);
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
-  if (manifest.schema !== 'taskweave-migration-backup-v1' || !Array.isArray(manifest.entries)) throw new Error('복구 manifest 오류');
+  if (!['cdpower-migration-backup-v1', 'taskweave-migration-backup-v1'].includes(manifest.schema) || !Array.isArray(manifest.entries)) throw new Error('복구 manifest 오류');
   const home = await realpath(manifest.home);
   await safeParents(home, manifestPath);
   if ((await state(manifestPath)).type !== 'file') throw new Error('복구 manifest는 일반 파일이어야 합니다.');
@@ -214,6 +244,15 @@ export async function inspectOwnedLegacyCleanup({ home, dataDir, clients, projec
   const add = (host, file, root, expected) => candidates.set(file, { host, path: file, root, expected });
   for (const host of clients) {
     add(host, path.join(home, `.${host}`, entryName(host)), home, managedEntry(home, host));
+    const compatibility = pointerPath(home, host, LEGACY_PLUGIN_ID);
+    try {
+      await safeParents(home, compatibility);
+      const current = await state(compatibility);
+      if (current.type === 'symlink' && path.resolve(path.dirname(compatibility), current.target) === pointerPath(home, host)) {
+        add(host, compatibility, home, null);
+        candidates.get(compatibility).expectedTarget = current.target;
+      }
+    } catch { preserved.push({ path: compatibility, reason: 'legacy-pointer-unverifiable' }); }
     const pointer = pointerPath(home, host);
     try {
       await safeParents(home, pointer);
@@ -237,7 +276,7 @@ export async function inspectOwnedLegacyCleanup({ home, dataDir, clients, projec
         await safeParents(home, manifestPath);
         if ((await state(manifestPath)).type !== 'file') continue;
         const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
-        if (manifest.schema !== 'taskweave-migration-backup-v1' || path.resolve(manifest.home) !== home || !Array.isArray(manifest.entries)) continue;
+        if (!['cdpower-migration-backup-v1', 'taskweave-migration-backup-v1'].includes(manifest.schema) || path.resolve(manifest.home) !== home || !Array.isArray(manifest.entries)) continue;
         for (const entry of manifest.entries) {
           const host = clients.find(host => entry.path === pointerPath(home, host) || inside(path.join(home, `.${host}`), entry.path));
           if (!host || entry.status !== 'applied') continue;
@@ -248,7 +287,7 @@ export async function inspectOwnedLegacyCleanup({ home, dataDir, clients, projec
           const replacement = entry.replacement;
           const ownedLink = replacement?.type === 'symlink' && (entry.path === pointerPath(home, host)
             ? ['active-pointer', 'active-pointer-update'].includes(entry.reason) && entry.after?.target === replacement.target
-            : inside(pointerPath(home, host), path.resolve(path.dirname(entry.path), replacement.target)));
+            : [PLUGIN_ID, LEGACY_PLUGIN_ID].some(name => inside(pointerPath(home, host, name), path.resolve(path.dirname(entry.path), replacement.target))));
           const ownedEntry = replacement?.type === 'file' && replacement.content === managedEntry(home, host) && entry.path === path.join(base, entryName(host));
           if (ownedLink || ownedEntry) {
             add(host, entry.path, home, replacement.type === 'file' ? replacement.content : null);

@@ -29,6 +29,10 @@ begin
   root = Pathname.new(ENV.fetch("WORKPLAN_ROOT", context.fetch("workplan_root"))).expand_path.cleanpath
   root = root.realpath if root.exist?
   if ENV.key?("WORKPLAN_ROOT")
+    # 회사의 옛 링크와 관리 위치가 같은 문서를 가리키면 같은 프로젝트다.
+    # 정확히 확인한 현재 프로젝트 루트만 예외로 허용한다.
+    registered_root = Pathname.new(context.fetch("workplan_root")).expand_path.cleanpath
+    registered_root = registered_root.realpath if registered_root.exist?
     allowed_root = if workspace_type == "personal-system"
                      Pathname.new(context.fetch("repository_root"))
                    elsif workspace_type == "managed-project"
@@ -36,8 +40,9 @@ begin
                    else
                      Pathname.new(context.fetch("company_workspace"))
                    end
+    allowed_root = allowed_root.realpath if allowed_root.exist?
     allowed_prefix = allowed_root.to_s + File::SEPARATOR
-    unless root.to_s == allowed_root.to_s || root.to_s.start_with?(allowed_prefix)
+    unless root == registered_root || root == allowed_root || root.to_s.start_with?(allowed_prefix)
       raise PolicyError, "WORKPLAN_ROOT가 허용된 작업공간 밖을 가리킵니다: #{root}"
     end
   end

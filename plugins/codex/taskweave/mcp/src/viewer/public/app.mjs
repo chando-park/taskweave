@@ -183,7 +183,7 @@ document.addEventListener('click',event=>{
 window.addEventListener('message',event=>{
   // Origin이 null인 다른 창의 메시지는 받지 않고 현재 iframe과 등록된 ID만 허용한다.
   const data=event.data;
-  if ($('#flow').hidden || event.source!==$('#flow').contentWindow || data?.type!=='taskweave-link' || !/^[a-f0-9]{24}$/.test(data.id) || !currentWorkplan?.documents.some(doc=>doc.id===data.id)) return;
+  if ($('#flow').hidden || event.source!==$('#flow').contentWindow || !['cdpower-link','taskweave-link'].includes(data?.type) || !/^[a-f0-9]{24}$/.test(data.id) || !currentWorkplan?.documents.some(doc=>doc.id===data.id)) return;
   if (data.kind==='document') selectDocument(data.id); else if (data.kind==='assets') showFlow(data.id);
 });
 loadOverview();

@@ -29,7 +29,37 @@ export function renderSafeMarkdown(text, resolveLink = () => null) {
   });
 }
 
-export async function renderFlowHtml(text, resolveLink, readImage) {
+function applyWorkplanTitle(html, title) {
+  const escaped = escapeHtml(title); let hasTitle = false; let hasHeading = false;
+  let svgDepth = 0;
+  // 정리된 HTML의 실제 제목만 바꾸며 script/style과 코드 예제 안의 태그는 건너뛴다.
+  const protectedBlock = '<(script|style|textarea|pre|code)\\b[^>]*>[\\s\\S]*?<\\/\\1\\s*>';
+  let result = html.replace(new RegExp(`${protectedBlock}|<\\/?svg\\b[^>]*>|<title\\b[^>]*>[\\s\\S]*?<\\/title\\s*>|<h1\\b([^>]*)>[\\s\\S]*?<\\/h1\\s*>`, 'gi'), (match, protectedTag, attributes) => {
+    if (protectedTag) return match;
+    if (/^<svg\b/i.test(match)) { svgDepth++; return match; }
+    if (/^<\/svg\b/i.test(match)) { svgDepth--; return match; }
+    if (svgDepth) return match;
+    if (/^<title\b/i.test(match)) { hasTitle = true; return `<title>${escaped}</title>`; }
+    if (hasHeading) return match;
+    hasHeading = true; return `<h1${attributes}>${escaped}</h1>`;
+  });
+  const titleTag = hasTitle ? '' : `<title>${escaped}</title>`;
+  const headingTag = hasHeading ? '' : `<h1>${escaped}</h1>`;
+  let insertedTitle = false; let insertedHeading = false;
+  svgDepth = 0;
+  result = result.replace(new RegExp(`${protectedBlock}|<\\/?svg\\b[^>]*>|<head\\b[^>]*>|<body\\b[^>]*>`, 'gi'), (match, protectedTag) => {
+    if (protectedTag) return match;
+    if (/^<svg\b/i.test(match)) { svgDepth++; return match; }
+    if (/^<\/svg\b/i.test(match)) { svgDepth--; return match; }
+    if (svgDepth) return match;
+    if (/^<head\b/i.test(match) && !insertedTitle) { insertedTitle = true; return match + titleTag; }
+    if (/^<body\b/i.test(match) && !insertedHeading) { insertedHeading = true; return match + headingTag; }
+    return match;
+  });
+  return (insertedTitle ? '' : titleTag) + (insertedHeading ? '' : headingTag) + result;
+}
+
+export async function renderFlowHtml(text, resolveLink, readImage, title) {
   const images = new Map();
   if (readImage) {
     // 격리된 HTML에서 서버로 이미지를 다시 요청하면 보안 정책이 차단한다.
@@ -44,7 +74,7 @@ export async function renderFlowHtml(text, resolveLink, readImage) {
     }));
   }
   // 원문 HTML은 저장하지 않는다. 동작은 opaque-origin iframe과 응답 CSP 안에서만 허용한다.
-  const clean = sanitizeHtml(text, {
+  let clean = sanitizeHtml(text, {
     allowedTags:false, allowedAttributes:false, allowVulnerableTags:true,
     allowedSchemes:['http','https'],
     allowedSchemesByTag: { img: readImage ? ['data'] : ['http', 'https'] },
@@ -59,8 +89,9 @@ export async function renderFlowHtml(text, resolveLink, readImage) {
       img: (tag, attrs) => { const resolved = resolveLink(attrs.src,true); const src = readImage ? images.get(resolved) : resolved; const attribs={...attrs}; if (src) attribs.src=src; else delete attribs.src; delete attribs.srcset; return {tagName:'img',attribs}; },
     },
   });
+  if (typeof title === 'string' && title) clean = applyWorkplanTitle(clean, title);
   // 격리 iframe의 null origin으로 API를 호출하지 않고 검증된 부모 창에 문서 ID만 전달한다.
-  return `${clean}<script>document.addEventListener('click',function(event){var a=event.target.closest&&event.target.closest('a[href]');if(!a)return;var match=a.getAttribute('href').match(/^\\/(document|assets)\\/([a-f0-9]{24})(?:#.*)?$/);if(match&&parent!==window){event.preventDefault();parent.postMessage({type:'taskweave-link',kind:match[1],id:match[2]},'*');}});</script>`;
+  return `${clean}<script>document.addEventListener('click',function(event){var a=event.target.closest&&event.target.closest('a[href]');if(!a)return;var match=a.getAttribute('href').match(/^\\/(document|assets)\\/([a-f0-9]{24})(?:#.*)?$/);if(match&&parent!==window){event.preventDefault();parent.postMessage({type:'cdpower-link',kind:match[1],id:match[2]},'*');}});</script>`;
 }
 
 export function renderDocumentPage(document, html) {

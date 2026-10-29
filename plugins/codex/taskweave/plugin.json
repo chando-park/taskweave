@@ -1,15 +1,15 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "taskweave",
-  "version": "0.3.13",
-  "description": "CDPower — 승인한 작업 흐름, 코드 설명과 안전한 기록 관리 (설치 ID: taskweave)",
+  "version": "0.4.5",
+  "description": "CDPower — 승인한 작업 흐름, 코드 설명과 안전한 기록 관리",
   "extensions": {
     "com.openai": {
       "skills": "./skills/",
       "mcpServers": "./.mcp.json",
       "interface": {
         "displayName": "CDPower",
-        "shortDescription": "CDPower — 승인한 작업 흐름, 코드 설명과 안전한 기록 관리 (설치 ID: taskweave)"
+        "shortDescription": "CDPower — 승인한 작업 흐름, 코드 설명과 안전한 기록 관리"
       }
     }
   }

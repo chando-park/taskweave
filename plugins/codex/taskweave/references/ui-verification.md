@@ -8,6 +8,8 @@
 
 ## 필요한 기능 찾기
 
+**현재 CDPower와 기존 구조화 도구의 구분:** 독립 원천·현재 렌더·같은 화면 경계·실제 비교·실패 후 수정 원칙은 모든 경로에 적용한다. 아래 inventory/packet/parser/hash/receipt와 CLI의 필수 입력은 그 계약을 이미 쓰는 기록 또는 사용자가 명시 선택한 구조화 도구에 한정한다. 새 간결한 Workplan에는 영향 상태·원본·실제 결과를 기록하며 형식 검사를 편집이나 완료의 추가 허가로 만들지 않는다. `none`에는 Golden·UI 영수증을 요구하지 않는다. 이 구분은 원본 대조 생략·자기 렌더를 정답으로 삼기·실패의 통과 처리 허가가 아니다.
+
 | 필요한 기능 | 입력 | 실행·판정 위치 | 다음 행동 |
 | --- | --- | --- | --- |
 | 검증 단계 선택 | 시각 변경 의도·영향 상태·Golden 출처 | [검증 단계 선택](#검증-단계-선택) | none/regression/conformance/full 중 적용 경로만 선택 |
@@ -45,8 +47,8 @@
 - 대상 View, 영향 state, viewport, scale, locale, color scheme, Dynamic Type, safe area, OS·toolchain, fixture와 실행 명령을 기록한다.
 - 제품 전체 화면 viewport는 플랫폼 지침과 프로젝트의 승인된 기기·크기·scale을 사용한다. 단독 컴포넌트에는 phone viewport를 강제하지 않는다.
 - 색·문구·간격·레이아웃·표시 조건·locale·Variant에 영향이 없으면 `none`으로 분류하고 Snapshot을 요구하지 않는다. 화면에 보이는 데이터 값만 바뀌어도 Snapshot 제외가 승인됐고 값·상태 직접 테스트가 완료 조건이면 `none`을 사용할 수 있다. View 코드나 시각 계약이 바뀌는 작업을 데이터 전용으로 위장하지 않는다.
-- `none`은 계획 gate에서 문자열 `ui_verification_reason`만 기록한다. completion gate에서는 실제 성공한 compile·behavior JSON result의 locator/hash도 필요하다. boolean이나 문자열이 아닌 false 값은 사유가 아니다.
-- `regression`·`conformance`·`full`은 승인 hash에 포함되는 별도 `canonical-visual-requirements-v1` inventory를 requirements/description에 둔다. source ID와 Figma identity·export hash, REQ별 assertion ID·region/property/source expected/tolerance를 고정하고 frontmatter의 `visual_requirement_inventory_digest`와 대조한다. 새 approval memo는 승인 전에 `ui-verification-gate plan`을 통과해야 하므로 Golden이 없는 `regression`은 그때 차단한다.
+- `none`은 UI 제외 이유와 적용되는 실제 검증 결과를 남긴다. 기존 completion gate를 명시 사용하는 기록만 그 도구의 compile·behavior JSON locator/hash 계약을 유지한다. 새 작업에 UI-none JSON을 추가 작성하도록 요구하지 않는다.
+- 구조화 gate를 사용하는 `regression`·`conformance`·`full` 기록은 기존 `canonical-visual-requirements-v1` inventory·승인 hash 계약을 유지한다. 새 간결한 메모는 같은 실제 원천·화면 경계·기대값·비교 결과를 설명한다. Golden 출처가 없으면 `regression` 통과로 취급하지 않고 원본 대조부터 수행한다.
 - Figma source는 `source_kind: figma`, `node_scope: full-render-boundary | component-boundary`, `coverage_complete: true`, `visible_region_ids`를 선언한다. source receipt는 `provider: figma`, `export_mode: original-node`, `transform: none`을 가져야 한다. 현재 앱 render·기존 Golden·임의 crop·배경만 선택한 노드는 Figma source로 등록할 수 없으며, 모든 visible region은 최소 하나의 assertion과 정확히 연결돼야 한다.
 - UI 계획 packet은 canonical inventory digest·source IDs·REQ/assertion IDs·`approved_snapshot_ids`를 그대로 참조한다. 내부 plot·axis·inset 요구를 outer frame 하나로 축소하거나 packet 안에서 자기선언한 assertion으로 바꾸면 실패한다.
 - 드래그·스크롤·터치·navigation처럼 이미지로 증명할 수 없는 요구사항은 inventory의 `interactions`에 source, trigger, expected effect와 실제 test ID를 기록하고 계획의 `approved_interaction_test_ids`에 연결한다. 정적 Snapshot ID로 대체할 수 없다.

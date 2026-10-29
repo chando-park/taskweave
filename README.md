@@ -2,19 +2,27 @@
 
 **English** | [한국어](README.ko.md)
 
-![CDPower black-and-copper battery logo](plugins/codex/taskweave/mcp/src/viewer/public/wordmark.svg)
+![CDPower black-and-copper battery logo](plugins/codex/cdpower/mcp/src/viewer/public/wordmark.svg)
 
 **A Codex and Claude Code plugin for reviewing changes before the AI edits files, then following the work through checks, feedback, and acceptance.**
 
 The same workflow supports code changes, research, summaries, and scripts, with sources and checks chosen for the task. Small code changes stay in the conversation: review the proposal, approve it, and inspect the result. Complex changes use a Workplan, a document describing the proposed work.
 
-This README describes **CDPower 0.3.13**, the display name for Taskweave. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
+This README describes **CDPower 0.4.5**. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
 
 [Install and set up](#install-and-set-up) · [Task flow](#how-a-task-moves-through-the-system) · [Examples](#try-it-requests-and-expected-responses) · [Viewer](#read-workplans-in-the-local-viewer) · [Record locations](#where-files-live-and-how-they-connect) · [Update](#update-remove-and-troubleshoot)
 
-The install ID `taskweave`, skill prefixes `$taskweave:` and `/taskweave:`, marketplace names, and GitHub URL stay unchanged so existing installations can update. You do not need to move your code or records. The UI and installation descriptions use **CDPower**.
+New installations use ID `cdpower` and skill prefixes `$cdpower:` and `/cdpower:`. The marketplace name `taskweave-marketplace` and GitHub address stay unchanged for update compatibility. Existing `taskweave` installations receive the same 0.4.5 code, rules, and viewer through a compatibility package, keeping their installed skill namespace. Do not enable both packages in one host. Your code and records do not move.
 
-## What changed in 0.3.13
+## What changed in 0.4.5
+
+- Requests for both diagnosis and a fix plan continue through concrete code and verification proposals instead of stopping at uncertainty. Feedback stays with the current work.
+- The AI explains Workplan and existing-ticket decisions early, then presents before/after code, preserved behavior, checks, and readable materials before requesting approval.
+- Viewer lists, details, and HTML use the MD title and support multiple Jira keys. Diagram accessibility titles, code samples, and source files are preserved.
+- Shared-record handoffs, completion adapters, CDPower identity, installation, and safe removal are connected without adding document gates, approval receipts, or unrelated tests.
+- Release evidence reuses 30 focused source tests and a Codex isolated conversation replay. Claude conversation execution remains unverified because authentication expired. This does not verify another computer's service logins, company policies, or real product behavior.
+
+## Previous changes in 0.3.13
 
 - The **Screen comparison** tab separates UI evidence from code-flow diagrams and test results.
 - Reports explain individual inputs, expectations, observed results, skipped checks, and measured coverage. Times use the user's local zone and seconds; date-only history is preserved.
@@ -58,19 +66,19 @@ Packages, MCP connections, and viewer behavior have been checked in isolated mac
 
 ```sh
 codex plugin marketplace add https://github.com/chando-park/taskweave.git
-codex plugin add taskweave@taskweave-marketplace
+codex plugin add cdpower@taskweave-marketplace
 ```
 
-Open a new conversation and request `$taskweave:setup`. If typing the name does not select a skill in your client, search for CDPower in its skill selector.
+Open a new conversation and request `$cdpower:setup`. If typing the name does not select a skill in your client, search for CDPower in its skill selector.
 
 ### Claude Code
 
 ```sh
 claude plugin marketplace add https://github.com/chando-park/taskweave.git --scope user
-claude plugin install taskweave@taskweave-marketplace --scope user
+claude plugin install cdpower@taskweave-marketplace --scope user
 ```
 
-Open a new conversation and request `/taskweave:setup`.
+Open a new conversation and request `/cdpower:setup`.
 
 ### What setup needs to know
 
@@ -85,7 +93,7 @@ For example:
 
 > My projects are in `/example/projects`. Register `example-app` and use CDPower's default record folder. Preserve existing settings and records, reuse the Figma connection, and do not create Jira tickets unless the project policy requires them.
 
-Run `$taskweave:setup` in Codex or `/taskweave:setup` in Claude. Setup registers the confirmed project and creates `Workplans`, `ProductMemory`, and `Instructions` under `~/.local/share/ai-workflow/workspaces/personal/projects/<project>/`. Both hosts use the same settings and records. Previously configured external record folders stay connected; setup does not move or delete them.
+Run `$cdpower:setup` in Codex or `/cdpower:setup` in Claude. Setup registers the confirmed project and creates `Workplans`, `ProductMemory`, and `Instructions` under `~/.local/share/ai-workflow/workspaces/personal/projects/<project>/`. Both hosts use the same settings and records. Previously configured external record folders stay connected; setup does not move or delete them.
 
 Replace the example project path with your own. New records use the default location above; an existing configured location is preserved. On another computer, the same structure is created under that computer's user home. Codex and Claude share records on one computer; CDPower does not synchronize records between computers.
 
@@ -125,7 +133,7 @@ Approval to implement does not also authorize commit, push, MR/PR creation, exte
 
 ## Try it: requests and expected responses
 
-The following are illustrative examples, not results from a real project. Select a CDPower skill explicitly if you want to make sure that workflow is used. In Codex, use `$taskweave:<skill>`; in Claude Code, use `/taskweave:<skill>`.
+The following are illustrative examples, not results from a real project. Select a CDPower skill explicitly if you want to make sure that workflow is used. In Codex, use `$cdpower:<skill>`; in Claude Code, use `/cdpower:<skill>`.
 
 ### A small code fix
 
@@ -241,7 +249,7 @@ For example, an AI planning an app change reads the selected skill, follows its 
 
 ## Skills: choose by the work you need
 
-The bundle contains 16 personal workflow skills plus `setup`. The names below work with the Codex `$taskweave:` or Claude `/taskweave:` prefix.
+The bundle contains 16 personal workflow skills plus `setup`. The names below work with the Codex `$cdpower:` or Claude `/cdpower:` prefix.
 
 | Skill | When to use it | What it does |
 | --- | --- | --- |
@@ -263,7 +271,7 @@ The bundle contains 16 personal workflow skills plus `setup`. The names below wo
 | `cpm` | Commit or publish Git changes | A bare invocation commits; push and MR/PR creation require an explicit request; never auto-merges |
 | `promote-codex-rule` | Make a repeated lesson a reusable rule | Reviews the appropriate rule or skill change before applying an approved update |
 
-The [packaged skill files](plugins/codex/taskweave/skills/) and [shared references](plugins/codex/taskweave/references/) show the actual instructions. This public bundle does not include company-specific Jira, knowledge-publication, or dashboard skills. A company workflow needs its own trusted policies and adapters.
+The [packaged skill files](plugins/codex/cdpower/skills/) and [shared references](plugins/codex/cdpower/references/) show the actual instructions. This public bundle does not include company-specific Jira, knowledge-publication, or dashboard skills. A company workflow needs its own trusted policies and adapters.
 
 ## MCP and external integrations
 
@@ -296,23 +304,33 @@ Codex:
 codex plugin marketplace upgrade taskweave-marketplace
 ```
 
-This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.3.13**; do not assume an already running conversation has changed.
+This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.4.5**; do not assume an already running conversation has changed.
 
 Claude Code:
 
 ```sh
 claude plugin marketplace update taskweave-marketplace
+claude plugin update cdpower@taskweave-marketplace --scope user
+```
+
+Confirm version **0.4.5**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records; ask `setup` to consolidate external Workplans when wanted. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
+
+#### Keep an existing `taskweave` installation
+
+If your installed plugin ID is `taskweave`, update that existing entry instead of installing a second copy. In Codex, refresh the catalog above and update the existing plugin in the plugin manager. In Claude Code, use:
+
+```sh
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-Confirm version **0.3.13**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records; ask `setup` to consolidate external Workplans when wanted. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
+The compatibility package is also version **0.4.5**. It keeps `$taskweave:<skill>` and `/taskweave:<skill>` working with the same CDPower rules and viewer. Do not enable both IDs in the same host.
 
 ### Remove the plugin, owned links, and viewer
 
 **Recommended: run the uninstall skill before removing the plugin.**
 
-- Codex: select `$taskweave:uninstall` and ask, “Remove CDPower from this Codex installation. Keep my records.”
-- Claude Code: run `/taskweave:uninstall` with the same request.
+- Codex: select `$cdpower:uninstall` and ask, “Remove CDPower from this Codex installation. Keep my records.”
+- Claude Code: run `/cdpower:uninstall` with the same request.
 - To remove both, explicitly ask, “Remove CDPower from both Codex and Claude. Keep my records.”
 
 The AI identifies the exact plugin and marketplace before running the host's official removal command. After a removal is confirmed, it cleans up only owned instruction blocks and legacy links for that installation. It preserves other instructions, modified links, and anything whose ownership cannot be established, then reports what remains. If another host or duplicate installation still uses the shared viewer, it keeps it running. Only the last removal can stop a viewer whose service, instance, and actual process identity match. A PID or port alone is not enough.
@@ -327,7 +345,7 @@ node "/installed/plugin/folder/mcp/src/installation.mjs" --client codex --uninst
 node "/installed/plugin/folder/mcp/src/installation.mjs" --client codex --uninstall --apply
 ```
 
-Use `--client claude` for Claude only or `--client both` for both. If one host has multiple marketplace installations, select an exact choice from the preview and pass it with a single host, for example `--plugin-selector taskweave@taskweave-marketplace`. Do not guess which marketplace to remove.
+Use `--client claude` for Claude only or `--client both` for both. If one host has multiple marketplace installations, select an exact choice from the preview and pass it with a single host, for example `--plugin-selector cdpower@taskweave-marketplace`. Do not guess which marketplace to remove.
 
 **Using only the marketplace's uninstall button, `codex plugin remove`, or `claude plugin uninstall`:** this removes the plugin but does not establish that external instruction links and the detached viewer were cleaned up. The documented hooks do not specify a plugin-uninstall event, so use the dedicated removal path. If you already removed it, inspect remaining links with a surviving installed removal tool, or identify the exact owned links before manual cleanup. Do not delete entire instruction files or the `.codex` and `.claude` directories.
 
@@ -365,7 +383,7 @@ Do not put credentials in chats, Workplans, or Product Memory. This package excl
 
 Report problems through [GitHub Issues](https://github.com/chando-park/taskweave/issues), without private logs, personal information, or credentials.
 
-No open-source license has been selected for CDPower itself. Public visibility does not grant an additional project license. Bundled dependencies retain their own licenses and notices: [Codex notices](plugins/codex/taskweave/THIRD_PARTY_NOTICES.md) and [Claude notices](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
+No open-source license has been selected for CDPower itself. Public visibility does not grant an additional project license. Bundled dependencies retain their own licenses and notices: [Codex notices](plugins/codex/cdpower/THIRD_PARTY_NOTICES.md) and [Claude notices](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
 
 Maintainers generate this distribution from a separate development source. Users do not need that checkout to install it. Version **0.3.9** corresponds to source commit `8b8f3cd`, with the selected black-and-copper CD battery logo. It retains the shared rules and safe removal flow from 0.3.8 (source `4871d7a`). The repository address and installation IDs remain unchanged so existing marketplace subscriptions can update in place. Personal records, credentials, and source Git history are not shipped. Historical version 0.3.6 used source baseline `e6f3514`, plus release-version metadata.
 

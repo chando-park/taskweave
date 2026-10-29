@@ -2,19 +2,27 @@
 
 [English](README.md) | **한국어**
 
-![CDPower 검정·구리색 건전지 로고](plugins/codex/taskweave/mcp/src/viewer/public/wordmark.svg)
+![CDPower 검정·구리색 건전지 로고](plugins/codex/cdpower/mcp/src/viewer/public/wordmark.svg)
 
 **AI가 무엇을 바꿀지 먼저 보고 승인하고, 작업 결과와 검증까지 같은 흐름에서 확인하는 Codex·Claude Code 플러그인입니다.**
 
 코드 수정뿐 아니라 조사·요약·대본에도 같은 작업 흐름을 사용합니다. 다만 필요한 자료와 확인 방법은 작업에 맞게 고릅니다. 작은 코드 수정은 대화에서 변경안과 승인을 주고받고, 복잡한 변경만 Workplan이라는 작업 계획 문서를 사용합니다.
 
-이 문서는 **CDPower 0.3.13** 패키지를 설명합니다. 기존 Taskweave의 새 표시 이름입니다. 이 저장소는 사용자가 주소를 추가하는 GitHub 플러그인 장터이며, OpenAI·Anthropic의 공식 기본 장터에 입점했다는 뜻은 아닙니다. ZIP을 내려받거나 별도 서버를 준비하지 않아도 됩니다.
+이 문서는 **CDPower 0.4.5** 패키지를 설명합니다. 이 저장소는 사용자가 주소를 추가하는 GitHub 플러그인 장터이며, OpenAI·Anthropic의 공식 기본 장터에 입점했다는 뜻은 아닙니다. ZIP을 내려받거나 별도 서버를 준비하지 않아도 됩니다.
 
 [설치·초기 설정](#설치와-초기-설정) · [작업 흐름](#요청부터-완료까지-어떻게-동작하나요) · [사용 예시](#실제-사용-예시) · [뷰어](#로컬-뷰어에서-workplan-읽기) · [기록 위치](#폴더와-문서는-어떻게-연결되나요) · [업데이트](#업데이트제거문제-해결)
 
-설치 ID `taskweave`, 스킬 접두어 `$taskweave:`·`/taskweave:`, 장터 이름과 GitHub 주소는 기존 업데이트 호환을 위해 그대로입니다. 코드와 기록 폴더를 새 이름으로 옮길 필요는 없습니다. 화면·설치 설명에는 **CDPower**를 표시합니다.
+새 설치 ID는 `cdpower`, 스킬 접두어는 `$cdpower:`·`/cdpower:`입니다. 장터 이름 `taskweave-marketplace`와 GitHub 주소는 기존 업데이트를 위해 유지합니다. 이전 `taskweave` 설치도 같은 0.4.5 코드·규칙·뷰어를 받는 호환 패키지가 있으며 그 설치의 스킬 접두어는 기존 이름을 유지합니다. 한 호스트에서 두 패키지를 동시에 활성화하지 마세요. 코드와 기록 폴더는 옮기지 않습니다.
 
-## 0.3.13에 반영한 내용
+## 0.4.5에 반영한 내용
+
+- 원인 조사와 수정 계획을 함께 요청하면 조사에서 멈추지 않고 구체 코드·검증안까지 준비합니다. 기존 작업의 불확실한 피드백도 같은 작업에서 이어갑니다.
+- Workplan 필요 여부·기존 티켓 사용 판단을 초기에 안내하고, 변경 전후 코드·유지 조건·검증 방법과 조회 자료를 준비한 뒤 승인을 요청합니다.
+- MD 제목과 여러 Jira 번호를 뷰어 목록·상세·HTML에 연결합니다. 그림의 접근성 제목·코드 예제·기존 원문은 보존합니다.
+- 공유 기록의 작성·승인·구현·검증·완료 도구 연결과 CDPower 이름·설치·제거 호환을 보완했습니다. 별도 문서 검사·새 승인 영수증·무관한 테스트를 강제하지 않습니다.
+- 검증은 원본 저장소의 영향 테스트 30건과 Codex 격리 대화 재현 결과를 사용했습니다. Claude 실제 대화는 인증 만료로 미검증입니다. 다른 컴퓨터의 서비스 로그인·회사 자료·실제 업무 성공을 대신하지 않습니다.
+
+## 이전 0.3.13에 반영한 내용
 
 - **화면 비교** 탭에서 UI 검증 자료를 코드 흐름·테스트 결과와 구분합니다.
 - 개별 입력·기대 동작·실제 결과·미실행 이유·실측 커버리지를 보고합니다. 시각은 현지 시간·초 단위로 표시하며 날짜만 있는 과거 기록의 시각을 만들지 않습니다.
@@ -58,19 +66,19 @@ Node.js 22 이상, Ruby, Git, 사용할 호스트의 CLI가 필요합니다. 호
 
 ```sh
 codex plugin marketplace add https://github.com/chando-park/taskweave.git
-codex plugin add taskweave@taskweave-marketplace
+codex plugin add cdpower@taskweave-marketplace
 ```
 
-새 대화에서 `$taskweave:setup`을 요청합니다. 입력만으로 스킬이 선택되지 않는 클라이언트에서는 스킬 선택기에서 CDPower를 검색해 선택합니다.
+새 대화에서 `$cdpower:setup`을 요청합니다. 입력만으로 스킬이 선택되지 않는 클라이언트에서는 스킬 선택기에서 CDPower를 검색해 선택합니다.
 
 ### Claude Code 설치
 
 ```sh
 claude plugin marketplace add https://github.com/chando-park/taskweave.git --scope user
-claude plugin install taskweave@taskweave-marketplace --scope user
+claude plugin install cdpower@taskweave-marketplace --scope user
 ```
 
-새 대화에서 `/taskweave:setup`을 요청합니다.
+새 대화에서 `/cdpower:setup`을 요청합니다.
 
 ### 초기 설정에서는 무엇을 정하나요?
 
@@ -85,7 +93,7 @@ claude plugin install taskweave@taskweave-marketplace --scope user
 
 > 프로젝트들은 `/example/projects`에 있어요. `example-app`을 등록하고 CDPower 기본 기록 폴더를 사용해 주세요. 기존 설정과 기록은 보존하고 Figma 연결은 재사용해 주세요. Jira는 프로젝트 정책상 필수일 때만 사용해 주세요.
 
-Codex에서는 `$taskweave:setup`, 클로드에서는 `/taskweave:setup`을 실행합니다. 확인한 프로젝트를 등록하고 `~/.local/share/ai-workflow/workspaces/personal/projects/<프로젝트>/` 아래에 `Workplans`, `ProductMemory`, `Instructions`를 만듭니다. 두 호스트는 같은 설정과 기록을 사용합니다. 이미 연결된 외부 기록 폴더는 그대로 두며 옮기거나 삭제하지 않습니다.
+Codex에서는 `$cdpower:setup`, 클로드에서는 `/cdpower:setup`을 실행합니다. 확인한 프로젝트를 등록하고 `~/.local/share/ai-workflow/workspaces/personal/projects/<프로젝트>/` 아래에 `Workplans`, `ProductMemory`, `Instructions`를 만듭니다. 두 호스트는 같은 설정과 기록을 사용합니다. 이미 연결된 외부 기록 폴더는 그대로 두며 옮기거나 삭제하지 않습니다.
 
 프로젝트 폴더 예시는 자신의 경로로 바꿉니다. 기록 폴더의 기본 위치는 위와 같고, 기존 설정에 다른 위치가 있으면 보존합니다. 다른 컴퓨터에서도 그 컴퓨터의 사용자 홈 아래에 같은 구조를 만듭니다. 같은 컴퓨터의 Codex·클로드는 기록을 함께 쓰지만, 컴퓨터 간 기록 동기화는 제공하지 않습니다.
 
@@ -125,7 +133,7 @@ AI가 연결된 공통 규칙·프로젝트 지침·관련 원본을 확인
 
 ## 실제 사용 예시
 
-아래는 실제 작업 결과가 아닌 사용 예시입니다. CDPower 절차를 확실히 선택하려면 해당 스킬을 명시합니다. Codex에서는 `$taskweave:<스킬명>`, Claude Code에서는 `/taskweave:<스킬명>` 형식입니다.
+아래는 실제 작업 결과가 아닌 사용 예시입니다. CDPower 절차를 확실히 선택하려면 해당 스킬을 명시합니다. Codex에서는 `$cdpower:<스킬명>`, Claude Code에서는 `/cdpower:<스킬명>` 형식입니다.
 
 ### 간단한 코드 수정
 
@@ -241,7 +249,7 @@ Workplan은 이번 일을 기록합니다. Instructions는 해당 프로젝트�
 
 ## 어떤 스킬을 선택하면 되나요?
 
-개인 작업 스킬 16개와 setup 1개가 포함되어 있습니다. 아래 이름 앞에 Codex는 `$taskweave:`, Claude는 `/taskweave:`를 붙입니다.
+개인 작업 스킬 16개와 setup 1개가 포함되어 있습니다. 아래 이름 앞에 Codex는 `$cdpower:`, Claude는 `/cdpower:`를 붙입니다.
 
 | 스킬 | 언제 사용하는가 | 하는 일 |
 | --- | --- | --- |
@@ -263,7 +271,7 @@ Workplan은 이번 일을 기록합니다. Instructions는 해당 프로젝트�
 | `cpm` | Git 변경 커밋·게시 | 단독 호출은 commit, push·MR/PR은 명시 요청 시만 수행, 자동 병합 안 함 |
 | `promote-codex-rule` | 반복된 교훈을 규칙으로 반영 | 적절한 규칙·스킬 변경안을 검토하고 승인 후 반영 |
 
-실제 지침은 [설치 스킬 원문](plugins/codex/taskweave/skills/)과 [공통 reference](plugins/codex/taskweave/references/)에서 확인할 수 있습니다. 공개 패키지에는 회사 전용 Jira·지식 게시·대시보드 스킬이 포함되지 않습니다. 회사 작업에 적용하려면 신뢰한 회사 정책과 adapter를 별도로 연결해야 합니다.
+실제 지침은 [설치 스킬 원문](plugins/codex/cdpower/skills/)과 [공통 reference](plugins/codex/cdpower/references/)에서 확인할 수 있습니다. 공개 패키지에는 회사 전용 Jira·지식 게시·대시보드 스킬이 포함되지 않습니다. 회사 작업에 적용하려면 신뢰한 회사 정책과 adapter를 별도로 연결해야 합니다.
 
 ## MCP와 외부 도구는 각각 무엇을 하나요?
 
@@ -296,23 +304,33 @@ Codex:
 codex plugin marketplace upgrade taskweave-marketplace
 ```
 
-이 명령은 목록을 갱신합니다. Codex의 플러그인 관리에서 CDPower 업데이트를 적용하고 설치 버전이 **0.3.13**인지 확인합니다. 실행 중인 대화까지 자동으로 바뀌었다고 판단하지 않습니다.
+이 명령은 목록을 갱신합니다. Codex의 플러그인 관리에서 CDPower 업데이트를 적용하고 설치 버전이 **0.4.5**인지 확인합니다. 실행 중인 대화까지 자동으로 바뀌었다고 판단하지 않습니다.
 
 Claude Code:
 
 ```sh
 claude plugin marketplace update taskweave-marketplace
+claude plugin update cdpower@taskweave-marketplace --scope user
+```
+
+설치 버전 **0.4.5**을 확인한 뒤 새 대화에서 필요한 CDPower 스킬을 선택합니다. 업데이트 자체는 기존 기록의 이동·재작성을 하지 않습니다. 외부 Workplan을 기본 위치로 모으려면 `setup`에 통합을 요청하세요. 예전에 전역 지침을 특정 버전의 캐시 폴더에 직접 연결했다면 setup에 해당 연결 확인을 요청하세요. 새 패키지 설치만으로 이전 수동 연결까지 바뀌지는 않습니다. 공개 패키지의 규칙은 업데이트로 받을 수 있지만, 자신의 회사·프로젝트 전용 규칙과 서비스 로그인은 각 컴퓨터에서 별도로 준비합니다.
+
+#### 이전 `taskweave` 설치를 그대로 업데이트
+
+설치 ID가 `taskweave`라면 새 플러그인을 중복 설치하지 말고 기존 항목을 업데이트하세요. Codex는 위 명령으로 장터를 갱신한 뒤 플러그인 관리에서 기존 설치를 업데이트합니다. Claude Code는 다음 명령을 사용합니다.
+
+```sh
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-설치 버전 **0.3.13**을 확인한 뒤 새 대화에서 필요한 CDPower 스킬을 선택합니다. 업데이트 자체는 기존 기록의 이동·재작성을 하지 않습니다. 외부 Workplan을 기본 위치로 모으려면 `setup`에 통합을 요청하세요. 예전에 전역 지침을 특정 버전의 캐시 폴더에 직접 연결했다면 setup에 해당 연결 확인을 요청하세요. 새 패키지 설치만으로 이전 수동 연결까지 바뀌지는 않습니다. 공개 패키지의 규칙은 업데이트로 받을 수 있지만, 자신의 회사·프로젝트 전용 규칙과 서비스 로그인은 각 컴퓨터에서 별도로 준비합니다.
+호환 패키지도 **0.4.5**이며, 같은 CDPower 규칙과 뷰어를 제공합니다. 기존 `$taskweave:<스킬>`과 `/taskweave:<스킬>` 호출을 유지합니다. 같은 호스트에서 두 ID를 함께 활성화하지 마세요.
 
 ### 제거 — 연결 지침과 뷰어까지 함께 정리
 
 **권장: 플러그인을 지우기 전에 해당 호스트에서 제거 스킬을 실행합니다.**
 
-- Codex: `$taskweave:uninstall`을 선택하고 “이 Codex의 CDPower를 제거해줘. 기록은 남겨줘.”
-- Claude Code: `/taskweave:uninstall`을 실행하고 같은 요청을 전달합니다.
+- Codex: `$cdpower:uninstall`을 선택하고 “이 Codex의 CDPower를 제거해줘. 기록은 남겨줘.”
+- Claude Code: `/cdpower:uninstall`을 실행하고 같은 요청을 전달합니다.
 - 둘 다 제거하려면 “Codex와 클로드의 CDPower를 모두 제거해줘. 기록은 남겨줘.”라고 명시합니다.
 
 AI는 정확한 설치와 장터를 먼저 확인한 뒤 공식 제거 명령을 실행합니다. 제거가 확인된 설치의 관리 블록·이전 연결만 정리하며 다른 사용자 지침은 남깁니다. 사용자가 수정한 연결·소유권이 불명확한 파일은 보존하고 위치와 이유를 알립니다. 한 호스트나 중복 설치가 남으면 공용 뷰어를 유지합니다. 마지막 설치가 사라진 때만 서비스·실행 식별자·실제 프로세스가 자기 뷰어임을 확인하고 종료합니다. PID·포트만 보고 다른 프로그램을 종료하지 않습니다.
@@ -327,7 +345,7 @@ node "/설치된/플러그인/폴더/mcp/src/installation.mjs" --client codex --
 node "/설치된/플러그인/폴더/mcp/src/installation.mjs" --client codex --uninstall --apply
 ```
 
-클로드만 대상으로 하면 `--client claude`, 둘 다는 `--client both`를 사용합니다. 같은 호스트에 여러 장터의 설치가 있으면 미리보기에서 하나를 고른 뒤, 단일 호스트와 `--plugin-selector taskweave@taskweave-marketplace`처럼 확인한 값을 지정합니다. 다른 장터를 추측해 제거하지 않습니다.
+클로드만 대상으로 하면 `--client claude`, 둘 다는 `--client both`를 사용합니다. 같은 호스트에 여러 장터의 설치가 있으면 미리보기에서 하나를 고른 뒤, 단일 호스트와 `--plugin-selector cdpower@taskweave-marketplace`처럼 확인한 값을 지정합니다. 다른 장터를 추측해 제거하지 않습니다.
 
 **장터의 삭제 버튼 또는 `codex plugin remove`·`claude plugin uninstall`만 직접 실행한 경우:** 플러그인 자체는 제거되지만 추가 연결·별도 뷰어까지 정리됐다고 볼 수 없습니다. 두 호스트의 공식 hook에 플러그인 삭제 전용 이벤트가 명시되지 않아 전용 제거 경로를 사용합니다. 이미 삭제했다면 남아 있는 설치본의 제거 도구로 확인하고, 도구가 없으면 남은 지침의 정확한 연결을 확인한 뒤 정리합니다. `.codex`·`.claude` 전체나 지침 파일 전체를 지우지 마세요.
 
@@ -365,7 +383,7 @@ MCP는 사용자 컴퓨터에서 실행하지만 AI에게 전달한 자료에는
 
 문제는 [GitHub Issues](https://github.com/chando-park/taskweave/issues)에 남겨 주세요. 공개 이슈에 회사 로그·개인정보·인증값을 붙이지 않습니다.
 
-CDPower 자체의 오픈소스 라이선스는 아직 지정하지 않았습니다. 저장소 공개가 별도의 프로젝트 사용 허락을 부여하는 뜻은 아닙니다. 외부 의존성의 라이선스·고지는 유지합니다: [Codex 고지](plugins/codex/taskweave/THIRD_PARTY_NOTICES.md), [Claude 고지](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
+CDPower 자체의 오픈소스 라이선스는 아직 지정하지 않았습니다. 저장소 공개가 별도의 프로젝트 사용 허락을 부여하는 뜻은 아닙니다. 외부 의존성의 라이선스·고지는 유지합니다: [Codex 고지](plugins/codex/cdpower/THIRD_PARTY_NOTICES.md), [Claude 고지](plugins/claude/taskweave/THIRD_PARTY_NOTICES.md).
 
 이 저장소는 별도 개발 원본에서 생성한 배포물입니다. 사용자가 원본 저장소까지 복사할 필요는 없습니다. **0.3.9**는 원본 커밋 `8b8f3cd`의 검정·구리색 CD 건전지 로고를 포함하며, 0.3.8(원본 `4871d7a`)의 공통 규칙과 안전한 제거 기능을 유지합니다. 기존 장터에서 업데이트하도록 저장소 주소·설치 식별자를 유지합니다. 개인 작업 기록·인증 정보·원본 Git 이력은 포함하지 않습니다. 과거 0.3.6의 원본 기준은 `e6f3514`와 배포 버전 정보였습니다.
 

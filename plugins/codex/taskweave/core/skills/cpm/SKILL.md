@@ -32,6 +32,10 @@ cpm은 테스트·빌드·lint를 자동 재실행하지 않는다. 사용자 �
 
 PR/MR은 공식 template을 우선하고 fallback만 render-mr-body.rb와 lint-mr-body.rb로 만든다. 공식 양식은 --official로 검사한다. 생성 전 target·reviewer/assignee·제목·본문을 확인하고 target을 명시 옵션으로 전달한다. 미확정 target·전역 reviewer 추천을 자동 확정하지 않는다.
 
+MR 대상 커밋이 2개 이상이면 MR 하나 안에서 `커밋별 변경 사항·코드 리뷰` 구역을 만든다. 커밋 SHA·제목 순서대로 변경 사항·파일·리뷰 분류·최종 의견을 각각 작성하고 마지막에 최종 diff의 `커밋 간 연계 검토`를 넣는다. 커밋 메시지로 리뷰를 대신하지 않으며 실제 커밋별 diff를 확인한다. 테스트 커버리지는 실제 측정한 커밋 SHA를 명시하고 다른 커밋에 재사용하지 않는다. 본문 생성·에이전트 위임 모두 [MR 본문](references/merge-request-body.md)의 복수 커밋 형식을 전달한다.
+
+fallback MR 본문은 점수 없이 최종 의견만 남긴다. 테스트 섹션은 실행 건수가 1 이상인 모듈의 실측 커버리지만 작성하고 건너뜀·미실행·0건이면 생략한다. 본문 작성이나 에이전트 위임 때 이 조건을 함께 전달하며, 이전 점수표·미실행 테스트 양식을 재사용하지 않는다. 명령과 통과·실패·건너뜀 결과는 사용자에게 별도로 보고한다.
+
 GitLab은 지정·저장소 설정으로 확정된 reviewer를 reviewer와 assignee에 넣는다. 성공 후 source·target·reviewer·assignee가 계획과 같음을 재조회한 뒤에만 select-reviewer.rb increment를 실행한다. GitHub reviewer를 GitLab 전역 파일에서 추정하지 않는다. 자동 병합·CI 취소를 하지 않는다.
 
 선택 모드·commit·push·PR/MR URL·reviewer/계수·기존 검증·제외 파일·남은 작업을 보고한다. 수행하지 않은 작업을 완료로 표시하지 않는다.

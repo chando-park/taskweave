@@ -1,0 +1,4 @@
+interface:
+  display_name: "Author Design System Component"
+  short_description: "Figma Component Set을 공통 SwiftUI 컴포넌트로 제작"
+  default_prompt: "Use $cdpower:author-design-system-component to implement this shared component only after verifying its approved Workplan."

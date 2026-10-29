@@ -1,0 +1,4 @@
+interface:
+  display_name: "버그 조사 계획"
+  short_description: "코드 수정 전에 버그 원인과 변경 방향을 조사하고 승인안을 작성합니다"
+  default_prompt: "Use /cdpower:bugfix-plan to investigate this bug and prepare one approval packet without changing code."
