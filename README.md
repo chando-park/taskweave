@@ -8,13 +8,22 @@
 
 The same workflow supports code changes, research, summaries, and scripts, with sources and checks chosen for the task. Small code changes stay in the conversation: review the proposal, approve it, and inspect the result. Complex changes use a Workplan, a document describing the proposed work.
 
-This README describes **CDPower 0.4.5**. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
+This README describes **CDPower 0.4.6**. This is a GitHub-hosted plugin marketplace you add by address, not an entry in OpenAI's or Anthropic's default directory. You do not need to download a ZIP or run a separate hosted server.
 
 [Install and set up](#install-and-set-up) · [Task flow](#how-a-task-moves-through-the-system) · [Examples](#try-it-requests-and-expected-responses) · [Viewer](#read-workplans-in-the-local-viewer) · [Record locations](#where-files-live-and-how-they-connect) · [Update](#update-remove-and-troubleshoot)
 
-New installations use ID `cdpower` and skill prefixes `$cdpower:` and `/cdpower:`. The marketplace name `taskweave-marketplace` and GitHub address stay unchanged for update compatibility. Existing `taskweave` installations receive the same 0.4.5 code, rules, and viewer through a compatibility package, keeping their installed skill namespace. Do not enable both packages in one host. Your code and records do not move.
+New installations use ID `cdpower` and skill prefixes `$cdpower:` and `/cdpower:`. The marketplace name `taskweave-marketplace` and GitHub address stay unchanged for update compatibility. Existing `taskweave` installations receive the same 0.4.6 code, rules, and viewer through a compatibility package, keeping their installed skill namespace. Do not enable both packages in one host. Your code and records do not move.
 
-## What changed in 0.4.5
+## What changed in 0.4.6
+
+- New `design-qc` skill investigates specified design-QC tickets, comments, attachments and independent design sources, then hands the evidence to the existing change, planning or feedback skill. Before requesting approval, it explains current/proposed code, preserved behavior and relevant checks.
+- Keep company project keys, Jira sites and workflow states in a company QC document explicitly linked by the current project Agent. Company SQC settings, ticket conversations, records and credentials are **not distributed** in these public packages. Set up that local company link separately on each computer; updates do not supply it.
+- Static snapshots do not establish animation behavior or design conformance. Feedback reuses the current Workplan, and new scope is proposed before implementation. The skill does not add a document gate, an approval service or Jira-write permission.
+- Release evidence: 11 focused automated tests passed; selected loaded-code coverage was 91.19% lines / 65.25% branches, not skill-compliance or whole-project coverage. Codex app conversation replay confirmed before/after code and checks before an approval request. Claude conversation execution remains unverified due to expired authentication; both host packages were checked.
+
+Example: select `$cdpower:design-qc` in Codex or `/cdpower:design-qc` in Claude and ask, **“Read QC-101 and QC-102, including existing comments, and prepare a fix plan with current/proposed code and checks. Do not edit yet.”** The AI uses the existing exact ticket keys, not a guessed company prefix. Existing `taskweave` installations use their retained skill prefix.
+
+## Previous changes in 0.4.5
 
 - Requests for both diagnosis and a fix plan continue through concrete code and verification proposals instead of stopping at uncertainty. Feedback stays with the current work.
 - The AI explains Workplan and existing-ticket decisions early, then presents before/after code, preserved behavior, checks, and readable materials before requesting approval.
@@ -249,7 +258,7 @@ For example, an AI planning an app change reads the selected skill, follows its 
 
 ## Skills: choose by the work you need
 
-The bundle contains 16 personal workflow skills plus `setup`. The names below work with the Codex `$cdpower:` or Claude `/cdpower:` prefix.
+The bundle contains 17 personal workflow skills plus `setup`. The names below work with the Codex `$cdpower:` or Claude `/cdpower:` prefix.
 
 | Skill | When to use it | What it does |
 | --- | --- | --- |
@@ -260,6 +269,7 @@ The bundle contains 16 personal workflow skills plus `setup`. The names below wo
 | `feature-plan` | Plan a feature with a wider impact | Produces a concrete Workplan proposal; does not implement |
 | `feature-apply` | Implement an approved feature plan | Makes the agreed changes and reports direct checks |
 | `bugfix-plan` | Investigate and plan a complex bug fix | Connects symptoms, cause, code changes, and regression checks |
+| `design-qc` | Investigate design-QC tickets and feedback | Reads locally linked company QC guidance and independent sources, then uses existing proposal/planning/feedback skills |
 | `bugfix-apply` | Implement an approved bug fix | Fixes the cause and checks the affected behavior |
 | `plan-ui-with-design-system` | Add UI details to feature planning | Maps design states to existing components, tokens, and needed UI checks |
 | `implement-ui-with-design-system` | Implement approved product UI | Uses the actual design-system declarations and checks affected states |
@@ -304,7 +314,7 @@ Codex:
 codex plugin marketplace upgrade taskweave-marketplace
 ```
 
-This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.4.5**; do not assume an already running conversation has changed.
+This refreshes the catalog. In Codex's plugin manager, apply the CDPower update and confirm version **0.4.6**; do not assume an already running conversation has changed.
 
 Claude Code:
 
@@ -313,7 +323,7 @@ claude plugin marketplace update taskweave-marketplace
 claude plugin update cdpower@taskweave-marketplace --scope user
 ```
 
-Confirm version **0.4.5**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records; ask `setup` to consolidate external Workplans when wanted. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
+Confirm version **0.4.6**, then start a new conversation and select the CDPower skill you need. Updating CDPower does not mean moving or rewriting your existing records; ask `setup` to consolidate external Workplans when wanted. If you previously linked global instructions manually to a version-specific cache folder, ask setup to inspect that link; installing a newer package alone does not retarget an old manual link. Updating supplies the public rules, not your company-specific policies or service logins; those need their own setup on each computer.
 
 #### Keep an existing `taskweave` installation
 
@@ -323,7 +333,7 @@ If your installed plugin ID is `taskweave`, update that existing entry instead o
 claude plugin update taskweave@taskweave-marketplace --scope user
 ```
 
-The compatibility package is also version **0.4.5**. It keeps `$taskweave:<skill>` and `/taskweave:<skill>` working with the same CDPower rules and viewer. Do not enable both IDs in the same host.
+The compatibility package is also version **0.4.6**. It keeps `$taskweave:<skill>` and `/taskweave:<skill>` working with the same CDPower rules and viewer. Do not enable both IDs in the same host.
 
 ### Remove the plugin, owned links, and viewer
 

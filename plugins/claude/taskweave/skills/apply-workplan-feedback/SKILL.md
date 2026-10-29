@@ -5,6 +5,8 @@ description: 현재 Workplan의 수정 피드백을 같은 범위·재승인·�
 
 # 현재 작업 피드백 처리
 
+디자인 QC 피드백인데 현재 회사 QC 지침·지정 티켓·원천의 조사 근거가 아직 없을 때만 /taskweave:design-qc를 먼저 적용한다. 이미 전달받은 같은 작업의 근거와 현재 Workplan은 재사용하고 여기서 추가 변경안을 이어가며, 최초 조사·계획을 반복하지 않는다.
+
 [공통 작업 흐름의 실행 연결](../../references/task-workflow.md#판단에서-실제-스킬로-이어가기)에서 현재 Workplan·관련 피드백으로 확인한 결과를 이어받는다. 같은 프로젝트 등록·최초 조사를 반복하지 않고 바뀐 사실에만 분류를 갱신한다.
 
 먼저 현재 대화의 결과물·기준과 Workplan 유무를 확인하고 [피드백 절차](../../references/acceptance-feedback-loop.md)를 읽는다. 원인 질문·완료 요청에 섞인 문제 제보도 이 스킬의 입력이다. 원인이 불확실하면 같은 문서의 [조사→수정안 연결](../../references/acceptance-feedback-loop.md#원인-조사에서-수정안까지-이어가기)을 실제로 수행한 뒤 아래 경로를 선택한다. Workplan 없는 코드는 /taskweave:code-change, 보육일지·요약·대본 등은 [글쓰기 작업](../../references/writing-work.md)의 자료·규칙·검토 기준으로 현재 수정본에서 이어간다. 글쓰기에 코드 diff·Git·MCP 연결을 요구하거나 피드백 때문에 사후 Workplan을 만들지 않는다. 코드 Workplan일 때만 현재 기록·관련 diff를 읽고 아래 범위를 적용한다. 과거 작업 전역 검색으로 대상을 추정하지 않는다.

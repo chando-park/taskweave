@@ -47,6 +47,7 @@ personal:
     - code-change
     - explain-code
     - bugfix-plan
+    - design-qc
     - bugfix-apply
     - feature-plan
     - feature-apply

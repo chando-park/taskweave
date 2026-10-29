@@ -12,6 +12,8 @@
 
 ## 판단에서 실제 스킬로 이어가기
 
+디자인 QC 티켓의 조사·수정 요청이면 $taskweave:design-qc로 현재 프로젝트가 연결한 회사 QC 지침·지정 티켓·디자인 원천을 먼저 확인한다. 이미 같은 작업에서 확인한 자료는 재사용하며 그 결과로 아래 기존 task-route를 한 번 사용해 조회·작은 변경안·새 계획·현재 피드백으로 이어간다. 이 연결은 구현 승인이나 Jira 쓰기 권한을 주지 않으며 일반 티켓 조회를 디자인 QC 수정으로 확대하지 않는다.
+
 새 요청·정정 또는 조사로 영향 범위가 바뀌면, AI는 사용자 의도와 확인한 사실을 설치된 플러그인의 `core/scripts/task-route.mjs`에 표준 입력 JSON으로 전달한다. 개발 원본은 `20_AI/Codex/Runtime/scripts/task-route.mjs`다. 같은 요청·범위의 확정된 결과는 재사용하며 최초 조사를 반복하지 않는다. 실행 실패는 현재 기준으로 판단한 이유와 실패 사실을 밝히고 가능한 작업을 계속하며 문서 형식 검사를 대신 실행하지 않는다.
 
 입력의 `intent`는 `inspect | diagnose | propose | plan | implement`, `kind`는 `code | writing`이다. "원인과 수정 계획을 확인해 줘"처럼 조사와 계획을 함께 요청하면 `explicitPlanRequested: true`로 전달한다. 현재 Workplan이 없어도 조사에서 끝내지 않고 계획 스킬이 필요한 확인과 변경안 제시까지 담당한다. 코드 변경안에는 확인한 `contextComplete`, `repositoryCount`, `changeKind: bug | feature`와 `recordRequired`, `explicitPlanRequested`, `complexChange`, `importantDecision`, `contractRisk`의 참/거짓을 넣는다. 위험 조건의 의미는 [위험 분류](risk-routing.md)를 사용하고 미확인을 false로 채우지 않는다. `currentWorkplan`과 `relatedFeedback`은 현재 대화가 실제로 가리키는 작업일 때만 전달한다. 필요한 맥락이 없으면 `missingContext`에 그 자료만 적는다.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "디자인 QC 조사와 수정 연결"
+  short_description: "디자인 QC 근거를 조사하고 기존 수정 계획과 현재 피드백으로 연결"
+  default_prompt: "/cdpower:design-qc로 지정한 디자인 QC 티켓의 원인과 수정 계획을 확인해 주세요."

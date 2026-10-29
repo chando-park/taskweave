@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
   "host": "codex",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "personalSkills": [
     "cpm",
     "code-change",
     "explain-code",
     "bugfix-plan",
+    "design-qc",
     "bugfix-apply",
     "feature-plan",
     "feature-apply",
@@ -26,7 +27,7 @@
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
-      "sha256": "f8a2573629323b439f087cc56ee6969e2b2f0034b32569a2ba08de0773a7cafc"
+      "sha256": "08570ee79e0e827b2f743f4e080e3692775908f78f4c55e9fc5240edc1cd467b"
     },
     {
       "path": ".mcp.json",
@@ -154,7 +155,7 @@
     },
     {
       "path": "core/references/task-workflow.md",
-      "sha256": "714c98c489eb21535af3c5f494258fee1e7304db631fd37e2fb4f8b11b20d2dd"
+      "sha256": "1c39a552f5d527d8e0059096feab80355bd92729435bcfe2f6f113e7b0940881"
     },
     {
       "path": "core/references/ticket-lifecycle.md",
@@ -198,7 +199,7 @@
     },
     {
       "path": "core/runtime-inventory.yml",
-      "sha256": "f65cae056c8331ededafbec0b68cf45d028913dbf43898a0cc1b1ecfe38488bc"
+      "sha256": "9dafdfa90e964d69cb65d55e218512eededb6c0a6fe7760046ab545112794231"
     },
     {
       "path": "core/runtime-rules.yml",
@@ -354,7 +355,7 @@
     },
     {
       "path": "core/skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "954e9607f173d92186ca49da54844fec198afeea8c47a011d86b911a22efd6bf"
+      "sha256": "cdeac3d0e9877b7829578df7fda781263813653b9ec93d0e866011000efc0ac2"
     },
     {
       "path": "core/skills/apply-workplan-feedback/agents/openai.yaml",
@@ -386,7 +387,7 @@
     },
     {
       "path": "core/skills/bugfix-plan/SKILL.md",
-      "sha256": "6fb63028b184602572f85c68536c0629c2fca667fbda7e618069d951feead496"
+      "sha256": "7a828d962080862eb8039c809b8a6e13ea9f556f248ebd66a72d53954618a61f"
     },
     {
       "path": "core/skills/bugfix-plan/agents/openai.yaml",
@@ -455,6 +456,14 @@
     {
       "path": "core/skills/cpm/scripts/select-reviewer.rb",
       "sha256": "34a22f003da53b554ee7b5888d37adc2920f0ad5951188c86906d0293a46edb0"
+    },
+    {
+      "path": "core/skills/design-qc/SKILL.md",
+      "sha256": "6dd3b8ca0b50f2ba8cc51f41f7b17ccc5caf5f88487ceea915f9c3e650b86982"
+    },
+    {
+      "path": "core/skills/design-qc/agents/openai.yaml",
+      "sha256": "187e7c6c9b974a4348a0b10b703ef4460883eca7723cb6b73153c0847fb92da9"
     },
     {
       "path": "core/skills/explain-code/SKILL.md",
@@ -19122,11 +19131,11 @@
     },
     {
       "path": "mcp/package-lock.json",
-      "sha256": "56183790199d33b226450fe68ac27e1c6dbac2cca1ccb7362b56ea77dbebcd70"
+      "sha256": "bd146175a5bb34ac0d9af17e5046e05dbbc205331e8d6612a6a34a019afb4cf7"
     },
     {
       "path": "mcp/package.json",
-      "sha256": "c785492e5c62735cf854977cbc355db108cda36a1cbb77f1ea89aafaf690d410"
+      "sha256": "31878a2904c6923010084e1a2ff1f24df62ea2e764f61192773b992906bc52d7"
     },
     {
       "path": "mcp/src/adapters/android.mjs",
@@ -19250,7 +19259,7 @@
     },
     {
       "path": "plugin.json",
-      "sha256": "6dcc79401a25646c0562be49dd136ddb6cc609711a4219aa7a6c1cd520a338f9"
+      "sha256": "8601b5f4df467cf470a1848d202ddeef346b9985b9222060c53508b92dac3955"
     },
     {
       "path": "references/acceptance-feedback-loop.md",
@@ -19346,7 +19355,7 @@
     },
     {
       "path": "references/task-workflow.md",
-      "sha256": "714c98c489eb21535af3c5f494258fee1e7304db631fd37e2fb4f8b11b20d2dd"
+      "sha256": "1c39a552f5d527d8e0059096feab80355bd92729435bcfe2f6f113e7b0940881"
     },
     {
       "path": "references/ticket-lifecycle.md",
@@ -19390,7 +19399,7 @@
     },
     {
       "path": "skills/apply-workplan-feedback/SKILL.md",
-      "sha256": "954e9607f173d92186ca49da54844fec198afeea8c47a011d86b911a22efd6bf"
+      "sha256": "cdeac3d0e9877b7829578df7fda781263813653b9ec93d0e866011000efc0ac2"
     },
     {
       "path": "skills/apply-workplan-feedback/agents/openai.yaml",
@@ -19422,7 +19431,7 @@
     },
     {
       "path": "skills/bugfix-plan/SKILL.md",
-      "sha256": "6fb63028b184602572f85c68536c0629c2fca667fbda7e618069d951feead496"
+      "sha256": "7a828d962080862eb8039c809b8a6e13ea9f556f248ebd66a72d53954618a61f"
     },
     {
       "path": "skills/bugfix-plan/agents/openai.yaml",
@@ -19491,6 +19500,14 @@
     {
       "path": "skills/cpm/scripts/select-reviewer.rb",
       "sha256": "34a22f003da53b554ee7b5888d37adc2920f0ad5951188c86906d0293a46edb0"
+    },
+    {
+      "path": "skills/design-qc/SKILL.md",
+      "sha256": "6dd3b8ca0b50f2ba8cc51f41f7b17ccc5caf5f88487ceea915f9c3e650b86982"
+    },
+    {
+      "path": "skills/design-qc/agents/openai.yaml",
+      "sha256": "187e7c6c9b974a4348a0b10b703ef4460883eca7723cb6b73153c0847fb92da9"
     },
     {
       "path": "skills/explain-code/SKILL.md",
